@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+        <!-- Les services -->
+
+        <h2 id="h2_services"><em>-</em> Nos <em>Supers</em> Services <em>-</em></h2>
+
+        <section class="services">
+<% services.forEach(service => { %>
+            <article class="article_service_<%=service.article%>">
+                <h3><%=service.title%></h3>
+                <p class="description_h3"><%=service.description%></p>
+                <button>À partir de <%=service.button%></button>
+                <p class="infos_services">
+                    <%=service.informations%>
+                </p>
+            </article>
+<% }); %>
+        </section>
+<%- include('partials/footer') %>

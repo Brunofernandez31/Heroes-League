@@ -237,6 +237,7 @@ h3 {
     font-size: 0.9rem;
     margin-left: 30px;
     margin-right: 30px;
+    white-space: pre-line;
 }
 
 
@@ -334,7 +335,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-1.png);
+      background-image: url(../ressources/images/testimony-1.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -349,7 +350,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-2.png);
+      background-image: url(../ressources/images/testimony-2.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -364,7 +365,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-3.png);
+      background-image: url(../ressources/images/testimony-3.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -379,7 +380,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-4.png);
+      background-image: url(../ressources/images/testimony-4.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -452,6 +453,7 @@ h3 {
         align-items: center;
         justify-content: center;
         border-radius: 20% 20% 0 0 / 15% 15% 0 0;
+        margin-top: 2rem;
     }
 
     footer .title_footer {

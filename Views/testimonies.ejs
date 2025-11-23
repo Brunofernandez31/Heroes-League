@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+    <!-- Les témoignages -->
+
+    <h2 id="h2_testimonies"><em>-</em> Les témoignages de nos clients <em>-</em></h2>
+
+    <section class="testimonies">
+<% testimonies.forEach(testimony => { %>
+    <article class="article_testimony">
+            <div class="cercle_img_<%=testimony.testimony%>"></div>
+            <div class="text_testimony">
+                <p class="name_testimony">"<%=testimony.name%>"</p>
+                <p class="description_testimony">"<%=testimony.description%>"</p>
+            </div>
+        </article>
+<% }); %>
+    </section>
+<%- include('partials/footer') %>
