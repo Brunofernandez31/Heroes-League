@@ -23,8 +23,8 @@ app.get('/nos-heros' , (req,res) => {
     res.render("nos-heros")
 })
 
-app.get('/temoignages' , (req,res) => {
-    res.render("temoignages")
+app.get('/testimonies' , (req,res) => {
+    res.render("testimonies")
 })
 
 app.get('/sauvez-moi' , (req,res) => {

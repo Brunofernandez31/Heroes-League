@@ -452,6 +452,7 @@ h3 {
         align-items: center;
         justify-content: center;
         border-radius: 20% 20% 0 0 / 15% 15% 0 0;
+        margin-top: 2rem;
     }
 
     footer .title_footer {
