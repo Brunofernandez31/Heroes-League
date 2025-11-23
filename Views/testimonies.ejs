@@ -4,47 +4,14 @@
     <h2 id="h2_testimonies"><em>-</em> Les témoignages de nos clients <em>-</em></h2>
 
     <section class="testimonies">
-
-        <article class="article_testimony">
-            <div class="cercle_img_testimony1"></div>
+<% testimonies.forEach(testimony => { %>
+    <article class="article_testimony">
+            <div class="cercle_img_<%=testimony.testimony%>"></div>
             <div class="text_testimony">
-                <p class="name_testimony">Tombédeu O.</p>
-                <p class="description_testimony">"Grâce à Heros League, j'ai pu déménager super rapidement.
-                    Attention à l'odeur laissée par les tentacules ceci-dit. Merci Poulpy !"</p>
+                <p class="name_testimony">"<%=testimony.name%>"</p>
+                <p class="description_testimony">"<%=testimony.description%>"</p>
             </div>
         </article>
-
-        <article class="article_testimony">
-            <div class="cercle_img_testimony2"></div>
-            <div class="text_testimony">
-                <p class="name_testimony">Jella N.</p>
-                <p class="description_testimony">
-                    "Ultraquenarde m'a sauvé la vie ! J'allais tout perdre et sur ses conseils
-                    j'ai investi dans les bitcoins, affaire à suivre !"</p>
-            </div>
-        </article>
-
-        <article class="article_testimony">
-            <div class="cercle_img_testimony3"></div>
-            <div class="text_testimony">
-                <p class="name_testimony">Bob O.</p>
-                <p class="description_testimony">
-                    "Je ne remercierai jamais assez Carotte Woman d'avoir retrouvé mon chat.
-                    Apparemment c'est normal s'il est orange et plus noir, elle l'aurait retrouvé dans un produit
-                    chimique spécial. Je la crois sur parole !"</p>
-            </div>
-        </article>
-
-        <article class="article_testimony">
-            <div class="cercle_img_testimony4"></div>
-            <div class="text_testimony">
-                <p class="name_testimony">Coupéhala H.</p>
-                <p class="description_testimony">
-                    "Supervif a été super, il m'a sortie des bouchons et amenée au travail
-                    en un temps record. Par contre j'aimerais bien retrouver ma voiture maintenant."
-                </p>
-            </div>
-        </article>
-
+<% }); %>
     </section>
 <%- include('partials/footer') %>

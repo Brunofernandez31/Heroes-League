@@ -1,4 +1,7 @@
 import express from "express";
+import heroes from "./Data/heroes.js";
+import testimonies from "./Data/testimonies.js";
+import services from "./Data/services.js";
 
 const app = express();
 
@@ -16,15 +19,21 @@ app.get('/' , (req,res) => {
 })
 
 app.get('/services' , (req,res) => {
-    res.render("services")
+    res.render("services" , {
+    services
+    })
 })
 
 app.get('/nos-heros' , (req,res) => {
-    res.render("nos-heros")
+    res.render("nos-heros", {
+    heroes
+  });
 })
 
 app.get('/testimonies' , (req,res) => {
-    res.render("testimonies")
+    res.render("testimonies", {
+    testimonies
+    })
 })
 
 app.get('/sauvez-moi' , (req,res) => {

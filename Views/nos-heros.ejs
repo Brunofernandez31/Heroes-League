@@ -5,82 +5,16 @@
         <h2 id="h2_heros"><em>-</em> Nos <em>Supers</em> héros <em>-</em></h2>
 
         <section class="heros">
-
-            <article class="article_hero_cat">
-                <img src="./ressources/images/catastrophic.png" alt="Cat Astrophic">
+<% heroes.forEach(hero => { %>
+            <article class="article_hero_<%=hero.article%>">
+                <img src="<%=hero.img%>" alt="<%=hero.article%>">
                 <div class="overlay">
-                    <p class="title_hero">Cat Astrophic</p>
-                    <p class="description_hero">
-                        Avec son super ronron, il saura vous réconforter dans n'importe quelle situation.
-                        <br>
-                        Ne contrôle pas tout à fait sa patte droite, et peut être amené
-                        à vous mettre une - plus ou moins petite - tape sur la tête.
+                    <p class="title_hero">"<%=hero.article%>"</p>
+                    <p class="description_hero">"<%=hero.description%>"
                     </p>
                 </div>
             </article>
-
-            <article class="article_hero_carotte">
-                <img src="./ressources/images/carotte-woman.png" alt="Carotte Woman">
-                <div class="overlay">
-                    <p class="title_hero">Carotte Woman</p>
-                    <p class="description_hero">
-                        Mis à part son apparence de carotte, on ne sait pas bien
-                        à quoi elle est forte, mais on va trouver.
-                        <br>
-                        Attention, elle essaiera souvent de vous faire
-                        payer plus que le prix convenu avec Heros League. N'acceptez pas.
-                    </p>
-                </div>
-            </article>
-
-            <article class="article_hero_ultraquenarde">
-                <img src="./ressources/images/ultraquenarde.png" alt="Ultraquenarde">
-                <div class="overlay">
-                    <p class="title_hero">Ultraquenarde</p>
-                    <p class="description_hero">
-                        Peut vous sortir de n'importe quel traquenard.
-                        <br>
-                        Vous sort du traquenard… Mais il arrive qu'elle vous entraîne dans un autre.
-                    </p>
-                </div>
-            </article>
-
-            <article class="article_hero_poulpy">
-                <img src="./ressources/images/poulpy.png" alt="Poulpy">
-                <div class="overlay">
-                    <p class="title_hero">Poulpy</p>
-                    <p class="description_hero">
-                        Il a des tentacules gigantesques, super pratique pour les déménagements.
-                        <br>
-                        Un peu collant
-                    </p>
-                </div>
-            </article>
-
-            <article class="article_hero_oran">
-                <img src="./ressources/images/oran-wu-tang-clan.png" alt="Orang Wu-Tang Clan">
-                <div class="overlay">
-                    <p class="title_hero">Orang Wu-Tang Clan</p>
-                    <p class="description_hero">
-                        Un gros singe agile, multi-tâche, qui intervient tout en rappant.
-                        <br>
-                        Peut être amené à vous demander de financer son prochain album, ne pas accepter.
-                    </p>
-                </div>
-            </article>
-
-            <article class="article_hero_superime">
-                <img src="./ressources/images/superime.png" alt="Superimé">
-                <div class="overlay">
-                    <p class="title_hero">Superimé</p>
-                    <p class="description_hero">
-                        Un feu super-héro qui ne veut pas partir à la retraite.
-                        <br>
-                        N'a plus de pouvoir mais refuse de l'admettre, peut être amené à
-                        vous raconter des histoires de l'époque où il était encore super.
-                    </p>
-                </div>
-            </article>
+<% }); %>
         </section>
 
         <div class="button_heros">
