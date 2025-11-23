@@ -1,8 +1,7 @@
 import express, { Router } from "express";
 import { router } from './src/routers/index.router.js';
-import heroes from "./Data/heroes.js";
-import testimonies from "./Data/testimonies.js";
-import services from "./Data/services.js";
+
+const PORT = process.env.PORT;
 
 const app = express();
 
@@ -25,6 +24,6 @@ app.get('/sauvez-moi' , (req,res) => {
 
 app.use(router);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log("Le serveur tourne sur le port 3000")
 })
