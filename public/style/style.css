@@ -237,6 +237,7 @@ h3 {
     font-size: 0.9rem;
     margin-left: 30px;
     margin-right: 30px;
+    white-space: pre-line;
 }
 
 

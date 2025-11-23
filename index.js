@@ -1,4 +1,5 @@
-import express from "express";
+import express, { Router } from "express";
+import { router } from './src/routers/index.router.js';
 import heroes from "./Data/heroes.js";
 import testimonies from "./Data/testimonies.js";
 import services from "./Data/services.js";
@@ -18,27 +19,11 @@ app.get('/' , (req,res) => {
     res.render("index")
 })
 
-app.get('/services' , (req,res) => {
-    res.render("services" , {
-    services
-    })
-})
-
-app.get('/nos-heros' , (req,res) => {
-    res.render("nos-heros", {
-    heroes
-  });
-})
-
-app.get('/testimonies' , (req,res) => {
-    res.render("testimonies", {
-    testimonies
-    })
-})
-
 app.get('/sauvez-moi' , (req,res) => {
     res.render("sauvez-moi")
 })
+
+app.use(router);
 
 app.listen(3000, () => {
     console.log("Le serveur tourne sur le port 3000")

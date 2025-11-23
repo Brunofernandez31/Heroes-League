@@ -1,5 +1,8 @@
-import heroes from "./Data/heroes.js";
+import heroes from "../../Data/heroes.js";
 
-function displayHeroes (req, res) {
-    
+
+export function displayHeroes (req, res) {
+    res.render("nos-heros", {
+    heroes
+  });
 }
