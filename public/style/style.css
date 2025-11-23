@@ -334,7 +334,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-1.png);
+      background-image: url(../ressources/images/testimony-1.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -349,7 +349,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-2.png);
+      background-image: url(../ressources/images/testimony-2.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -364,7 +364,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-3.png);
+      background-image: url(../ressources/images/testimony-3.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -379,7 +379,7 @@ h3 {
       position: absolute;
       width: 220px;
       height: 220px;
-      background-image: url(ressources/images/testimony-4.png);
+      background-image: url(../ressources/images/testimony-4.png);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;

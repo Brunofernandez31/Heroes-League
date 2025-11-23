@@ -2,6 +2,10 @@ import express from "express";
 
 const app = express();
 
+// Je rajoute à express la gestion des fichiers statiques
+// Tous les fichiers dans le dossier "public" seront servis tels quels
+app.use(express.static('public'));
+
 app.set('view engine', 'ejs');
 // On va également définir le dossier où se trouvent les templates EJS
 app.set('views', './views');
