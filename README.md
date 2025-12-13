@@ -9,3 +9,7 @@ Etape 2 :
 Transformer l'intégration HTML avec Express + EJS 
 Faire des objets, exporter l'objet pour travailler les boucles avec EJS afin d'éviter de se répéter.
 Faire des controllers, des routers, des partials, connecter le tout ensemble
+
+Etape 3:
+Faire la methode MERISE
+Creation de la BDD
