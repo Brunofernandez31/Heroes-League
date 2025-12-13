@@ -1,8 +1,9 @@
-import heroes from "../../Data/heroes.js";
+import heroes from "../../data/heroes.js";
 
 
 export function displayHeroes (req, res) {
+  //logique métier ici : (filtres, calculs, appels BDD..)
     res.render("nos-heros", {
-    heroes
+    heroes // Données envoyées à la vue
   });
 }
