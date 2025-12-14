@@ -68,10 +68,5 @@ Ne fait pas la différence entre les problèmes métaphoriques et digestifs. Peu
         description: `Sens du devoir surdéveloppé et flair infaillible pour les gens en détresse. Peut vous retrouver n'importe où, vous protéger de n'importe quoi, et rapporter n'importe quel objet perdu.
 
 Toujours fidèle, parfois trop. A tendance à "sauver" les gens qui n'ont rien demandé, surtout les facteurs, les livreurs, et les chats qu'il considère en danger.`,
-    },{
-    },{
-
-    },{
-
     }
 ]
