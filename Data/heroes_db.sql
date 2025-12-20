@@ -26,10 +26,14 @@ CREATE table "hero" (
     advantage TEXT,
     disadvantage TEXT,
     price_per_hour DECIMAL (7,2), 
-    percent_win DECIMAL (5,2) CHECK (percent_win BETWEEN 0 AND 100), 
+    percent_win DECIMAL (5,2) CHECK (percent_win BETWEEN 0 AND 100) DEFAULT 100, 
     id_admin INT NOT NULL REFERENCES "admin"(id_admin),
-    other_price VARCHAR(255)
+    other_price VARCHAR(255),
+    img_hero VARCHAR(255),
+    nb_mission SMALLINT
 );
+
+CREATE TYPE mission_status AS ENUM ('Disponible', 'En cours', 'Terminée');
 
 CREATE table "mission" (
     id_mission SERIAL PRIMARY KEY,
@@ -46,7 +50,6 @@ CREATE table "mission" (
 CREATE table "opinion" (
     id_opinion SERIAL PRIMARY KEY,
     description TEXT,
-    score SMALLINT NOT NULL,
     id_user INT NOT NULL REFERENCES "user"(id_user),
     id_hero INT NOT NULL REFERENCES "hero"(id_hero),
     score SMALLINT NOT NULL CHECK (score BETWEEN 1 AND 5),
@@ -96,7 +99,7 @@ VALUES
     -- Poulpy
     ('Ventouses de rechange', 'Quand les autres tombent ou pour accrocher son téléphone', TRUE, 50, '3 hours'),
     ('Déodorant spécial tentacules', 'Efficacité très limitée', TRUE, 5, '1 day'),
-    ('Cartons de déménagement', 'Tachés mais pré scotché', TRUE, 8, '30 minutes'),
+    ('Cartons de déménagement', 'Tachés d''encre mais pré scotché', TRUE, 8, '30 minutes'),
     
     -- Orang Wu-Tang Clan
     ('Micro cassé', 'A trop servi en tant que projectile', TRUE, 2, '2 days'),
@@ -131,70 +134,77 @@ VALUES
     ('Lano', 'Pratique pour se marier en urgence mais ils SAURON que vous l''avez', TRUE, 1, '14 days'),
     ('Cape Huccino', 'Elle fait le café mais augmente votre tension, pas pour les cardiaques', TRUE, 3, '8 hours');
 
-INSERT INTO "hero" (name, advantage, disadvantage, price_per_hour, percent_win, id_admin, other_price)
+INSERT INTO "hero" (name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, nb_mission)
 VALUES
     ('Cat Astrophic', 
     'Avec son super ronron, il saura vous réconforter dans n''importe quelle situation.', 
     'Ne contrôle pas tout à fait sa patte droite, et peut être amené à vous mettre une - plus ou moins petite - tape sur la tête. Se perd de temps en temps', 
     50, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Une box de super croquettes de la marque CalinCat'),
+    'Une box de super croquettes de la marque CalinCat',
+    'catastrophic.png', 34),
 
     ('Carotte Woman', 
     'Mis à part son apparence de carotte, il est champion du Monde de straégie en botanique mais on peut lui trouver une meilleur utilité', 
     'Attention, elle essaiera souvent de vous faire payer plus que le prix convenu avec Heros League. N''acceptez pas.', 
     30, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Un lapin en civet avec la photo de son chasseur ou du terreau BioNucléaire'),
+    'Un lapin en civet avec la photo de son chasseur ou du terreau BioNucléaire',
+    'carotte_woman.png', 12),
 
     ('Ultraquenarde', 
     'Peut vous sortir de n''importe quel traquenard.', 
     'Vous sort du traquenard… Mais il arrive qu''elle vous entraîne dans un autre.', 
     75, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Un kit d''évasion professionnel ou un autographe du professeur de la Casa de Papel'),
+    'Un kit d''évasion professionnel ou un autographe du professeur de la Casa de Papel',
+    'ultraquenarde.png', 45),
 
     ('Poulpy', 
     'Il a des tentacules gigantesques, super pratique pour les déménagements.', 
     'Un peu collant et sent la marais', 
     40, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Un assortiment de crabes exotiques frais ou la derniere veste du styliste Dr Octopus'),
+    'Un assortiment de crabes exotiques frais ou la derniere veste du styliste Dr Octopus',
+    'poulpy.png', 52),
 
     ('Orang Wu-Tang Clan', 
     'Un gros singe agile, multi-tâche, qui intervient tout en rappant.', 
     'Peut être amené à vous demander de financer son prochain album, ne pas accepter.', 
     60, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Des bananes premium et un micro neuf ou un albumn en featuring avec lui'),
+    'Des bananes premium et un micro neuf ou un albumn en featuring avec lui',
+    'oran-wu-tang-clan.png', 63),
 
     ('Superimé', 
     'Un vieux super-héro qui ne veut pas partir à la retraite.', 
     'N''a plus de pouvoir mais refuse de l''admettre, peut être amené à vous raconter des histoires de l''époque où il était encore super.', 
     20, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Une entrée pour visiter une maison de retraite de luxe ou des pantoufles collector de Tortue Genial'),
+    'Une entrée pour visiter une maison de retraite de luxe ou des pantoufles collector de Tortue Genial',
+    'superime.png', 1785),
 
     ('Capitaine Glue', 
     'Peut coller n''importe quoi à n''importe quoi ou n''importe qui. Très utile pour réparer, immobiliser des ennemis, ou recoller les pots cassés… au sens propre.', 
     'Tout ce qu''il touche reste collé pendant 48h. Y compris vous, si vous lui serrez la main. Evitez évidemment de lui faire la bise', 
     55, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Un assortiment de colle haut de gamme ou de la teinture pour colle de chez Castoracolleur'),
+    'Un assortiment de colle haut de gamme ou de la teinture pour colle de chez Castoracolleur',
+    'capitaine-glu.png',78),
 
     ('Prune Power', 
     'Spécialiste des situations coincées. Peut vous sortir d''une contravention injuste ou d''une constipation rebelle grâce à ses pouvoirs laxatifs naturels.', 
     'Ne fait pas la différence entre les problèmes métaphoriques et digestifs. Peut résoudre votre dispute administrative en vous donnant la diarrhée.', 
     45, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Une caisse de vin de pruneaux d''Agen AOC ou de la crême Premium pour avoir une peau de pêche'),
+    'Une caisse de vin de pruneaux d''Agen AOC ou de la crême Premium pour avoir une peau de pêche', 'prunePower.png', 91),
 
     ('Fidélidog', 
     'Sens du devoir surdéveloppé et flair infaillible pour les gens en détresse. Peut vous retrouver n''importe où, vous protéger de n''importe quoi, et rapporter n''importe quel objet perdu.', 
     'Toujours fidèle, parfois trop. A tendance à "sauver" les gens qui n''ont rien demandé, surtout les facteurs, les livreurs, et les chats qu''il considère en danger.', 
     35, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Un os à mâcher géant ou la super balle magique qui se jette toute seule');
+    'Un os à mâcher géant ou la super balle magique qui se jette toute seule', 'fidelidog.png', 42);
 
 INSERT INTO "mission" (description, level, city, start_date, duration, id_user, id_hero, status)
 VALUES 
