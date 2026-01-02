@@ -1,17 +1,22 @@
 <%- include('partials/header') %>
-    <!-- Les témoignages -->
 
-    <h2 id="h2_testimonies"><em>-</em> Les témoignages de nos clients <em>-</em></h2>
+<section>
+        <h2 id="h2_testimonies"><em>-</em> Les témoignages de nos clients <em>-</em></h2>
 
-    <section class="testimonies">
-<% testimonies.forEach(testimony => { %>
-    <article class="article_testimony">
-            <div class="cercle_img_<%=testimony.testimony%>"></div>
-            <div class="text_testimony">
-                <p class="name_testimony">"<%=testimony.name%>"</p>
-                <p class="description_testimony">"<%=testimony.description%>"</p>
-            </div>
-        </article>
-<% }); %>
+        <section class="testimonies">
+            <% testimonies.forEach(t=> { %>
+                <article class="article_testimony">
+                    <div class="cercle_img_testimony" style="background-image: url(/ressources/images/<%=t.img_client%>);"></div> 
+                    <div class="text_testimony">
+                        <p class="name_testimony"><%=t.client_name%></p>
+                        <p class="description_testimony"><%=t.description%></p>
+    <!-- CSS à finir --><p class="score_testimony">Je lui donne une note de <%=t.score%>/5</p> <!-- CSS à finir -->
+    <!-- CSS à finir --><p class="date_testimony">Témoignage délivré le : <%=t.created_at%></p><!-- CSS à finir -->
+                    </div>
+                </article>
+                <% }); %>
+        </section>
     </section>
+
+
 <%- include('partials/footer') %>

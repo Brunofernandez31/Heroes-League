@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { displayTestimonies } from '../controllers/testimonies.controller.js';
+import { displayTestimonies } from '../../data/main-controller.js';
 
 export const testimoniesRouter = Router();
 

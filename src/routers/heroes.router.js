@@ -1,9 +1,7 @@
 import { Router } from 'express';
-import { displayHeroes } from '../controllers/heroes.controller.js';
+import { displayHeroes, displayHeroesById} from '../../data/main-controller.js';
 
 export const heroesRouter = Router();
 
 heroesRouter.get('/nos-heros', displayHeroes);
-// j'ai besoin d'une route
-// Quand quelqu'un va sur la route /nos-heros on appelle la fonction displayHeroes qui vient du controller
-
+heroesRouter.get('/votre-hero/:id', displayHeroesById)

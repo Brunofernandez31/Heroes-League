@@ -5,6 +5,9 @@ const PORT = process.env.PORT;
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true })); // Pour les formulaires
+app.use(express.json()); // Pour le JSON
+
 // Je rajoute à express la gestion des fichiers statiques
 // Tous les fichiers dans le dossier "public" seront servis tels quels
 app.use(express.static('public'));
@@ -14,12 +17,8 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 
-app.get('/' , (req,res) => {
+app.get('/', (_req, res) => {
     res.render("index")
-})
-
-app.get('/sauvez-moi' , (req,res) => {
-    res.render("sauvez-moi")
 })
 
 app.use(router);

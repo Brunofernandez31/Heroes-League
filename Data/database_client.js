@@ -1,10 +1,13 @@
 import pg from "pg";
 
-//Create a client connexion for postegreSQL
-const client = new pg.Client(process.env.DATABASE_URL);
+const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: false
+});
 
-// connect it 
-client.connect();
+// Test de connexion
+pool.on('connect', (client) => {
+    client.query("SET CLIENT_ENCODING TO 'UTF8'");
+});
 
-// Export the client
-export default client;
+export default pool;

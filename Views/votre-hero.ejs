@@ -1,0 +1,51 @@
+<%- include('partials/header') %>
+
+    <!-- Le héro -->
+
+    <h2 id="h2_heros"><em>-</em> Votre <em>Super</em> héro <em>-</em></h2>
+
+    <section class="section_heros_unique">
+        <article class="article_hero_unique">
+            <img class = "img_hero_unique" src="/ressources/images/<%=hero.img_hero%>" alt="<%=hero.name%>">
+            <div class="overlay">
+                <p class="title_hero">
+                    <%=hero.name%>
+                </p>
+                <p class="description_hero"> Avantage : <%=hero.advantage%>
+                        Désavantage : <%=hero.disadvantage%>
+                </p>
+            </div>
+        </article>
+    </section>
+    <section class="palmares">
+        <p><%=hero.name%> a accompli pas moins de <%=hero.nb_mission%> missions.</p>
+        <p>Ce héro, a un taux de réussite de <%=hero.percent_win%>% sur la totalité de ses missions.</p>
+        <p>Sa rémunération varie en fonction du besoin et de l'urgence mais son prix de départ est de <%=hero.price_per_hour%>€/h.</p>
+        <p>Cependant, si jamais le prix est trop élevé pour vous, vous pouvez lui apporter : "<%=hero.other_price%>".</p>
+    </section>
+
+    <div class="button_heros">
+        <button><a href='/nos-heros'>Tous nos héros</a></button>
+    </div>
+
+    <section>
+        <h2 id="h2_testimonies"><em>-</em> Les témoignages pour <%=hero.name%><em>-</em></h2>
+
+        <section class="testimonies">
+            <% testimony.forEach(t=> { %>
+                <article class="article_testimony">
+                    <div class="cercle_img_testimony" style="background-image: url(/ressources/images/<%=t.img_client%>);"></div> 
+                    <div class="text_testimony">
+                        <p class="name_testimony"><%=t.client_name%></p>
+                        <p class="description_testimony"><%=t.description%></p>
+    <!-- CSS à finir --><p class="score_testimony">Je lui donne une note de <%=t.score%>/5</p> <!-- CSS à finir -->
+    <!-- CSS à finir --><p class="date_testimony">Témoignage délivré le : <%=t.created_at%></p><!-- CSS à finir -->
+                    </div>
+                </article>
+                <% }); %>
+        </section>
+    </section>
+
+
+
+    <%- include('partials/footer') %>

@@ -6,7 +6,7 @@
 
         <section class="help_me">
 
-            <form id="help_me_form">
+            <form id="help_me_form" action="/sauvez-moi" method="POST">
                 <fieldset>
                     <label for="user_name">Nom</label>
                     <input type="text" name="user_name" id="user_name" aria-label="Mettez votre nom">
@@ -18,11 +18,16 @@
                 </fieldset>
 
                 <fieldset>
-                    <label for="choice_services">Services</label>
-                    <select name="choice_services" id="choice_services">
-                        <option value="Déménagement" selected>Super déménagement</option>
-                        <option value="Investissement">Pleuvoir de l'or</option>
-                        <option value="Voyage">Téléportation atomique</option>
+                    <label for="user_city">Ville</label>
+                    <input type="text" name="user_city" id="user_city" aria-label="Mettez votre ville">
+                </fieldset>
+
+                <fieldset>
+                    <label for="choice_urgence">Quel degrè d'urgence</label>
+                    <select name="choice_urgence" id="choice_urgence">
+                        <option value="hebdomadaire" selected>Dans les 7 jours</option>
+                        <option value="threeDays"> Dans les 3 jours</option>
+                        <option value="immediate">Immédiatement</option>
                     </select>
                 </fieldset>
 

@@ -1,13 +1,26 @@
+SET CLIENT_ENCODING TO 'UTF8';
+
+DROP TABLE IF EXISTS opinion CASCADE;
+DROP TABLE IF EXISTS mission CASCADE;
+DROP TABLE IF EXISTS have CASCADE;
+DROP TABLE IF EXISTS describe CASCADE;
+DROP TABLE IF EXISTS hero CASCADE;
+DROP TABLE IF EXISTS stuff CASCADE;
+DROP TABLE IF EXISTS "client" CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
+DROP TYPE IF EXISTS mission_status CASCADE;
+
 CREATE table "admin" (
     id_admin SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(150)
 );
 
-CREATE table "user" (
-    id_user SERIAL PRIMARY KEY,
+CREATE table "client" (
+    id_client SERIAL PRIMARY KEY,
     name VARCHAR(150) UNIQUE NOT NULL,
-    email VARCHAR(150)
+    email VARCHAR(150),
+    img_client VARCHAR(255)
 );
 
 CREATE table "stuff" (
@@ -30,27 +43,29 @@ CREATE table "hero" (
     id_admin INT NOT NULL REFERENCES "admin"(id_admin),
     other_price VARCHAR(255),
     img_hero VARCHAR(255),
-    nb_mission SMALLINT
+    nb_mission SMALLINT,
+    quartier VARCHAR(100)
 );
 
 CREATE TYPE mission_status AS ENUM ('Disponible', 'En cours', 'Terminée');
+CREATE TYPE urgency_level AS ENUM ('hebdomadaire', 'threeDays', 'immediate');
 
 CREATE table "mission" (
     id_mission SERIAL PRIMARY KEY,
     description TEXT,
-    level SMALLINT,
     city VARCHAR (255) NOT NULL,
-    start_date DATE,
-    duration INTERVAL NOT NULL,
-    id_user INT NOT NULL REFERENCES "user"(id_user),
+    start_date DATE DEFAULT 'NOW()',
+    duration INTERVAL,
+    id_client INT NOT NULL REFERENCES "client"(id_client),
     id_hero INT REFERENCES "hero"(id_hero),
-    status mission_status NOT NULL DEFAULT 'Disponible'
+    status mission_status NOT NULL DEFAULT 'Disponible',
+    urgency urgency_level NOT NULL DEFAULT 'hebdomadaire';
 );
 
 CREATE table "opinion" (
     id_opinion SERIAL PRIMARY KEY,
     description TEXT,
-    id_user INT NOT NULL REFERENCES "user"(id_user),
+    id_client INT NOT NULL REFERENCES "client"(id_client),
     id_hero INT NOT NULL REFERENCES "hero"(id_hero),
     score SMALLINT NOT NULL CHECK (score BETWEEN 1 AND 5),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -71,13 +86,12 @@ CREATE table "have" (
 INSERT INTO "admin" (name, email)
 VALUES ('BruBru', 'brubru@heroes_leagues.fr');
 
-INSERT INTO "user" (name, email)
+INSERT INTO "client" (name, email, img_client) 
 VALUES
-    ('Marie Dupont', 'marie.dupont@email.com'),
-    ('Jean Martin', 'jean.martin@email.com'),
-    ('Sophie Bernard', 'sophie.bernard@email.com'),
-    ('Luc Petit', 'luc.petit@email.com'),
-    ('Emma Roux', 'emma.roux@email.com');
+    ('Tombédeu O', 'tombedeu.o@gmailhero.com', 'tombedeu-o.png'),
+    ('Jella N', 'jella.n@gmailhero.com', 'jella-n.png'),
+    ('Bob O', 'bob.o@gmailhero.com', 'bob-o.png'),
+    ('Coupéhala H', 'coupehala.h@gmailhero.com', 'coupehala-h.png');
 
 INSERT INTO "stuff" (article, description_article, statut, stock, manufacturing_time)
 VALUES 
@@ -145,7 +159,7 @@ VALUES
     'catastrophic.png', 34),
 
     ('Carotte Woman', 
-    'Mis à part son apparence de carotte, il est champion du Monde de straégie en botanique mais on peut lui trouver une meilleur utilité', 
+    'Mis à part son apparence de carotte, il est champion du Monde de stratégie en botanique mais on peut lui trouver une meilleur utilité', 
     'Attention, elle essaiera souvent de vous faire payer plus que le prix convenu avec Heros League. N''acceptez pas.', 
     30, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
@@ -197,7 +211,7 @@ VALUES
     'Ne fait pas la différence entre les problèmes métaphoriques et digestifs. Peut résoudre votre dispute administrative en vous donnant la diarrhée.', 
     45, 
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
-    'Une caisse de vin de pruneaux d''Agen AOC ou de la crême Premium pour avoir une peau de pêche', 'prunePower.png', 91),
+    'Une caisse de vin de pruneaux d''Agen AOC ou de la crème Premium pour avoir une peau de pêche', 'prunePower.png', 91),
 
     ('Fidélidog', 
     'Sens du devoir surdéveloppé et flair infaillible pour les gens en détresse. Peut vous retrouver n''importe où, vous protéger de n''importe quoi, et rapporter n''importe quel objet perdu.', 
@@ -206,14 +220,18 @@ VALUES
     (SELECT id_admin FROM "admin" WHERE name = 'BruBru'), 
     'Un os à mâcher géant ou la super balle magique qui se jette toute seule', 'fidelidog.png', 42);
 
-INSERT INTO "mission" (description, level, city, start_date, duration, id_user, id_hero, status)
+
+-- mission
+
+
+INSERT INTO "mission" (description, level, city, start_date, duration, id_client, id_hero, status)
 VALUES 
     ('Mon chat est coincé dans un arbre depuis 2 jours. Il refuse de descendre et commence à miauler désespérément. Besoin d''aide urgente !', 
     2, 
     'Paris', 
     '2024-12-20', 
     '1 hour', 
-    (SELECT id_user FROM "user" WHERE name = 'Marie Dupont' LIMIT 1),
+    (SELECT id_client FROM "client" WHERE name = 'Tombédeu O' LIMIT 1),
     NULL,
     'Disponible'),
     
@@ -222,7 +240,7 @@ VALUES
     'Lyon', 
     '2024-12-22', 
     '3 hours', 
-    (SELECT id_user FROM "user" WHERE name = 'Jean Martin' LIMIT 1),
+    (SELECT id_client FROM "client" WHERE name = 'Jella N' LIMIT 1),
     NULL,
     'Disponible'),
     
@@ -231,7 +249,7 @@ VALUES
     'Marseille', 
     '2024-12-21', 
     '2 hours', 
-    (SELECT id_user FROM "user" WHERE name = 'Sophie Bernard' LIMIT 1),
+    (SELECT id_client FROM "client" WHERE name = 'Bob O' LIMIT 1),
     NULL,
     'Disponible'),
     
@@ -240,7 +258,7 @@ VALUES
     'Toulouse', 
     '2024-12-23', 
     '30 minutes', 
-    (SELECT id_user FROM "user" WHERE name = 'Luc Petit' LIMIT 1),
+    (SELECT id_client FROM "client" WHERE name = 'Coupéhala H' LIMIT 1),
     NULL,
     'Disponible'),
     
@@ -249,7 +267,34 @@ VALUES
     'Bordeaux', 
     '2024-12-24', 
     '1 hour 30 minutes', 
-    (SELECT id_user FROM "user" WHERE name = 'Emma Roux' LIMIT 1),
+    (SELECT id_client FROM "client" WHERE name = 'Tombédeu O' LIMIT 1),
     NULL,
     'Disponible');
 
+
+-- opinions
+
+    INSERT INTO "opinion" (description, id_client, id_hero, score, created_at) VALUES
+    ('Grâce à Heros League, j''ai pu déménager super rapidement. Attention à l''odeur laissée par les tentacules ceci-dit. Merci Poulpy !', 
+    (SELECT id_client FROM "client" WHERE name = 'Tombédeu O'), 
+    4, 
+    4, 
+    '2024-11-15 14:30:00'),
+    
+    ('Ultraquenarde m''a sauvé la vie ! J''allais tout perdre et sur ses conseils j''ai investi dans les bitcoins, affaire à suivre !', 
+    (SELECT id_client FROM "client" WHERE name = 'Jella N'), 
+    3, 
+    5, 
+    '2024-11-20 10:15:00'),
+    
+    ('Je ne remercierai jamais assez Carotte Woman d''avoir retrouvé mon chat. Apparemment c''est normal s''il est orange et plus noir, elle l''aurait retrouvé dans un produit chimique spécial. Je la crois sur parole !', 
+    (SELECT id_client FROM "client" WHERE name = 'Bob O'), 
+    2, 
+    3, 
+    '2024-12-01 16:45:00'),
+    
+    ('Cat Astrophic a été super, il m''a sorti des bouchons avec son ronron apaisant. Par contre j''aimerais bien retrouver mes clés maintenant.', 
+    (SELECT id_client FROM "client" WHERE name = 'Coupéhala H'), 
+    1, 
+    4, 
+    '2024-12-10 09:20:00');
