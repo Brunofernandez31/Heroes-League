@@ -47,7 +47,7 @@ const datamapper = {
   async getClientByMail (mail) {
     const result = await pool.query(
       `
-      SELECT email FROM client
+      SELECT * FROM client
       WHERE email = $1;
       `,[mail]);
       return result.rows[0];
@@ -68,9 +68,11 @@ const datamapper = {
   async createMission (description, city, id_client, urgency) {
     const result = await pool.query(
       `
-      INSERT INTO mission (description, city, )
-      `
-    )
+      INSERT INTO mission (description, city, id_client, urgency)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *`,[description, city, id_client, urgency]
+    ); // Si pas de returning on renvoie un tableau vide pour result.rows
+    return result.rows[0];
   }
 
 }

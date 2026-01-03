@@ -1,0 +1,91 @@
+<%- include('partials/header') %>
+
+<!-- Formulaire rapport de mission -->
+
+<h2 class="h2_mission_report" id="h2_mission_report"><em>-</em> Rapport de <em>Mission</em> <em>-</em></h2>
+
+<section class="mission_report">
+
+    <form id="mission_report_form" action="/rapport-mission" method="POST">
+        
+        <!-- Sélection du héros -->
+        <fieldset>
+            <label for="hero_select">Sélectionnez votre héros</label>
+            <select name="hero_id" id="hero_select" required>
+                <option value="" selected disabled>Choisir un héros</option>
+                <% heroes.forEach(hero => { %>
+                    <option value="<%= hero.id_hero %>" data-price="<%= hero.price_per_hour %>">
+                        <%= hero.name %>
+                    </option>
+                <% }); %>
+            </select>
+        </fieldset>
+
+        <!-- Affichage du taux horaire (rempli dynamiquement) -->
+        <fieldset>
+            <label for="hourly_rate">Taux horaire du héros</label>
+            <input type="text" id="hourly_rate" readonly placeholder="Taux horaire">
+        </fieldset>
+
+        <!-- Degré d'urgence (boutons radio) -->
+        <fieldset class="urgency_fieldset">
+            <legend>Degré d'urgence de la mission</legend>
+            
+            <div class="radio_group">
+                <input type="radio" name="urgency" id="urgency_normal" value="hebdomadaire" checked>
+                <label for="urgency_normal">Normal (7 jours) - Pas de supplément</label>
+            </div>
+
+            <div class="radio_group">
+                <input type="radio" name="urgency" id="urgency_three_days" value="threeDays">
+                <label for="urgency_3days">Urgent (3 jours) - Supplément +5%</label>
+            </div>
+
+            <div class="radio_group">
+                <input type="radio" name="urgency" id="urgency_immediate" value="immediate">
+                <label for="urgency_immediate">Immédiat - Supplément +15%</label>
+            </div>
+        </fieldset>
+
+        <!-- Durée de la mission -->
+        <fieldset>
+            <label for="mission_duration">Durée de la mission (en heures)</label>
+            <input type="number" name="mission_duration" id="mission_duration" min="0.5" step="0.5" required aria-label="Indiquez la durée en heures">
+        </fieldset>
+
+        <!-- Affichage du total (calculé dynamiquement) -->
+        <fieldset>
+            <label for="total_price">Montant total à payer</label>
+            <input type="text" id="total_price" readonly placeholder="0.00 €">
+        </fieldset>
+
+        <!-- Statut de la mission (réussite/échec) -->
+        <fieldset class="mission_status_fieldset">
+            <legend>Résultat de la mission</legend>
+            
+            <div class="radio_group">
+                <input type="radio" name="mission" id="mission_success" value="success">
+                <label for="mission_success">Mission réussie</label>
+            </div>
+
+            <div class="radio_group">
+                <input type="radio" name="mission" id="mission_failed" value="failed">
+                <label for="mission_failed">Mission échouée</label>
+            </div>
+        </fieldset>
+
+        <!-- Commentaires optionnels -->
+        <fieldset>
+            <label for="mission_comments">Commentaires (optionnel)</label>
+            <textarea name="mission_comments" id="mission_comments" aria-label="Ajoutez des commentaires sur la mission"></textarea>
+        </fieldset>
+
+        <button type="submit" form="mission_report_form" aria-label="Envoyer le rapport de mission">
+            Envoyer le rapport
+        </button>
+    </form>
+
+</section>
+
+<script defer src="/script/rapport.script.js"></script>
+<%- include('partials/footer') %>
