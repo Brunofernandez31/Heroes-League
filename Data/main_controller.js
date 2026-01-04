@@ -25,12 +25,17 @@ export function displaySauvezMoiForm(_req, res) {
 
 // afficher tous les héros pour la vue rapport de fin de mission du héro
 
-export async function displayRapportMission(_req, res) {
+export async function displayRapportMission(req, res) {
+
+  //Récupérer l'id depuis le parametre dans l'URL
+  const idUrl = req.params.id
 
   const result = await datamapper.getHeroes();
+  const mission = await datamapper.getMissionById(idUrl); //Utiliser l'id récupérer depuis l'URL
     
   res.render("rapport_mission", {
-    heroes: result
+    heroes: result,
+    mission
   });
 }
 
@@ -46,12 +51,12 @@ export async function displayHeroesById (req, res) {
   const resultTestimonies = await datamapper.getTestimonyById(heroId); // Recupère le témoignage lié à l'id du héro
 
   if (!result) {
-    res.render("Le héro n'a pas été trouvé");
+    res.send("Le héro n'a pas été trouvé");
     return // Toujours pour arrêter l'exécution
   }
 
     if (!resultTestimonies) {
-    res.render("Le témoignage n'a pas été trouvé");
+    res.send("Le témoignage n'a pas été trouvé");
     return // Toujours pour arrêter l'exécution
   }
 
@@ -111,7 +116,8 @@ export async function findClient (req, res) {
   // Création de la mission
   const missionCreate = await datamapper.createMission (clientDescription, clientCity, clientId, clientUrgency)
   if(missionCreate) {
-    res.send ("La mission a été créér avec succès")
+    res.redirect("/"); // si on utilise render c'est une erreur
+    // Ici on utilise redirect pour renvoyer vers une page et pas rendre une vue 
   }
 }
 
@@ -121,23 +127,52 @@ export async function findClient (req, res) {
 // modifier la mission dans la BDD + taux reussite héro
 
 export async function sendRapportMission (req, res) {
-  console.log(req.body)
+
+  //Récupérer l'id de la mission
+  const missionId = req.params.id;
+  // Récupérer la mission en cours
+  const mission = await datamapper.getMissionById(missionId);
+
+  console.log(missionId) // Voir si on récupère bien l'id dans l'URL
+  console.log(req.body) // Que récupère le body ?
+
   // Récupérer toutes les données du formulaire de rapport de mission du héro
-  const idHero = req.body.hero_id; //Id héro
-  const urgency = req.body.urgency; // Degre urgence
+  const idHero = req.body.hero_id; // Id héro
+  const urgency = mission.urgency; // Degre urgence non changeable par le héro donc pas de récupération via req.body.urgency mais plutot par la bdd
   const missionDuration = req.body.mission_duration; // Temps mission
-  const missionResult = req.body.mission; //Sucess ou failed
   const missionComments = req.body.mission_comments; // Commentaire de mission
+  const missionResult = req.body.mission; // Sucess ou failed
+
+
+  // Calculer de manière sécurisée le prix total à mettre à jour
+
+  const hero = await datamapper.getHeroesById(idHero); // Bien envoyé l'id du héro
+  const heroPrice = hero.price_per_hour; // Viser la colonne de la bdd contenant le taux horaire du héro
+
+  let totalPrice = 0;
+
+  if(urgency === "hebdomadaire") {
+    totalPrice = heroPrice * missionDuration * ( 1 + 0);
+  } else if(urgency === "threeDays") {
+    totalPrice = heroPrice * missionDuration * ( 1 + 0.05);
+  } else if(urgency === "immediate") {
+    totalPrice = heroPrice * missionDuration * ( 1 + 0.15);
+  }
+
+  // Appel de la fonction
+  await datamapper.updateMission(missionId, idHero, missionDuration, missionComments, totalPrice, missionResult);
+  await datamapper.updateHero(idHero);
+
+  res.redirect("/"); // si on utilise render c'est une erreur
+  // Ici on utilise redirect pour renvoyer vers une page et pas rendre une vue 
+}
 
   // let percentWin = 100;
 
   // if (missionResult === "sucess") {
-  //   percentWin = 1;
+  //   percentWin = 100*;
   //   await datamapper.updateHero(percentWin, nb_mission);
   // } else if (missionResult === "failed") {
   //   percentWin = -1;
   //   await datamapper.updateHero(percentWin, nb_mission);
   // }
-
-  // const result = await datamapper.updateMission(idHero, urgency, missionDuration, missionResult, missionComments);
-}

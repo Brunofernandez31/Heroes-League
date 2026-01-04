@@ -10,6 +10,7 @@ const datamapper = {
     return result.rows
   },
 
+
   async getHeroesById(id) {
     const result = await pool.query(
       `
@@ -20,6 +21,7 @@ const datamapper = {
       );
       return result.rows[0]; // Retourner que le premier élément du tableau
   },
+
 
   async getTestimonyById(id) {
     const result = await pool.query(
@@ -33,6 +35,7 @@ const datamapper = {
       return result.rows;
   },
 
+
   async getTestimonies () {
     const result = await pool.query(
       `      
@@ -44,6 +47,7 @@ const datamapper = {
       return result.rows;
   },
 
+
   async getClientByMail (mail) {
     const result = await pool.query(
       `
@@ -52,6 +56,7 @@ const datamapper = {
       `,[mail]);
       return result.rows[0];
   },
+
 
   async createClientBdd (nameClient, mail) {
     const result = await pool.query(
@@ -65,6 +70,7 @@ const datamapper = {
     return result.rows[0];
   },
 
+
   async createMission (description, city, id_client, urgency) {
     const result = await pool.query(
       `
@@ -75,8 +81,8 @@ const datamapper = {
     return result.rows[0];
   },
 
-  async getMissionById (id) {
 
+  async getMissionById (id) {
     const result = await pool.query(
       `
       SELECT * 
@@ -85,25 +91,36 @@ const datamapper = {
       `,[id] // prévention contre injection sql, le [id] remplacera le $1
       );
       return result.rows[0]; // Retourner que le premier élément du tableau
+  },
+
+
+  async updateMission (id_mission, id_hero, duration, comments, total_price, mission_result) {
+    const result = await pool.query(
+      `
+      UPDATE mission 
+      SET id_hero = $2, duration = $3, status = 'Terminée', comments = $4, total_price = $5, mission_result = $6
+      WHERE id_mission = $1
+      RETURNING *`,[id_mission, id_hero, duration, comments, total_price, mission_result]
+    );
+    return result.rows[0];
+  },
+
+  async updateHero (id) {
+    const result = await pool.query(
+      `
+      UPDATE hero
+      SET nb_mission = nb_mission + 1
+      WHERE id_hero = $1
+      RETURNING *
+      `,[id] // prévention contre injection sql, le [id] remplacera le $1
+      );
+      return result.rows[0]; // Retourner que le premier élément du tableau
   }
 
-  }
+}
 
-  // async updateMission () {
-  //   const result = await pool.query()
-  // },
-
-  // async updateHero () {
-  //   const result = await pool.query()
-  // }
+  export default datamapper;
 
 
-export default datamapper;
 
-  //   const result = await pool.query(
-  //     `
-  //     UPDATE mission 
-  //     SET id_hero = $1, duration = $2, status =$3
-  //     WHERE id_hero = $1, duration = $2, status =$3
-  //     `,[id_hero, duration, status]
-  //   )
+

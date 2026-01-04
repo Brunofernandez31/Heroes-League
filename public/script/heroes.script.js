@@ -5,6 +5,6 @@ heros.forEach(hero => {
     hero.addEventListener('click', () => {
         const id = hero.querySelector(".img_hero").dataset.id;
         //dataset.id va selectionner dans l'objet data de html la clé id
-        window.location.href = `/votre-hero/${id}`; //Construction url de redirection
+        window.location.href = `/votre_hero/${id}`; //Construction url de redirection
 });
 });
