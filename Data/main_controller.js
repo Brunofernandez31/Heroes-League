@@ -126,8 +126,18 @@ export async function sendRapportMission (req, res) {
   const idHero = req.body.hero_id; //Id héro
   const urgency = req.body.urgency; // Degre urgence
   const missionDuration = req.body.mission_duration; // Temps mission
-  const missionResult = req.body.mission; //Sucess ou echec
+  const missionResult = req.body.mission; //Sucess ou failed
   const missionComments = req.body.mission_comments; // Commentaire de mission
 
-  // const result = await datamapper.updateMission();
+  // let percentWin = 100;
+
+  // if (missionResult === "sucess") {
+  //   percentWin = 1;
+  //   await datamapper.updateHero(percentWin, nb_mission);
+  // } else if (missionResult === "failed") {
+  //   percentWin = -1;
+  //   await datamapper.updateHero(percentWin, nb_mission);
+  // }
+
+  // const result = await datamapper.updateMission(idHero, urgency, missionDuration, missionResult, missionComments);
 }

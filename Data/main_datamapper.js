@@ -75,11 +75,28 @@ const datamapper = {
     return result.rows[0];
   },
 
+  async getMissionById (id) {
+
+    const result = await pool.query(
+      `
+      SELECT * 
+      FROM mission
+      WHERE id_mission = $1
+      `,[id] // prévention contre injection sql, le [id] remplacera le $1
+      );
+      return result.rows[0]; // Retourner que le premier élément du tableau
+  }
+
+  }
+
   // async updateMission () {
+  //   const result = await pool.query()
+  // },
+
+  // async updateHero () {
   //   const result = await pool.query()
   // }
 
-}
 
 export default datamapper;
 

@@ -4,7 +4,7 @@ import { displayRapportMission, sendRapportMission } from '../../data/main_contr
 export const rapportHeroRouter = Router();
 
 // Route GET : Afficher le formulaire de rapport de mission
-rapportHeroRouter.get('/rapport_mission', displayRapportMission);
+rapportHeroRouter.get('/rapport_mission/:id', displayRapportMission);
 
 // Route POST : Traiter le formulaire de rapport de mission
-rapportHeroRouter.post('/rapport_mission', sendRapportMission);
+rapportHeroRouter.post('/rapport_mission/:id', sendRapportMission);

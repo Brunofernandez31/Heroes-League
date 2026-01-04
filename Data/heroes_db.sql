@@ -49,19 +49,21 @@ CREATE table "hero" (
 
 CREATE TYPE mission_status AS ENUM ('Disponible', 'En cours', 'Terminée');
 CREATE TYPE urgency_level AS ENUM ('hebdomadaire', 'threeDays', 'immediate');
+CREATE TYPE mission_result AS ENUM ('success', 'failed');
 
 CREATE table "mission" (
     id_mission SERIAL PRIMARY KEY,
     description TEXT,
     city VARCHAR (255) NOT NULL,
-    start_date DATE DEFAULT 'NOW()',
+    start_date DATE DEFAULT NOW(),
     duration INTERVAL,
     id_client INT NOT NULL REFERENCES "client"(id_client),
     id_hero INT REFERENCES "hero"(id_hero),
     status mission_status NOT NULL DEFAULT 'Disponible',
-    urgency urgency_level NOT NULL DEFAULT 'hebdomadaire';
+    urgency urgency_level NOT NULL DEFAULT 'hebdomadaire',
     comments TEXT,
-    total_price DECIMAL (7,2)
+    total_price DECIMAL (7,2),
+    mission_result mission_result
 );
 
 CREATE table "opinion" (
