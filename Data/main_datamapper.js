@@ -73,8 +73,20 @@ const datamapper = {
       RETURNING *`,[description, city, id_client, urgency]
     ); // Si pas de returning on renvoie un tableau vide pour result.rows
     return result.rows[0];
-  }
+  },
+
+  // async updateMission () {
+  //   const result = await pool.query()
+  // }
 
 }
 
 export default datamapper;
+
+  //   const result = await pool.query(
+  //     `
+  //     UPDATE mission 
+  //     SET id_hero = $1, duration = $2, status =$3
+  //     WHERE id_hero = $1, duration = $2, status =$3
+  //     `,[id_hero, duration, status]
+  //   )

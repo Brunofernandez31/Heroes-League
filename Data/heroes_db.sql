@@ -60,6 +60,8 @@ CREATE table "mission" (
     id_hero INT REFERENCES "hero"(id_hero),
     status mission_status NOT NULL DEFAULT 'Disponible',
     urgency urgency_level NOT NULL DEFAULT 'hebdomadaire';
+    comments TEXT,
+    total_price DECIMAL (7,2)
 );
 
 CREATE table "opinion" (
