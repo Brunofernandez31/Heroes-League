@@ -36,3 +36,6 @@ hero.addEventListener('change', () => {
     // Appelle de la fonction pour afficher le prix total
     totalPrice()
 });
+
+// Affichage de la modal du rapport de mission
+
