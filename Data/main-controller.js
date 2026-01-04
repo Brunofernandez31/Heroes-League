@@ -13,7 +13,11 @@ export async function displayHeroes(_req, res) {
   });
 }
 
+// afficher le formulaire de demande de mission du client
 
+export function displaySauvezMoiForm(_req, res) {
+  res.render('sauvez-moi');
+}
 
 // afficher tous les héros pour la vue rapport de fin de mission du héro
 
@@ -36,12 +40,12 @@ export async function displayHeroesById (req, res) {
   const result = await datamapper.getHeroesById(heroId); //Recupère le héro avec son id
   const resultTestimonies = await datamapper.getTestimonyById(heroId); // Recupère le témoignage lié à l'id du héro
 
-  if (!result){
+  if (!result) {
     res.render("Le héro n'a pas été trouvé");
     return // Toujours pour arrêter l'exécution
   }
 
-    if (!resultTestimonies){
+    if (!resultTestimonies) {
     res.render("Le témoignage n'a pas été trouvé");
     return // Toujours pour arrêter l'exécution
   }

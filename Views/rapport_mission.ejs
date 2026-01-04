@@ -25,6 +25,7 @@
         <fieldset>
             <label for="hourly_rate">Taux horaire du héros</label>
             <input type="text" id="hourly_rate" readonly placeholder="Taux horaire">
+            <!-- Readonly pour éviter que l'utilisateur triche et modifie lui même le prix -->
         </fieldset>
 
         <!-- Degré d'urgence (boutons radio) -->
@@ -49,7 +50,7 @@
 
         <!-- Durée de la mission -->
         <fieldset>
-            <label for="mission_duration">Durée de la mission (en heures)</label>
+            <label for="mission_duration">Durée de la mission (en demi-heures)</label>
             <input type="number" name="mission_duration" id="mission_duration" min="0.5" step="0.5" required aria-label="Indiquez la durée en heures">
         </fieldset>
 
@@ -57,14 +58,16 @@
         <fieldset>
             <label for="total_price">Montant total à payer</label>
             <input type="text" id="total_price" readonly placeholder="0.00 €">
+            <!-- Readonly pour éviter que l'utilisateur triche et modifie lui même le prix -->
         </fieldset>
 
         <!-- Statut de la mission (réussite/échec) -->
         <fieldset class="mission_status_fieldset">
             <legend>Résultat de la mission</legend>
-            
+            <!-- Placer un seul required sur un des deux boutons radio, 
+            le navigateur comprendra qu'il en faudra au moins un obligatoirement -->
             <div class="radio_group">
-                <input type="radio" name="mission" id="mission_success" value="success">
+                <input type="radio" name="mission" id="mission_success" value="success" required>
                 <label for="mission_success">Mission réussie</label>
             </div>
 

@@ -1,3 +1,5 @@
+// Récupérer tous les éléments dont on a besoin
+
 const hero = document.getElementById("hero_select");
 const duration = document.getElementById("mission_duration");
 const tauxHoraire = document.getElementById("hourly_rate");
