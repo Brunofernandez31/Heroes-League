@@ -11,7 +11,7 @@ export async function displayHeroes(_req, res) {
   res.render("nos_heros", {
     heroes: result
   });
-}
+};
 
 
 
@@ -19,7 +19,7 @@ export async function displayHeroes(_req, res) {
 
 export function displaySauvezMoiForm(_req, res) {
   res.render('sauvez_moi');
-}
+};
 
 
 
@@ -37,7 +37,7 @@ export async function displayRapportMission(req, res) {
     heroes: result,
     mission
   });
-}
+};
 
 
 
@@ -64,7 +64,7 @@ export async function displayHeroesById (req, res) {
     hero : result, // Données envoyées à la vue
     testimony : resultTestimonies
   });
-}
+};
 
 
 
@@ -77,7 +77,7 @@ export async function displayTestimonies(_req, res) {
   res.render("testimonies", {
     testimonies: result
   });
-}
+};
 
 
 
@@ -119,7 +119,7 @@ export async function findClient (req, res) {
     res.redirect("/"); // si on utilise render c'est une erreur
     // Ici on utilise redirect pour renvoyer vers une page et pas rendre une vue 
   }
-}
+};
 
 
 
@@ -165,14 +165,8 @@ export async function sendRapportMission (req, res) {
 
   res.redirect("/"); // si on utilise render c'est une erreur
   // Ici on utilise redirect pour renvoyer vers une page et pas rendre une vue 
-}
+};
 
-  // let percentWin = 100;
-
-  // if (missionResult === "sucess") {
-  //   percentWin = 100*;
-  //   await datamapper.updateHero(percentWin, nb_mission);
-  // } else if (missionResult === "failed") {
-  //   percentWin = -1;
-  //   await datamapper.updateHero(percentWin, nb_mission);
-  // }
+export async function calculRapportMission (req, res) {
+  
+};

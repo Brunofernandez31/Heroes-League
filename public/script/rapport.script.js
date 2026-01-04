@@ -37,5 +37,12 @@ hero.addEventListener('change', () => {
     totalPrice()
 });
 
+
+
 // Affichage de la modal du rapport de mission
 
+const previewRapport = document.getElementById("preview_rapport");
+
+previewRapport.addEventListener("click", () => {
+
+})
