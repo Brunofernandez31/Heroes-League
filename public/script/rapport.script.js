@@ -53,6 +53,14 @@ previewRapport.addEventListener("click", async () => { // Déclencher un évène
     const missionId = document.getElementById("mission_id").value; // Id de la mission récupéré facilement grâce à l'input hidden en backEnd
     // const tauxHoraire = document.getElementById("hourly_rate").value; // Pas obligé car en back on peut faire une req vers la bdd pour le récupérer
     const urgency = document.getElementById("urgency").value;
+    let urgencyText;
+        if (urgency === "hebdomadaire") {
+            urgencyText = "en : 7 jours"
+        } else if (urgency === "threeDays") {
+            urgencyText = "en 3 jours"
+        } else {
+            urgencyText = "immédiatement"
+        }
     const duration = document.getElementById("mission_duration").value;
     
     //Convertir le 0.5 minutes en 30 minutes
@@ -66,12 +74,18 @@ previewRapport.addEventListener("click", async () => { // Déclencher un évène
     const heures = Math.floor(duration); // On enlève la partie décimal avec math.floor qui arrondi au plus bas
     const minutes = (duration % 1) * 60;  // On récupère le reste de la division par 1 (donc la partie décimale) qu'on multiplie par 60
     durationValue = heures + "h" + minutes;
-}
+    }
     const missionResult = document.querySelector('input[name="mission"]:checked')?.value; // Retourne "success" OU "failed" (celui qui est coché)
     // on va sélectionner tous les input appelé "name"
     // Les : c'est pour vérifier s'ils sont cochés
     // Le ?. C'est une sécurité, si aucun est coché on renvoi undefined
     // Value c'est la valeur (success ou failed)
+    let missionResultValue;
+        if (missionResult === "success") {
+            missionResultValue = "succès"
+        } else {
+            missionResultValue = "échec"
+        }
 
     const comments = document.getElementById("mission_comments").value;
 
@@ -89,7 +103,7 @@ previewRapport.addEventListener("click", async () => { // Déclencher un évène
         // Attention, il faudra faire attention à bien récupérer la clé dans le backEnd
         missionId, // l'id de la mission
         urgency,
-        duration,
+        duration, // Laissé la valeur brut ici de la durée genre 1.5 pour le calcul dans le backend
         missionResult,
         comments
     }),
@@ -101,12 +115,12 @@ const data = await response.json();
 
 document.getElementById("modal_hero").textContent = data.nameHero; // Ecrire dans le DOM de la modal
 document.getElementById("modal_taux").textContent = data.heroPrice;
-document.getElementById("modal_duration").textContent = data.durationValue;
-
-document.getElementById("modal_urgency").textContent = data.urgency;
+document.getElementById("modal_duration").textContent = durationValue; // Bien envoyé durationValue ici car on envoie le formatage de l'heure
+// Note : pas besoin de data.durationValue parce que durationValue c'est une variable direct locale du frontend
+document.getElementById("modal_urgency").textContent = urgencyText;
 document.getElementById("modal_comments").textContent = data.comments;
 document.getElementById("modal_total").textContent = data.totalPrice;
-document.getElementById("modal_result").textContent = data.missionResult;
+document.getElementById("modal_result").textContent = missionResultValue;
 
 // Afficher la modal en changeant son style de none en block
 document.getElementById("preview_modal").style.display = "block";
