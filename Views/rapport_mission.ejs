@@ -8,6 +8,8 @@
     <section class="mission_report">
 
         <form id="mission_report_form" action="/rapport_mission/<%=mission.id_mission%>" method="POST">
+        <!-- Ajouter un champ caché dans le HTML pour le récupérer dans le front facilement -->
+        <input type="hidden" id="mission_id" value="<%= mission.id_mission %>">
 
             <!-- Sélection du héros -->
             <fieldset>
@@ -46,13 +48,6 @@
                     aria-label="Indiquez la durée en heures">
             </fieldset>
 
-            <!-- Affichage du total (calculé dynamiquement) -->
-            <fieldset>
-                <label for="total_price">Montant total à payer</label>
-                <input type="text" id="total_price" readonly placeholder="0.00 €">
-                <!-- Readonly pour éviter que l'utilisateur triche et modifie lui même le prix -->
-            </fieldset>
-
             <!-- Statut de la mission (réussite/échec) -->
             <fieldset class="mission_status_fieldset">
                 <legend>Résultat de la mission</legend>
@@ -88,10 +83,12 @@
                 <div class="modal_content">
                     <h3>Récapitulatif</h3>
                         <p>Héros : <span id="modal_hero"></span></p>
-                        <p>Durée : <span id="modal_duration"></span>h</p>
-                        <p>Urgence : <span id="modal_urgency"></span></p>
+                        <p>Taux horaire : <span id="modal_taux"></span>€</p>
+                        <p>Durée : <span id="modal_duration"></span>heures</p>
+                        <p>Délai d'urgence souhaité : <span id="modal_urgency"></span></p>
+                        <p>Commentaire laissé par le client : <span id="modal_comments"></span></p>
                         <p>Montant total : <span id="modal_total"></span>€</p>
-                        <p>Résultat : <span id="modal_result"></span></p>
+                        <p>Résultat : <span id="modal_result">La mission est un </span></p>
                     <button type="submit" form="mission_report_form">Envoyer le rapport</button>
                     <button type="button" id="close_modal">Annuler</button>
                 </div>
