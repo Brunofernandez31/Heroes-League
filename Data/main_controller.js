@@ -67,16 +67,6 @@ export async function displayHeroesById (req, res) {
   });
 };
 
-ok maintenant passons à tout autre chose
-
-l'authentification
-
-je veux qu'il y ait un bouton connexion et un bouton inscription
-
-l'inscription sera pour les clients 
-
-la connexion sera pour les héros 
-
 
 
 // Afficher les témoignages clients

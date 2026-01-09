@@ -78,4 +78,51 @@ du 04/01/2026 au 09/01/2026
 
 ---
 
-**Dernière mise à jour :** 10/01/2026
+# 🚀 FEUILLE DE ROUTE - API & AUTHENTIFICATION
+
+## 🎯 OBJECTIF
+Ajouter une API REST avec authentification au projet Heroes League.
+
+---
+
+## 👥 RÔLES ET PERMISSIONS
+
+| Rôle | Peut faire |
+|------|-----------|
+| **Public (non connecté)** | Consulter héros/services/témoignages, Créer des missions |
+| **Utilisateur (inscrit)** | Tout ce que le public + Laisser des avis |
+| **Héros (compte créé par admin)** | Consulter/prendre missions, Remplir rapports, Voir historique |
+| **Admin (toi)** | TOUT + Gérer héros, Modération |
+
+---
+
+## 📊 MODIFICATIONS BDD
+**Logique :**
+- **Client non inscrit** → `id_user = NULL` (peut quand même créer des missions)
+- **Client inscrit** → `id_user` rempli (peut laisser des avis)
+- **Héros** → Toujours un `id_user` (créé par l'admin)
+
+## 🔐 SÉCURITÉ
+
+### **Technologies**
+- **Argon2** : Hachage des mots de passe
+- **JWT** : Tokens d'authentification
+- **Middlewares** : Protection des routes
+
+### **Flow authentification**
+```
+1. Inscription
+   → Hash password avec Argon2
+   → Stocke en BDD avec role='user'
+
+2. Connexion
+   → Vérifie email + password
+   → Génère token JWT
+   → Renvoie token au client
+
+3. Requêtes protégées
+   → Client envoie token dans headers
+   → Middleware vérifie token
+   → Si valide → accès autorisé
+   → Si invalide → 401 Unauthorized
+```

@@ -85,7 +85,15 @@ CREATE table "have" (
     id_hero INT NOT NULL REFERENCES "hero"(id_hero),
     id_stuff INT NOT NULL REFERENCES "stuff"(id_stuff),
     PRIMARY KEY (id_hero, id_stuff)
-);
+);\
+
+create table "users" (
+    id_user SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);  
 
 INSERT INTO "admin" (name, email)
 VALUES ('BruBru', 'brubru@heroes_leagues.fr');
