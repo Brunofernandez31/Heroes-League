@@ -29,33 +29,53 @@ Bonus :
 - introduire l'IA qui va choisir parmis la liste de stuff de la BDD 3 equipements pouvant être adéquat en fonction de la mission
 - Faire une authentification
 
-04/01/2026
+du 04/01/2026 au 09/01/2026
 
-Ce qui est fait :
-Côté client (formulaire mission) :
+## ✅ CE QUI EST FAIT
 
-Formulaire "Sauvez-moi" qui crée un client + mission ✅
-Route GET /sauvez-moi pour afficher le formulaire ✅
-Route POST /sauvez-moi pour traiter le formulaire ✅
-Logique : vérifier si client existe, sinon créer, puis créer mission ✅
+### Côté client (formulaire création de mission)
 
-Côté héros (rapport mission) :
+- ✅ Formulaire "Sauvez-moi" qui crée un client + mission
+- ✅ Route GET `/sauvez-moi` pour afficher le formulaire
+- ✅ Route POST `/sauvez-moi` pour traiter le formulaire
+- ✅ Logique : vérifier si client existe, sinon créer le client, puis créer la mission
+- ✅ Sécurité : Ne jamais faire confiance au client (validation côté serveur des prix et des calculs)
 
-Formulaire de rapport de mission ✅
-Route GET /rapport pour afficher le formulaire ✅
-Calcul dynamique du total (prix × durée × supplément) en JavaScript ✅
-Validation (required sur résultat mission) ✅
+### Côté héros (rapport de mission)
 
+**Formulaire et routes :**
+- ✅ Formulaire de rapport de mission
+- ✅ Route GET `/rapport_mission/:id` pour afficher le formulaire
+- ✅ Route POST `/rapport_mission/:id/preview` pour prévisualisation AJAX
+- ✅ Route POST `/rapport_mission/:id` pour soumission finale
 
-❌ Ce qu'il reste à faire :
-Pour finaliser le rapport de mission :
+**Prévisualisation (modal AJAX) :**
+- ✅ Bouton "Afficher" qui ouvre une modal sans recharger la page
+- ✅ Communication Frontend ↔ Backend avec `fetch()` et JSON
+- ✅ Calcul du total sécurisé côté backend (prix × durée × supplément)
+- ✅ Formatage intelligent (durée en heures/minutes + le texte lié à l'urgence)
+- ✅ Affichage des données dans la modal
 
-Route POST /rapport pour traiter le formulaire
-Contrôleur pour :
+**Soumission et UPDATE BDD :**
+- ✅ Bouton "Envoyer le rapport" qui soumet le formulaire classique
+- ✅ UPDATE de la mission dans la BDD 
+- ✅ UPDATE du héros : `nb_mission` incrémenté
+- ✅ Redirection après soumission du formulaire
 
-Récupérer les données du formulaire
-Mettre à jour la mission (status → "Terminée", duration)
-Mettre à jour le héros selon réussite/échec (nb_mission, etc.)
+---
 
+## 🎯 CE QU'IL RESTE (Optionnel)
 
-Fonctions datamapper pour les UPDATE
+### Améliorations UX
+- le CSS
+- Gestion des erreurs (try/catch dans le fetch)
+
+### Fonctionnalités avancées
+- ⚪ Calculer le pourcentage de réussite du héros (`nb_success / nb_mission`)
+- ⚪ Page listant toutes les missions
+- ⚪ Filtrer les missions par statut (Disponible, En cours, Terminée)
+- ⚪ Permettre au client de choisir un héros pour sa mission
+
+---
+
+**Dernière mise à jour :** 10/01/2026
