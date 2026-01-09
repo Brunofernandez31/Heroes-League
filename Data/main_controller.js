@@ -147,7 +147,8 @@ export async function previewRapport (req, res) {
 
   // Calculer de manière sécurisée le prix total à mettre à jour
 
-  const hero = await datamapper.getHeroesById(idHero); // Bien envoyé l'id du héro
+  // console.log(idHero)
+  const hero = await datamapper.getHeroesById(idHero); // Bien envoyé l'id du 
   const nameHero = hero.name; // Viser la colonne de la bdd contenant le nom du héro
   const heroPrice = hero.price_per_hour; // Viser la colonne de la bdd contenant le taux horaire du héro
 
@@ -161,14 +162,14 @@ export async function previewRapport (req, res) {
     totalPrice = heroPrice * duration * ( 1 + 0.15);
   }
   
-  console.log("=== DONNÉES DISPONIBLES ===");
-  console.log("Total calculé:", totalPrice);
+  // console.log("=== DONNÉES DISPONIBLES ===");
+  // console.log("Total calculé:", totalPrice);
   // console.log("Mission:", mission);
   // console.log("Héros:", hero);
-  console.log("Urgence:", urgency);
-  console.log("Durée:", duration);
-  console.log("Résultat:", missionResult);
-  console.log("Commentaires:", comments);
+  // console.log("Urgence:", urgency);
+  // console.log("Durée:", duration);
+  // console.log("Résultat:", missionResult);
+  // console.log("Commentaires:", comments);
 
   // Renvoyer une réponse en json pour que le front puisse le comprendre
 
@@ -193,11 +194,11 @@ export async function sendRapportMission (req, res) {
 
   //Récupérer l'id de la mission
   const missionId = req.params.id;
-  // Récupérer la mission en cours
+  // Récupérer la mission en cours grâce à l'Id
   const mission = await datamapper.getMissionById(missionId);
 
   // console.log(missionId) // Voir si on récupère bien l'id dans l'URL
-  // console.log(req.body) // Que récupère le body ?
+  console.log(req.body) // Que récupère le body ?
 
   // Récupérer toutes les données du formulaire de rapport de mission du héro
   const idHero = req.body.hero_id; // Id héro

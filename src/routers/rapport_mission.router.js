@@ -7,4 +7,8 @@ export const rapportHeroRouter = Router();
 rapportHeroRouter.get('/rapport_mission/:id', displayRapportMission);
 
 // Route POST : Traiter l'affichage du formulaire de rapport de mission AVANT ENVOI
-rapportHeroRouter.post('/rapport_mission/:id', previewRapport);
+// L'URL du navigateur ne change pas, mais la requête HTTP est bien envoyée en arrière-plan grâce au fetch
+rapportHeroRouter.post('/rapport_mission/:id/preview', previewRapport);
+
+// Route POST : Mettre à jour la BDD avec le rapport de mission envoyé
+rapportHeroRouter.post('/rapport_mission/:id', sendRapportMission);

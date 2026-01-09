@@ -4,7 +4,6 @@ import { servicesRouter } from '../routers/services.router.js';
 import { testimoniesRouter } from './testimonies.router.js';
 import { createClientRouter } from '../routers/sauvez_moi.router.js'
 import { rapportHeroRouter } from './rapport_mission.router.js';
-import { previewRouter } from './previewRapport.router.js';
 
 export const router = Router();
 
@@ -14,4 +13,3 @@ router.use(servicesRouter);
 router.use(testimoniesRouter);
 router.use(createClientRouter);
 router.use(rapportHeroRouter);
-router.use(previewRouter);
