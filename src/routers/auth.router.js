@@ -5,4 +5,4 @@ import { authenticateToken } from "../middlewares/auth.middleware.js";
 export const authRouter = Router();
 
 authRouter.post("/api/auth/register", register);
-authRouter.post("/api/auth/login", authenticateToken, login);
+authRouter.post("/api/auth/login", login);

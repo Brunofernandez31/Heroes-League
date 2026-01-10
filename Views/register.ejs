@@ -1,0 +1,26 @@
+<%- include('partials/headers') %>
+
+    <!-- Formulaire d'inscription -->
+
+    <h2 class="h2_register" id="h2_register"><em>-</em><em>Inscription</em><em>-</em></h2>
+
+    <section class="register">
+
+        <form id="register_form">
+
+            <fieldset>
+                <label for="email">Veuillez renseigner votre email</label>
+                <input type="text" name ="email" id="email_register" placeholder="test@test.com">
+            </fieldset>
+            <fieldset>
+                <label for="password">Veuillez renseigner votre mot de passe</label>
+                <input type="text" name ="password" id="password_register" placeholder="motdepasse123">
+            </fieldset>
+
+            <button type="submit" form="register_form" id="send_register" >Confirmer</button>
+            <a href="/">Retour à l'accueil</a>
+    </section>
+
+<script defer src="/script/auth.script.js"></script>
+
+<%- include('partials/footer') %>
