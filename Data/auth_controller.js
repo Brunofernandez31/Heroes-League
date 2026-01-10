@@ -29,7 +29,6 @@ export async function register(req, res) {
 };
 
 export async function login(req, res) {
-
     try {
         // Récupérer les infos submit du formulaire login
         const userEmail = req.body.email;
@@ -53,8 +52,9 @@ export async function login(req, res) {
         if (await argon2.verify(userPasswordHash, userPassword)) { // Vérifier le mot de passe hashé correspond à l'entrée mdp client
             const token = jwt.sign( // Création du token
                 {
-                userId,
-                email: loginUser.email, role: loginUser.role },
+                    userId,
+                    email: loginUser.email, role: loginUser.role
+                },
                 process.env.JWT_SECRET,  // Clé secrète dans le .env
                 { expiresIn: '24h' } // Expiration du token
             );
