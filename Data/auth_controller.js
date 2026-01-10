@@ -40,7 +40,7 @@ export async function login(req, res) {
         }
 
         if (!userPassword) { // Vérifier s'il y a un mdp d'entré
-            return res.status(400).json({ error: "Mot de passe requis" });
+            return res.status(400).json({ error: "Mot de passe requis" }); // Status Bad Request (erreur de format)
         }
 
         const loginUser = await datamapper.getUserByEmail(userEmail) // Chercher l'user dans la bdd
@@ -61,7 +61,7 @@ export async function login(req, res) {
 
             res.status(200).json({ token }); // Status succès général
         } else {
-            res.status(401).json({ error: "Email ou mot de passe incorrect" }) // Status Unauthorized
+            res.status(401).json({ error: "Email ou mot de passe incorrect" }) // Status Unauthorized (mauvais identifiant)
         }
 
 
