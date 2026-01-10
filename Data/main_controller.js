@@ -1,4 +1,3 @@
-import { name } from "ejs";
 import datamapper from "./main_datamapper.js"
 
 
@@ -162,14 +161,6 @@ export async function previewRapport (req, res) {
     totalPrice = heroPrice * duration * ( 1 + 0.15);
   }
   
-  // console.log("=== DONNÉES DISPONIBLES ===");
-  // console.log("Total calculé:", totalPrice);
-  // console.log("Mission:", mission);
-  // console.log("Héros:", hero);
-  // console.log("Urgence:", urgency);
-  // console.log("Durée:", duration);
-  // console.log("Résultat:", missionResult);
-  // console.log("Commentaires:", comments);
 
   // Renvoyer une réponse en json pour que le front puisse le comprendre
 
