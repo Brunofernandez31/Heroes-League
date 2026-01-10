@@ -86,8 +86,8 @@ previewRapport.addEventListener("click", async () => { // Déclencher un évène
         duration, // Laissé la valeur brut ici de la durée (ex : 1.5) pour le calcul dans le backend
         missionResult, // Success ou failed
         comments
-    }),
-}) // Fermer FETCH pour ensuite recevoir/récupérer la réponse
+    })
+}); // Fermer FETCH pour ensuite recevoir/récupérer la réponse
 
 // 2) Traduire la réponse reçu/récupérer du serveur du format de chaine de caracteres JSON en format d'objet JS
 const data = await response.json(); // Convertit la chaîne JSON reçun en objet JavaScript afin de pouvoir ecrire dans le DOM
