@@ -237,10 +237,42 @@ export function displayLogin (_req ,res) {
   res.render("login")
 };
 
-export async function createHero (req, res) {
-  const name = req.body.name;
-  const advantage = req.body.advantage;
-  const idAdmin = req.user.userId;
 
-  await datamapper.createHero()
+// Afficher la vue html du formulaire de création du héro
+export function displayCreateHero (_req ,res) {
+  res.render("createHero")
+};
+
+// Créer un super héro dans la bdd
+
+export async function createHero(req, res) {
+  try {
+    const name = req.body.name;
+    const advantage = req.body.advantage;
+    const disadvantage = req.body.disadvantage;
+    const pricePerHour = req.body.price_per_hour;
+    const otherPrice = req.body.other_price;
+    const imgHero = req.body.img_hero;
+    const quartier = req.body.quartier;
+    const idAdmin = req.user.userId;
+
+    const hero = await datamapper.createHero(
+      name, 
+      advantage, 
+      disadvantage, 
+      pricePerHour, 
+      idAdmin, 
+      otherPrice, 
+      imgHero, 
+      quartier
+    );
+
+    res.status(201).json({ 
+      message: "Héros créé avec succès", 
+      heroId: hero.id_hero
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de la création du héros" });
+  }
 }
