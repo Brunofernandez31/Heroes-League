@@ -92,7 +92,9 @@ create table "users" (
     email VARCHAR(255) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     role VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT NOW(),
+    firstname VARCHAR(100),
+    lastname VARCHAR (100)
 );  
 
 INSERT INTO "admin" (name, email)

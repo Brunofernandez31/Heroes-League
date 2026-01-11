@@ -93,8 +93,6 @@ export async function getMe(req, res) {
     const user = await datamapper.getUserByEmail(userMail);
 
     res.json({
-        userId: user.id_user,
-        email: user.email,
         role: user.role,
         firstName: user.firstname,
         lastName: user.lastname

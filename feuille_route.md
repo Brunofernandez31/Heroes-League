@@ -81,11 +81,13 @@ du 04/01/2026 au 09/01/2026
 # 🚀 FEUILLE DE ROUTE - API & AUTHENTIFICATION
 
 ## 🎯 OBJECTIF
-Ajouter une API REST avec authentification au projet Heroes League.
+✅ Ajouter une API REST avec authentification au projet Heroes League. - 11/01/2026
 
 ---
 
 ## 👥 RÔLES ET PERMISSIONS
+
+✅ Définition des rôles (Public, Utilisateur, Héros, Admin) - 11/01/2026
 
 | Rôle | Peut faire |
 |------|-----------|
@@ -97,32 +99,114 @@ Ajouter une API REST avec authentification au projet Heroes League.
 ---
 
 ## 📊 MODIFICATIONS BDD
+
+✅ Table `users` créée (id_user, email, password, role, firstname, lastname, created_at) - 11/01/2026  
+✅ Contrainte CHECK sur le rôle (user, hero, admin) - 11/01/2026  
+✅ Colonnes `comments` et `total_price` ajoutées à la table `mission` - 11/01/2026  
+✅ Colonne `mission_result` (ENUM success/failed) ajoutée à la table `mission` - 11/01/2026  
+
 **Logique :**
 - **Client non inscrit** → `id_user = NULL` (peut quand même créer des missions)
 - **Client inscrit** → `id_user` rempli (peut laisser des avis)
 - **Héros** → Toujours un `id_user` (créé par l'admin)
 
-## 🔐 SÉCURITÉ
+---
+
+## 🔐 AUTHENTIFICATION & SÉCURITÉ
 
 ### **Technologies**
-- **Argon2** : Hachage des mots de passe
-- **JWT** : Tokens d'authentification
-- **Middlewares** : Protection des routes
+✅ Argon2 installé et configuré - 11/01/2026  
+✅ jsonwebtoken installé et configuré - 11/01/2026  
+✅ env configuré avec JWT_SECRET - 11/01/2026  
 
-### **Flow authentification**
-```
-1. Inscription
-   → Hash password avec Argon2
-   → Stocke en BDD avec role='user'
+### **Backend - Fonctions datamapper**
+✅ `createUser(email, password, role, firstName, lastName)` - 11/01/2026  
+✅ `getUserByEmail(email)` - 11/01/2026  
 
-2. Connexion
-   → Vérifie email + password
-   → Génère token JWT
-   → Renvoie token au client
+### **Backend - Contrôleurs d'authentification**
+✅ `register` : Inscription utilisateur avec hash Argon2 - 11/01/2026  
+✅ `login` : Connexion avec vérification password et génération JWT - 11/01/2026  
+✅ `getMe` : Récupération des infos utilisateur connecté - 11/01/2026  
 
-3. Requêtes protégées
-   → Client envoie token dans headers
-   → Middleware vérifie token
-   → Si valide → accès autorisé
-   → Si invalide → 401 Unauthorized
-```
+### **Backend - Middlewares**
+✅ `authenticateToken` : Vérification du token JWT - 11/01/2026  
+
+### **Backend - Routes API**
+✅ POST `/api/auth/register` : Inscription - 11/01/2026  
+✅ POST `/api/auth/login` : Connexion - 11/01/2026  
+✅ GET `/api/auth/me` : Infos utilisateur (protégée) - 11/01/2026  
+
+### **Backend - Routes HTML**
+✅ GET `/register` : Affiche formulaire d'inscription - 11/01/2026  
+✅ GET `/login` : Affiche formulaire de connexion - 11/01/2026  
+
+### **Frontend - Vues EJS**
+✅ `register.ejs` : Formulaire d'inscription (email, password, firstName, lastName) - 11/01/2026  
+✅ `login.ejs` : Formulaire de connexion - 11/01/2026  
+✅ Modification de `index.ejs` avec le script getMe - 11/01/2026  
+
+### **Frontend - Scripts JavaScript**
+✅ `auth_register.script.js` : Gestion inscription avec fetch() - 11/01/2026  
+✅ `auth_login.script.js` : Gestion connexion avec fetch() et stockage token - 11/01/2026  
+✅ `getMe.script.js` : Vérification token et affichage "Bienvenue [Prénom Nom]" - 11/01/2026  
+
+### **Frontend - localStorage**
+✅ Stockage du token JWT après connexion - 11/01/2026  
+✅ Récupération du token pour les requêtes protégées - 11/01/2026  
+✅ Suppression du token si expiré/invalide - 11/01/2026  
+
+### **Tests**
+✅ Test inscription avec RapidAPI - 11/01/2026  
+✅ Test connexion avec RapidAPI - 11/01/2026  
+✅ Test route protégée `/api/auth/me` avec RapidAPI - 11/01/2026  
+✅ Test affichage "Bienvenue [nom]" sur page d'accueil - 11/01/2026  
+
+---
+
+## 📚 DOCUMENTATION CRÉÉE
+
+✅ Fiche pratique Argon2 & JWT - 11/01/2026  
+✅ Fiche pratique Fetch & Frontend/Backend - 11/01/2026  
+
+---
+
+## 🎯 CE QU'IL RESTE À FAIRE
+
+### **Phase 3 : Middleware de rôle**
+- ⚪ Créer `requireRole(role)` middleware
+- ⚪ Protéger les routes selon les rôles (admin, hero, user)
+
+### **Amélioration de l'authentification**
+- ⚪ Bouton "Déconnexion" (supprimer token du localStorage)
+- ⚪ Modifier le header : afficher "Se connecter" si non connecté, "Mon compte" si connecté
+- ⚪ Page "Mon profil" pour modifier ses informations
+
+### **Fonctionnalités héros**
+- ⚪ Dashboard héros avec liste des missions disponibles
+- ⚪ Route `/api/missions/available` : Voir missions disponibles
+- ⚪ Route POST `/api/missions/:id/take` : Prendre une mission
+- ⚪ Route GET `/api/missions/mine` : Historique des missions du héros
+- ⚪ Interface pour consulter et prendre des missions
+
+### **Fonctionnalités admin**
+- ⚪ Route POST `/api/heroes` : Créer un héros (+ compte user associé)
+- ⚪ Route PUT `/api/heroes/:id` : Modifier un héros
+- ⚪ Route DELETE `/api/heroes/:id` : Supprimer un héros
+- ⚪ Interface d'administration
+
+### **Fonctionnalités missions**
+- ⚪ Calculer le pourcentage de réussite du héros (`nb_success / nb_mission`)
+- ⚪ Page listant toutes les missions
+- ⚪ Filtrer les missions par statut (Disponible, En cours, Terminée)
+- ⚪ Permettre au client de choisir un héros pour sa mission
+
+### **Amélioration UX générale**
+- ⚪ CSS / Design
+- ⚪ Messages d'erreur plus explicites
+- ⚪ Validation des formulaires côté client (avant envoi)
+- ⚪ Loader / Spinner pendant les requêtes
+- ⚪ Toast notifications au lieu des `alert()`
+
+---
+
+**Dernière mise à jour :** 11/01/2026

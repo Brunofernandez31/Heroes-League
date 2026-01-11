@@ -2,12 +2,13 @@ import jwt from "jsonwebtoken";
 
 export async function authenticateToken (req, res, next) {
     try {
+        console.log('token en cours')
         const userToken = req.headers.authorization; // Récupérer le "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV"
         const arrayToken = userToken.split(" "); // séparer le mot bearer du token
         const token = arrayToken[1]; // Garder uniquement le token
-
+        console.log('token reçu' + token)
         if (!token) { 
-            res.status(401).json({error : "Token invalide"});
+            res.status(401).json({error : "Token absent"});
             return
         }
 
@@ -21,6 +22,7 @@ export async function authenticateToken (req, res, next) {
         next(); // Passe à la fonction d'après
 
     } catch (error) {
+        console.log("❌ ERREUR:", error.message);
         res.status(403).json({error : "Token invalide ou expiré"});
         return
     }
