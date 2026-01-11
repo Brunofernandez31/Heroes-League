@@ -1,3 +1,4 @@
+import { register } from "./auth_controller.js";
 import datamapper from "./main_datamapper.js"
 
 
@@ -220,4 +221,18 @@ export async function sendRapportMission (req, res) {
 
   res.redirect("/"); // si on utilise render c'est une erreur
   // Ici on utilise redirect pour renvoyer vers une page et pas rendre une vue 
+};
+
+
+
+// Afficher la vue html du formulaire d'inscription utilisateur
+
+export function displayRegister (_req, res) {
+  res.render("register")
+};
+
+// Afficher la vue html du formulaire de connexion de l'utilisateur
+
+export function displayLogin (_req ,res) {
+  res.render("login")
 };
