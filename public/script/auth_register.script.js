@@ -3,6 +3,8 @@
 const emailUser = document.getElementById("email_register"); // Ne pas récupérer la value tout de suite car elle est vide
 // Bien récupérer les valeurs dans le addEventListener
 const passwordUser = document.getElementById("password_register");
+const firstNameUser = document.getElementById("firstName_register");
+const lastNameUser = document.getElementById("lastName_register");
 const buttonSubmit = document.getElementById("send_register");
 
 
@@ -12,8 +14,10 @@ buttonSubmit.addEventListener("click", async (e) => {
     try {
         e.preventDefault(); // Empecher le rechargement du formulaire d'inscription
 
-        const email = document.getElementById("email_register").value;
-        const password = document.getElementById("password_register").value;
+        const email = emailUser.value;
+        const password = passwordUser.value;
+        const firstName = firstNameUser.value;
+        const lastName = lastNameUser.value;
 
         const response = await fetch("/api/auth/register", {
             method: "POST", // La méthode qu'on va envoyer, son type de requête
@@ -21,14 +25,16 @@ buttonSubmit.addEventListener("click", async (e) => {
             // Le Body c'est le corps de ma requête, on va mettre ce que je veux envoyer dans le backend pour le main_controller
             body: JSON.stringify({
                 email,
-                password
+                password,
+                firstName,
+                lastName
             })
         });
 
         const data = await response.json();
 
         if (response.ok) {  // Status 200-299
-            alert("Inscription réussie !");
+            console.log("Inscription réussie !");
             window.location.href = '/auth/login';  // Redirige vers la page de connexion
         }
 

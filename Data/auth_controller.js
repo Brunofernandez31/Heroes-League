@@ -8,6 +8,9 @@ export async function register(req, res) {
         // Récupérer les infos submit du formulaire register
         const userEmail = req.body.email;
         const userPassword = req.body.password;
+        const firstName = req.body.firstName;
+        const lastName = req.body.lastName;
+
 
         if (!userEmail) {
             return res.status(400).json({ error: "Email requis" });
@@ -17,9 +20,18 @@ export async function register(req, res) {
             return res.status(400).json({ error: "Mot de passe requis" });
         }
 
+        if (!firstName) {
+            return res.status(400).json({ error: "firstname requis" });
+        }
+
+        if (!lastName) {
+            return res.status(400).json({ error: "lastname requis" });
+        }
+
+
         const hashPassword = await argon2.hash(userPassword); // Hash du mdp avec argon2
 
-        const userRegister = await datamapper.createUser(userEmail, hashPassword, "user");
+        const userRegister = await datamapper.createUser(userEmail, hashPassword, "user", firstName, lastName);
         res.status(201).json({ message: "Inscription réussie", userId: userRegister.id_user });
 
 
@@ -54,14 +66,16 @@ export async function login(req, res) {
             const token = jwt.sign( // Création du token
                 {
                     userId,
-                    email: loginUser.email, role: loginUser.role
+                    email: loginUser.email,
+                    role: loginUser.role
                 },
                 process.env.JWT_SECRET,  // Clé secrète dans le .env
                 { expiresIn: '24h' } // Expiration du token
             );
 
+
             res.status(200).json({ token }); // Status succès général et envoie du token
-            
+
         } else {
             res.status(401).json({ error: "Email ou mot de passe incorrect" }) // Status Unauthorized (mauvais identifiant)
         }
@@ -71,6 +85,18 @@ export async function login(req, res) {
     };
 };
 
-export async function getMe (req, res) {
-    res.json(req.user);
+export async function getMe(req, res) {
+
+    // Récupérer le mail dans le req.user
+    const userMail = req.user.email; // email est dans le token et en ayant fait req.user = verifToken; dans le middleware je peux le récupérer
+    // Récupérer les informations de firstname et lastname de l'user inscrit via la bdd
+    const user = await datamapper.getUserByEmail(userMail);
+
+    res.json({
+        userId: user.id_user,
+        email: user.email,
+        role: user.role,
+        firstName: user.firstname,
+        lastName: user.lastname
+    });
 }

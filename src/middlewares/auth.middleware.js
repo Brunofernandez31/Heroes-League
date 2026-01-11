@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export function authenticateToken (req, res, next) {
+export async function authenticateToken (req, res, next) {
     try {
         const userToken = req.headers.authorization; // Récupérer le "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV"
         const arrayToken = userToken.split(" "); // séparer le mot bearer du token
@@ -17,7 +17,7 @@ export function authenticateToken (req, res, next) {
 
         // On ajoute au gros objet Req une clef user avec l'objet verifToken
         // On pourra s'en servir dans les autres fonctions
-        req.user = verifToken;        
+        req.user = verifToken;
         next(); // Passe à la fonction d'après
 
     } catch (error) {

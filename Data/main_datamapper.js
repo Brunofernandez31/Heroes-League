@@ -117,13 +117,13 @@ const datamapper = {
       return result.rows[0]; // Retourner que le premier élément du tableau
   },
 
-  async createUser (email, password, role) {
+  async createUser (email, password, role, firstName, lastName) {
     const result = await pool.query(
       `
-      INSERT INTO users (email, password, role)
-      VALUES ($1, $2, $3)
+      INSERT INTO users (email, password, role, firstname, lastname)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
-      `, [email, password, role]
+      `, [email, password, role, firstName, lastName]
     );
     return result.rows[0];
   },
