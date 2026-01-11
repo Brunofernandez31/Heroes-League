@@ -236,3 +236,7 @@ export function displayRegister (_req, res) {
 export function displayLogin (_req ,res) {
   res.render("login")
 };
+
+export function createHero (req, res) {
+  
+}

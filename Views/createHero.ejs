@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+    <!-- Formulaire de création de héro -->
+
+    <h2 class="h2_create_hero" id="h2_create_hero"><em>-</em><em> Création d'un Super Héro </em><em>-</em></h2>
+
+    <section class="create_hero">
+
+        <form id="create_hero_form">
+
+            <fieldset>
+                <label for="name">Nom du héro</label>
+                <input type="text" name="name" id="name" placeholder="Cat Astrophic" required>
+            </fieldset>
+
+            <fieldset>
+                <label for="advantage">Avantages</label>
+                <textarea name="advantage" id="advantage" rows="3"
+                    placeholder="Décrivez les points forts..."></textarea>
+            </fieldset>
+
+            <fieldset>
+                <label for="disadvantage">Inconvénients</label>
+                <textarea name="disadvantage" id="disadvantage" rows="3"
+                    placeholder="Décrivez les faiblesses..."></textarea>
+            </fieldset>
+
+            <fieldset>
+                <label for="price_per_hour">Prix par heure (€)</label>
+                <input type="text" name="price_per_hour" id="price_per_hour" placeholder="50.00" required>
+            </fieldset>
+
+            <fieldset>
+                <label for="img_hero">URL de l'image</label>
+                <input type="url" name="img_hero" id="img_hero" placeholder="https://...">
+            </fieldset>
+
+            <fieldset>
+                <label for="quartier">Quartier</label>
+                <input type="text" name="quartier" id="quartier" placeholder="Centre-ville">
+            </fieldset>
+
+            <fieldset>
+                <label for="other_price">Autres tarifs (optionnel)</label>
+                <input type="text" name="other_price" id="other_price" placeholder="Forfait nuit : 200€">
+            </fieldset>
+
+            <button type="submit" form="create_hero_form" id="send_create_hero_form">Créer le héro</button>
+            <a href="/">Retour à l'accueil</a>
+        </form>
+
+    </section>
+
+    <script defer src="/script/createHero.script.js"></script>
+
+    <%- include('partials/footer') %>

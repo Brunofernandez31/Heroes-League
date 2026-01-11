@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { register, login, getMe} from "../../data/auth_controller.js";
-import { displayRegister, displayLogin } from "../../data/main_controller.js";
+import { displayRegister, displayLogin, createHero } from "../../data/main_controller.js";
 import { authenticateToken } from "../middlewares/authenticateToken.js"
 import { isAdmin } from "../middlewares/isAdmin.middelware.js";
 
@@ -11,4 +11,4 @@ authRouter.get("/auth/login", displayLogin);
 authRouter.post("/api/auth/register", register);
 authRouter.post("/api/auth/login", login);
 authRouter.get("/api/auth/me", authenticateToken, getMe);
-authRouter.get("/api/createHero", authenticateToken, isAdmin, getMe);
+authRouter.get("/api/createHero", authenticateToken, isAdmin, createHero);
