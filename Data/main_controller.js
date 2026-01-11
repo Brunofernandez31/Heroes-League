@@ -247,12 +247,12 @@ export function displayCreateHero (_req ,res) {
 
 export async function createHero(req, res) {
   try {
+    // Récupérer toutes les informations fournis par le client avec la method POST et le body du fetch
     const name = req.body.name;
     const advantage = req.body.advantage;
     const disadvantage = req.body.disadvantage;
     const pricePerHour = req.body.price_per_hour;
     const otherPrice = req.body.other_price;
-    const imgHero = req.body.img_hero;
     const quartier = req.body.quartier;
     const idAdmin = req.user.userId;
 
@@ -262,8 +262,7 @@ export async function createHero(req, res) {
       disadvantage, 
       pricePerHour, 
       idAdmin, 
-      otherPrice, 
-      imgHero, 
+      otherPrice,
       quartier
     );
 

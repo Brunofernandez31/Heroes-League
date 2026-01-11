@@ -8,8 +8,8 @@ export const authRouter = Router();
 
 authRouter.get("/auth/register", displayRegister);
 authRouter.get("/auth/login", displayLogin);
-authRouter.get("auth/createHero", displayCreateHero);
+authRouter.get("/auth/createHero", displayCreateHero);
 authRouter.post("/api/auth/register", register);
 authRouter.post("/api/auth/login", login);
 authRouter.get("/api/auth/me", authenticateToken, getMe);
-authRouter.get("/api/createHero", authenticateToken, isAdmin, createHero);
+authRouter.post("/api/createHero", authenticateToken, isAdmin, createHero);

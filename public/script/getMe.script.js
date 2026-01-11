@@ -28,5 +28,4 @@ async function checkAuth() {
         }
     }
 }
-
-    checkAuth();
+checkAuth();

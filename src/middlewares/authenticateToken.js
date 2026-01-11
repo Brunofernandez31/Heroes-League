@@ -17,7 +17,6 @@ export async function authenticateToken (req, res, next) {
         // On ajoute au gros objet Req une clef user avec l'objet verifToken
         // On pourra s'en servir dans les autres fonctions
         req.user = verifToken;
-        console.log(req.user)
         next(); // Passe à la fonction d'après
 
     } catch (error) {
