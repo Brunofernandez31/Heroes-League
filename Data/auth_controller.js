@@ -49,6 +49,7 @@ export async function login(req, res) {
 
         const userId = loginUser.id_user;
         const userPasswordHash = loginUser.password;
+
         if (await argon2.verify(userPasswordHash, userPassword)) { // Vérifier le mot de passe hashé correspond à l'entrée mdp client
             const token = jwt.sign( // Création du token
                 {
@@ -59,14 +60,17 @@ export async function login(req, res) {
                 { expiresIn: '24h' } // Expiration du token
             );
 
-            res.status(200).json({ token }); // Status succès général
+            res.status(200).json({ token }); // Status succès général et envoie du token
+            
         } else {
             res.status(401).json({ error: "Email ou mot de passe incorrect" }) // Status Unauthorized (mauvais identifiant)
         }
-
-
 
     } catch (error) {
         res.status(500).json({ error: "Erreur de serveur" })
     };
 };
+
+export async function getMe (req, res) {
+    res.json(req.user);
+}

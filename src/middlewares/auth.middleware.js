@@ -17,9 +17,8 @@ export function authenticateToken (req, res, next) {
 
         // On ajoute au gros objet Req une clef user avec l'objet verifToken
         // On pourra s'en servir dans les autres fonctions
-        req.user = verifToken;
-        
-        next();
+        req.user = verifToken;        
+        next(); // Passe à la fonction d'après
 
     } catch (error) {
         res.status(403).json({error : "Token invalide ou expiré"});

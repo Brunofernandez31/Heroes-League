@@ -1,8 +1,8 @@
-<%- include('partials/headers') %>
+<%- include('partials/header') %>
 
     <!-- Formulaire d'inscription -->
 
-    <h2 class="h2_register" id="h2_register"><em>-</em><em>Inscription</em><em>-</em></h2>
+    <h2 class="h2_register" id="h2_register"><em>-</em><em> Inscription </em><em>-</em></h2>
 
     <section class="register">
 
@@ -16,11 +16,19 @@
                 <label for="password">Veuillez renseigner votre mot de passe</label>
                 <input type="text" name ="password" id="password_register" placeholder="motdepasse123">
             </fieldset>
+            <fieldset>
+                <label for="firstName">Veuillez renseigner votre nom</label>
+                <input type="text" name ="firstName" id="firstName_register" placeholder="Coco">
+            </fieldset>
+            <fieldset>
+                <label for="lastName">Veuillez renseigner votre prénom</label>
+                <input type="text" name ="lastName" id="lastName_register" placeholder="Rico">
+            </fieldset>
 
             <button type="submit" form="register_form" id="send_register">Confirmer</button>
             <a href="/">Retour à l'accueil</a>
     </section>
 
-<script defer src="/script/auth.script.js"></script>
+<script defer src="/script/auth_register.script.js"></script>
 
 <%- include('partials/footer') %>
