@@ -237,6 +237,10 @@ export function displayLogin (_req ,res) {
   res.render("login")
 };
 
-export function createHero (req, res) {
-  
+export async function createHero (req, res) {
+  const name = req.body.name;
+  const advantage = req.body.advantage;
+  const idAdmin = req.user.userId;
+
+  await datamapper.createHero()
 }

@@ -17,9 +17,9 @@ const datamapper = {
       SELECT * 
       FROM hero
       WHERE id_hero = $1
-      `,[id] // prévention contre injection sql, le [id] remplacera le $1
-      );
-      return result.rows[0]; // Retourner que le premier élément du tableau
+      `, [id] // prévention contre injection sql, le [id] remplacera le $1
+    );
+    return result.rows[0]; // Retourner que le premier élément du tableau
   },
 
 
@@ -30,35 +30,35 @@ const datamapper = {
       FROM opinion
       JOIN client ON opinion.id_client = client.id_client
       WHERE opinion.id_hero = $1
-      `,[id] // prévention contre injection sql, le [id] remplacera le $1
-      );
-      return result.rows;
+      `, [id] // prévention contre injection sql, le [id] remplacera le $1
+    );
+    return result.rows;
   },
 
 
-  async getTestimonies () {
+  async getTestimonies() {
     const result = await pool.query(
       `      
       SELECT opinion.*, client.img_client, client.name as client_name
       FROM opinion
       JOIN client ON opinion.id_client = client.id_client
       `
-      );
-      return result.rows;
+    );
+    return result.rows;
   },
 
 
-  async getClientByMail (mail) {
+  async getClientByMail(mail) {
     const result = await pool.query(
       `
       SELECT * FROM client
       WHERE email = $1;
-      `,[mail]);
-      return result.rows[0];
+      `, [mail]);
+    return result.rows[0];
   },
 
 
-  async createClientBdd (nameClient, mail) {
+  async createClientBdd(nameClient, mail) {
     const result = await pool.query(
       `
       INSERT INTO client (name, email, img_client) 
@@ -71,53 +71,53 @@ const datamapper = {
   },
 
 
-  async createMission (description, city, id_client, urgency) {
+  async createMission(description, city, id_client, urgency) {
     const result = await pool.query(
       `
       INSERT INTO mission (description, city, id_client, urgency)
       VALUES ($1, $2, $3, $4)
-      RETURNING *`,[description, city, id_client, urgency]
+      RETURNING *`, [description, city, id_client, urgency]
     ); // Si pas de returning on renvoie un tableau vide pour result.rows
     return result.rows[0];
   },
 
 
-  async getMissionById (id) {
+  async getMissionById(id) {
     const result = await pool.query(
       `
       SELECT * 
       FROM mission
       WHERE id_mission = $1
-      `,[id] // prévention contre injection sql, le [id] remplacera le $1
-      );
-      return result.rows[0]; // Retourner que le premier élément du tableau
+      `, [id] // prévention contre injection sql, le [id] remplacera le $1
+    );
+    return result.rows[0]; // Retourner que le premier élément du tableau
   },
 
 
-  async updateMission (id_mission, id_hero, duration, comments, total_price, mission_result) {
+  async updateMission(id_mission, id_hero, duration, comments, total_price, mission_result) {
     const result = await pool.query(
       `
       UPDATE mission 
       SET id_hero = $2, duration = $3, status = 'Terminée', comments = $4, total_price = $5, mission_result = $6
       WHERE id_mission = $1
-      RETURNING *`,[id_mission, id_hero, duration, comments, total_price, mission_result]
+      RETURNING *`, [id_mission, id_hero, duration, comments, total_price, mission_result]
     );
     return result.rows[0];
   },
 
-  async updateHero (id) {
+  async updateHero(id) {
     const result = await pool.query(
       `
       UPDATE hero
       SET nb_mission = nb_mission + 1
       WHERE id_hero = $1
       RETURNING *
-      `,[id] // prévention contre injection sql, le [id] remplacera le $1
-      );
-      return result.rows[0]; // Retourner que le premier élément du tableau
+      `, [id] // prévention contre injection sql, le [id] remplacera le $1
+    );
+    return result.rows[0]; // Retourner que le premier élément du tableau
   },
 
-  async createUser (email, password, role, firstName, lastName) {
+  async createUser(email, password, role, firstName, lastName) {
     const result = await pool.query(
       `
       INSERT INTO users (email, password, role, firstname, lastname)
@@ -128,20 +128,32 @@ const datamapper = {
     return result.rows[0];
   },
 
-  async getUserByEmail (email) {
+  async getUserByEmail(email) {
     const result = await pool.query(
-    `
+      `
     SELECT * 
     FROM users
     WHERE email = $1;
     `, [email]
     );
     return result.rows[0];
+  },
+
+  async createHero(name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, quartier) {
+    const result = await pool.query(
+      `
+      INSERT INTO hero (name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, quartier)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *;
+      `,
+      [name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, quartier]
+    );
+    return result.rows[0];
   }
 
 }
 
-  export default datamapper;
+export default datamapper;
 
 
 
