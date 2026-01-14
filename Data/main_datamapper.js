@@ -149,6 +149,16 @@ const datamapper = {
       [name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, quartier]
     );
     return result.rows[0];
+  },
+
+  async getAdminByEmail(email) {
+    const result = await pool.query(
+      `
+    SELECT * FROM admin
+    WHERE email = $1;
+    `, [email]
+    );
+    return result.rows[0];
   }
 
 }

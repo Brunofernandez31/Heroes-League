@@ -254,15 +254,24 @@ export async function createHero(req, res) {
     const pricePerHour = req.body.price_per_hour;
     const otherPrice = req.body.other_price;
     const quartier = req.body.quartier;
-    const idAdmin = req.user.userId;
+    const adminEmail = req.user.email;
+
+    // Trouver l'admin dans la bdd
+    const admin = await datamapper.getAdminByEmail(adminEmail);
+    console.log(admin)
+
+    if (!admin) {
+      return res.status(404).json({ error: "Admin non trouvé" });
+    }
 
     const hero = await datamapper.createHero(
       name, 
       advantage, 
       disadvantage, 
       pricePerHour, 
-      idAdmin, 
+      admin.id_admin, 
       otherPrice,
+      'default-hero.png', // Image par défaut
       quartier
     );
 
@@ -272,6 +281,7 @@ export async function createHero(req, res) {
     });
 
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Erreur lors de la création du héros" });
   }
 }
