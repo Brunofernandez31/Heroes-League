@@ -1,31 +1,32 @@
 <%- include('partials/header') %>
-<!-- Les héros -->
+    <!-- Les héros -->
 
-        <h2 id="h2_heros"><em>-</em> Nos <em>Supers</em> héros <em>-</em></h2>
+    <h2 id="h2_heros"><em>-</em> Nos <em>Supers</em> héros <em>-</em></h2>
 
-        <section class="heros">
+    <section class="heros">
 
-<% heroes.forEach(hero => { %>
+        <% heroes.forEach((hero, index) => { %>
 
-            <article class="article_hero article_hero_<%= hero.name %>">
+            <article class="article_hero article_hero_<%= hero.name %> <%= index >= 3 ? 'hidden-hero' : '' %>">
                 <!-- article_hero est la classe fixe, commune à tous les articles -->
                 <!-- article_hero_<%=hero.name%> reste pour le style individuel -->
-                
-                <img class="img_hero" data-id="<%=hero.id_hero%>" src="/ressources/images/<%=hero.img_hero%>" alt="<%=hero.name%>">
+
+                <img class="img_hero" data-id="<%=hero.id_hero%>" src="/ressources/images/<%=hero.img_hero%>"
+                    alt="<%=hero.name%>">
                 <div class="overlay">
-                    <p class="title_hero"><%=hero.name%></p>
-                    <p class="description_hero"> Avantage : <%=hero.advantage%> 
-                        Désavantage : <%=hero.disadvantage%>
+                    <p class="title_hero">
+                        <%=hero.name%>
+                    </p>
+                    <p class="description_hero"> Avantage : <%=hero.advantage%>
+                            Désavantage : <%=hero.disadvantage%>
                     </p>
                 </div>
             </article>
-<% }); %>
-        </section>
+            <% }); %>
+    </section>
 
-        <div class="button_heros">
-            <button><a href="https://fr.wikipedia.org/wiki/Liste_de_super-h%C3%A9ros_au_cin%C3%A9ma">
-                    Tous nos héros</a></button>
-        </div>
-
-<script defer src="/script/heroes.script.js"></script>
-<%- include('partials/footer') %>
+    <div class="button_heros">
+        <button id="show-more-heroes">Tous nos héros</button>
+    </div>
+    <script defer src="/script/heroes.script.js"></script>
+    <%- include('partials/footer') %>

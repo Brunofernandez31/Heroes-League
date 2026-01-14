@@ -3,12 +3,16 @@ import pool from "./database_client.js"; // Pour se connecter à la bdd afin de 
 
 const datamapper = {
 
-  async getHeroes() {
-    const result = await pool.query(
-      `SELECT * FROM hero;`
-    );
-    return result.rows
-  },
+  async getHeroes (limit = null) {  
+  const query = limit 
+    ? `SELECT * FROM hero LIMIT $1;`
+    : `SELECT * FROM hero;`;
+  
+  const result = limit 
+    ? await pool.query(query, [limit])
+    : await pool.query(query);
+  return result.rows;
+},
 
 
   async getHeroesById(id) {

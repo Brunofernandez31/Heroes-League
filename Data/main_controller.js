@@ -1,4 +1,3 @@
-import { register } from "./auth_controller.js";
 import datamapper from "./main_datamapper.js"
 
 
@@ -224,15 +223,13 @@ export async function sendRapportMission (req, res) {
 };
 
 
-
 // Afficher la vue html du formulaire d'inscription utilisateur
-
 export function displayRegister (_req, res) {
   res.render("register")
 };
 
-// Afficher la vue html du formulaire de connexion de l'utilisateur
 
+// Afficher la vue html du formulaire de connexion de l'utilisateur
 export function displayLogin (_req ,res) {
   res.render("login")
 };
@@ -243,8 +240,8 @@ export function displayCreateHero (_req ,res) {
   res.render("createHero")
 };
 
-// Créer un super héro dans la bdd
 
+// Créer un super héro dans la bdd
 export async function createHero(req, res) {
   try {
     // Récupérer toutes les informations fournis par le client avec la method POST et le body du fetch

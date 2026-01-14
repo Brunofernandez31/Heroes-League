@@ -1,5 +1,6 @@
 :root {
     --bg-button: #A29BFE;
+    --bg-button-link:#DE6D76;
     --color-h2: #A29BFE;
     --color-h3: #A29BFE;
     --bg-body: #000000;
@@ -197,7 +198,7 @@ h3 {
 .heros {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-auto-rows: auto;
     margin-left: 3rem;
     margin-right: 4rem;
     gap: 2rem;
@@ -212,15 +213,26 @@ h3 {
 
 .heros .img_hero {
     width: 100%;
-    /* ← Ajoute */
     height: 700px;
-    /* ← Ajoute */
     object-fit: cover;
-    /* ← Ajoute pour garder le ratio */
     display: block;
-    /* ← Ajoute pour éviter l'espace en bas */
 }
 
+.hidden-hero {
+    display: none;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 /* L'overlay cache par défaut et se positionne sur l'image */
 .heros .overlay {
     position: absolute;
@@ -229,11 +241,8 @@ h3 {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    /* Fond noir semi-transparent */
     opacity: 0;
-    /* Caché par défaut */
     transition: opacity 0.3s ease;
-    /* Animation fluide */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -485,7 +494,7 @@ label {
 
 .button_link {
     display: inline-block;
-    background-color: var(--bg-button);
+    background-color: var(--bg-button-link);
     color: var(--color-text);
     border: none;
     border-radius: 10px;
@@ -493,7 +502,6 @@ label {
     font-weight: var(--font-weight-bold);
     padding: 8px 24px;
     text-decoration: none;
-    /* Enlève le soulignement */
     cursor: pointer;
 }
 
