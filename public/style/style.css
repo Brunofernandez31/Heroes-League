@@ -17,6 +17,14 @@ body {
     font-size: 20px;
     background-color: var(--bg-body);
     color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    /* ← Ajoute cette règle pour que main prenne tout l'espace disponible */
 }
 
 /* header */
@@ -43,6 +51,14 @@ a {
     display: flex;
     justify-content: center;
     position: relative;
+}
+
+h1 a {
+    color: var(--color-text);
+    cursor: pointer;
+    border: 3px solid #A29BFE;
+    border-radius: 20px;
+    padding: 0.5rem;
 }
 
 /* .banniere */
@@ -102,6 +118,7 @@ button {
     font-size: 0.9rem;
     font-weight: var(--font-weight-bold);
     padding: 8px 24px;
+    cursor: pointer;
 }
 
 /* articles_services */
@@ -191,6 +208,17 @@ h3 {
     position: relative;
     overflow: hidden;
     /* Pour que l'overlay ne dépasse pas */
+}
+
+.heros .img_hero {
+    width: 100%;
+    /* ← Ajoute */
+    height: 700px;
+    /* ← Ajoute */
+    object-fit: cover;
+    /* ← Ajoute pour garder le ratio */
+    display: block;
+    /* ← Ajoute pour éviter l'espace en bas */
 }
 
 /* L'overlay cache par défaut et se positionne sur l'image */
@@ -326,7 +354,7 @@ h3 {
 /* héro unique  */
 
 
-.section_heros_unique { 
+.section_heros_unique {
     width: 100%;
     height: 100%;
 }
@@ -407,24 +435,25 @@ h3 {
 }
 
 .help_me {
-    height: 800px;
+    min-height: 800px;
+    /* s'agrandit au besoin */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#help_me_form {
+form {
     display: flex;
-    flex-flow: column wrap;
+    flex-direction: column;
     height: 100%;
     text-align: center;
     align-items: center;
 }
 
 fieldset {
-    width: 40%;
-    padding: 2rem;
+    width: 50%;
+    padding: 1rem;
     border: none;
 }
 
@@ -453,6 +482,31 @@ label {
     font-size: 1.1rem;
     font-weight: var(--font-weight-bold);
 }
+
+.button_link {
+    display: inline-block;
+    background-color: var(--bg-button);
+    color: var(--color-text);
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+    padding: 8px 24px;
+    text-decoration: none;
+    /* Enlève le soulignement */
+    cursor: pointer;
+}
+
+.button-link:hover {
+    opacity: 0.9;
+    /* Petit effet au survol */
+}
+
+/* login */
+
+
+
+/* footer */
 
 footer {
     background-color: var(--bg-footer);

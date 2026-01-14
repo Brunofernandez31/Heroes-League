@@ -258,7 +258,6 @@ export async function createHero(req, res) {
 
     // Trouver l'admin dans la bdd
     const admin = await datamapper.getAdminByEmail(adminEmail);
-    console.log(admin)
 
     if (!admin) {
       return res.status(404).json({ error: "Admin non trouvé" });
