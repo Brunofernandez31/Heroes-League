@@ -50,7 +50,8 @@ CREATE TABLE "stuff" (
 
 CREATE TABLE "hero" (
     id_hero SERIAL PRIMARY KEY,
-    name VARCHAR(150) UNIQUE NOT NULL,
+    firstname VARCHAR(150) UNIQUE NOT NULL,
+    lastname VARCHAR(150) UNIQUE NOT NULL,
     advantage TEXT,
     disadvantage TEXT,
     price_per_hour DECIMAL (7,2), 
@@ -183,9 +184,9 @@ VALUES
 
 -- Héros 
 
-INSERT INTO "hero" (name, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, nb_mission)
+INSERT INTO "hero" (firstname, lastname, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, nb_mission)
 VALUES
-    ('Cat Astrophic', 
+    ('Cat', 'Astrophic', 
     'Avec son super ronron, il saura vous réconforter dans n''importe quelle situation.', 
     'Ne contrôle pas tout à fait sa patte droite, et peut être amené à vous mettre une - plus ou moins petite - tape sur la tête. Se perd de temps en temps', 
     50, 
@@ -193,7 +194,7 @@ VALUES
     'Une box de super croquettes de la marque CalinCat',
     'catastrophic.png', 34),
 
-    ('Carotte Woman', 
+    ('Carotte', 'Woman', 
     'Mis à part son apparence de carotte, il est champion du Monde de stratégie en botanique mais on peut lui trouver une meilleur utilité', 
     'Attention, elle essaiera souvent de vous faire payer plus que le prix convenu avec Heros League. N''acceptez pas.', 
     30, 
@@ -201,7 +202,7 @@ VALUES
     'Un lapin en civet avec la photo de son chasseur ou du terreau BioNucléaire',
     'carotte_woman.png', 12),
 
-    ('Ultraquenarde', 
+    ('Ultra', 'Quenarde', 
     'Peut vous sortir de n''importe quel traquenard.', 
     'Vous sort du traquenard… Mais il arrive qu''elle vous entraîne dans un autre.', 
     75, 
@@ -209,7 +210,7 @@ VALUES
     'Un kit d''évasion professionnel ou un autographe du professeur de la Casa de Papel',
     'ultraquenarde.png', 45),
 
-    ('Poulpy', 
+    ('Poulpy','Octopus', 
     'Il a des tentacules gigantesques, super pratique pour les déménagements.', 
     'Un peu collant et sent la marais', 
     40, 
@@ -217,7 +218,7 @@ VALUES
     'Un assortiment de crabes exotiques frais ou la derniere veste du styliste Dr Octopus',
     'poulpy.png', 52),
 
-    ('Orang Wu-Tang Clan', 
+    ('Orang Wu', 'Tang Clan', 
     'Un gros singe agile, multi-tâche, qui intervient tout en rappant.', 
     'Peut être amené à vous demander de financer son prochain album, ne pas accepter.', 
     60, 
@@ -225,7 +226,7 @@ VALUES
     'Des bananes premium et un micro neuf ou un albumn en featuring avec lui',
     'oran-wu-tang-clan.png', 63),
 
-    ('Superimé', 
+    ('Superimé','Elvieux', 
     'Un vieux super-héro qui ne veut pas partir à la retraite.', 
     'N''a plus de pouvoir mais refuse de l''admettre, peut être amené à vous raconter des histoires de l''époque où il était encore super.', 
     20, 
@@ -233,7 +234,7 @@ VALUES
     'Une entrée pour visiter une maison de retraite de luxe ou des pantoufles collector de Tortue Genial',
     'superime.png', 1785),
 
-    ('Capitaine Glue', 
+    ('Capitaine', 'Glue', 
     'Peut coller n''importe quoi à n''importe quoi ou n''importe qui. Très utile pour réparer, immobiliser des ennemis, ou recoller les pots cassés… au sens propre.', 
     'Tout ce qu''il touche reste collé pendant 48h. Y compris vous, si vous lui serrez la main. Evitez évidemment de lui faire la bise', 
     55, 
@@ -241,7 +242,7 @@ VALUES
     'Un assortiment de colle haut de gamme ou de la teinture pour colle de chez Castoracolleur',
     'capitaine-glu.png', 78),
 
-    ('Prune Power', 
+    ('Prun', 'Power', 
     'Spécialiste des situations coincées. Peut vous sortir d''une contravention injuste ou d''une constipation rebelle grâce à ses pouvoirs laxatifs naturels.', 
     'Ne fait pas la différence entre les problèmes métaphoriques et digestifs. Peut résoudre votre dispute administrative en vous donnant la diarrhée.', 
     45, 
@@ -249,7 +250,7 @@ VALUES
     'Une caisse de vin de pruneaux d''Agen AOC ou de la crème Premium pour avoir une peau de pêche', 
     'prunePower.png', 91),
 
-    ('Fidélidog', 
+    ('Fidéli', 'dog', 
     'Sens du devoir surdéveloppé et flair infaillible pour les gens en détresse. Peut vous retrouver n''importe où, vous protéger de n''importe quoi, et rapporter n''importe quel objet perdu.', 
     'Toujours fidèle, parfois trop. A tendance à "sauver" les gens qui n''ont rien demandé, surtout les facteurs, les livreurs, et les chats qu''il considère en danger.', 
     35, 

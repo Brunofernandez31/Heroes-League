@@ -12,8 +12,9 @@ form.addEventListener("submit", async (e) => { // Pas oublier async vu qu'on att
             return
         }
 
-        // Récupérer toutes les valeurs du champ du formulaire
-        const name = document.getElementById("name").value;
+        // Récupérer toutes les valeurs du champ du formulaire de création de héro
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
         const advantage = document.getElementById("advantage").value;
         const disadvantage = document.getElementById("disadvantage").value;
         const price_per_hour = document.getElementById("price_per_hour").value;
@@ -26,8 +27,8 @@ form.addEventListener("submit", async (e) => { // Pas oublier async vu qu'on att
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
-            // Envoyer tout le paquet de valeur du formulaire dans le controlleur gr$ace au body
-            body: JSON.stringify({ name, advantage, disadvantage, price_per_hour, quartier, other_price })
+            // Envoyer tout le paquet d'infos du formulaire dans le controlleur grâce au body
+            body: JSON.stringify({ firstName, lastName, advantage, disadvantage, price_per_hour, quartier, other_price })
         })
 
         if (response.ok) {
