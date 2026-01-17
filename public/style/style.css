@@ -122,6 +122,10 @@ button {
     cursor: pointer;
 }
 
+.button_rangement {
+    gap: 1rem;
+}
+
 /* articles_services */
 
 h3 {

@@ -5,7 +5,7 @@
 
     <section class="heros">
 
-        <% heroes.forEach((hero, index) => { %>
+        <% heroes.forEach((hero, index)=> { %>
 
             <article class="article_hero article_hero_<%= hero.name %> <%= index >= 3 ? 'hidden-hero' : '' %>">
                 <!-- article_hero est la classe fixe, commune à tous les articles -->
@@ -26,7 +26,10 @@
     </section>
 
     <div class="button_heros">
-        <button id="show-more-heroes">Tous nos héros</button>
+        <div class="button_rangement">
+            <button id="show-more-heroes">Tous nos héros</button>
+            <a href="/" class="button_link">Retour à l'accueil</a>
+        </div>
     </div>
     <script defer src="/script/heroes.script.js"></script>
     <%- include('partials/footer') %>

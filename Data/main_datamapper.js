@@ -3,16 +3,16 @@ import pool from "./database_client.js"; // Pour se connecter à la bdd afin de 
 
 const datamapper = {
 
-  async getHeroes (limit = null) {  
-  const query = limit 
-    ? `SELECT * FROM hero LIMIT $1;`
-    : `SELECT * FROM hero;`;
-  
-  const result = limit 
-    ? await pool.query(query, [limit])
-    : await pool.query(query);
-  return result.rows;
-},
+  async getHeroes(limit = null) {
+    const query = limit
+      ? `SELECT * FROM hero LIMIT $1;`
+      : `SELECT * FROM hero;`;
+
+    const result = limit
+      ? await pool.query(query, [limit])
+      : await pool.query(query);
+    return result.rows;
+  },
 
 
   async getHeroesById(id) {
@@ -143,28 +143,17 @@ const datamapper = {
     return result.rows[0];
   },
 
-  async createHero(name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, quartier) {
+  async createHero(name, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, quartier) {
     const result = await pool.query(
       `
-      INSERT INTO hero (name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, quartier)
+      INSERT INTO hero (name, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, quartier)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING *;
       `,
-      [name, advantage, disadvantage, price_per_hour, id_admin, other_price, img_hero, quartier]
-    );
-    return result.rows[0];
-  },
-
-  async getAdminByEmail(email) {
-    const result = await pool.query(
-      `
-    SELECT * FROM admin
-    WHERE email = $1;
-    `, [email]
+      [name, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, quartier]
     );
     return result.rows[0];
   }
-
 }
 
 export default datamapper;
