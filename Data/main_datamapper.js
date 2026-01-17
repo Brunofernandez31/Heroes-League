@@ -143,14 +143,14 @@ const datamapper = {
     return result.rows[0];
   },
 
-  async createHero(firstName, lastName, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, quartier) {
+  async createHero(firstName, lastName, advantage, disadvantage, price_per_hour, created_by, id_user, other_price, img_hero, quartier) {
     const result = await pool.query(
       `
-      INSERT INTO hero (name, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, quartier)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      INSERT INTO hero (firstname, lastname, advantage, disadvantage, price_per_hour, created_by, id_user, other_price, img_hero, quartier)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING *;
       `,
-      [firstName, lastName, advantage, disadvantage, price_per_hour, created_by, other_price, img_hero, quartier]
+      [firstName, lastName, advantage, disadvantage, price_per_hour, created_by, id_user, other_price, img_hero, quartier]
     );
     return result.rows[0];
   }

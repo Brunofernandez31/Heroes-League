@@ -1,4 +1,5 @@
 import datamapper from "./main_datamapper.js"
+import argon2 from "argon2";
 
 
 
@@ -241,11 +242,11 @@ export function displayCreateHero(_req, res) {
 };
 
 
-// Créer un super héro dans la bdd
+// Créer un super héro dans la table hero et dans la table user de la BDD
 export async function createHero(req, res) {
   try {
-    // Récupérer toutes les informations fournis par le client avec la method POST et le body du fetch
-    const { name, advantage, disadvantage, price_per_hour, other_price, quartier } = req.body;
+    // Récupérer toutes les informations fournis par le client (createHero.ejs) avec la method POST et le body du fetch
+    const { firstName, lastName, emailHero, password, advantage, disadvantage, price_per_hour, other_price, quartier } = req.body;
 
     // L'email de l'admin est dans req.user (vient du token JWT)
     const adminEmail = req.user.email;
@@ -257,12 +258,21 @@ export async function createHero(req, res) {
       return res.status(403).json({ error: "Accès refusé" });
     }
 
+    // Hacher le mdp donné au héro grâce à argon2
+    const hashPassword = await argon2.hash(password);
+
+    // Creer le héro dans la table user avec le role 'hero'
+    const user = await datamapper.createUser(emailHero, hashPassword, 'hero', firstName, lastName);
+
+    // Creer le héro dans la table hero
     const hero = await datamapper.createHero(
-      name,
+      firstName,
+      lastName,
       advantage,
       disadvantage,
       price_per_hour,
-      admin.id_user,  // Le héro sera créé par l'admin ici, ca fait référence à la colonne created_by
+      admin.id_user, // Le héro sera créé par l'admin ici, ca fait référence à la colonne created_by
+      user.id_user, // Renseigner l'identifiant de l'user
       other_price,
       'default-hero.png', // Donner une image par défaut
       quartier
@@ -270,7 +280,8 @@ export async function createHero(req, res) {
 
     res.status(201).json({
       message: "Héros créé avec succès",
-      heroId: hero.id_hero
+      heroId: hero.id_hero,
+      userId: user.id_user
     });
 
   } catch (error) {
