@@ -8,6 +8,8 @@ async function headerDynamique() {
     const register = document.getElementById("register");
     const createHero = document.getElementById("createHero");
     const mission = document.getElementById("mission");
+    const helpMe = document.getElementById("help_me");
+    const dashboard = document.getElementById("dashboard");
 
     // Récupérer le token
     const token = localStorage.getItem('token');
@@ -40,9 +42,10 @@ async function headerDynamique() {
             // Afficher le message de Bienvenue
             welcome.style.display="block";
 
-            // Enlever le bouton de connexion et d'inscription
+            // Enlever le bouton de connexion, d'inscription et le formulaire Sauvez-moi!
             login.style.display = 'none';
             register.style.display = 'none';
+            helpMe.style.display= 'none';
 
             // Ajouter le bouton de déconnexion
             logout.style.display = "block";
@@ -59,6 +62,7 @@ async function headerDynamique() {
             if (role === 'hero') {
                 createHero.style.display = 'none';
                 mission.style.display = 'block';
+                dashboard.style.display = 'block';
             } else if (role === 'admin') {
                 createHero.style.display='block';
                 mission.style.display = 'none';

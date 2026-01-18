@@ -243,3 +243,11 @@ du 04/01/2026 au 09/01/2026
   - Hero : voit "Rapport de mission" (pas "Créer un héro")
   - Non connecté : voit "Connexion" et "Inscription"
 - ✅ Formatage automatique des noms (première lettre en majuscule)
+
+### ** EXERCICE : Dashboard Héros **
+But final
+Créer une interface pour les héros connectés qui leur permet de :
+
+Voir les missions disponibles (status = 'Disponible')
+Prendre une mission (passe le status à 'En cours' + assigne le héros)
+Voir leur historique (missions terminées avec leurs stats)

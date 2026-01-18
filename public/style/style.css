@@ -61,7 +61,7 @@ h1 a {
     padding: 0.5rem;
 }
 
-#logout, #createHero, #mission, #welcome {
+#logout, #createHero, #mission, #welcome, #helpMe, #dashboard {
     display: none;
 }
 

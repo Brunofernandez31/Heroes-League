@@ -1,5 +1,6 @@
 import express from "express";
 import { router } from './src/routers/index.router.js';
+import cors from "cors";
 
 const PORT = process.env.PORT;
 
@@ -11,6 +12,11 @@ app.use(express.json()); // Pour le JSON
 // Je rajoute à express la gestion des fichiers statiques
 // Tous les fichiers dans le dossier "public" seront servis tels quels
 app.use(express.static('public'));
+
+// protection de lecture des reponses du navigateur sur l'origine du port 
+app.use(cors({
+    origin: `http://localhost:${PORT}`
+}));
 
 app.set('view engine', 'ejs');
 // On va également définir le dossier où se trouvent les templates EJS
