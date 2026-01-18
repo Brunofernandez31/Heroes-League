@@ -209,4 +209,37 @@ du 04/01/2026 au 09/01/2026
 
 ---
 
-**Dernière mise à jour :** 11/01/2026
+**mise à jour** 17/01/2026
+
+## ✅ Système de création de héros avec compte utilisateur
+
+**Objectif** : Les héros créés par l'admin ont automatiquement un compte `users` pour se connecter et remplir leurs rapports de mission.
+
+### **Architecture BDD**
+- ✅ Table `users` créée en premier avec contrainte sur les rôles (admin, hero, user)
+- ✅ Table `hero` modifiée : ajout de `id_user` (compte du héro) et `created_by` (admin créateur)
+- ✅ Migration des données existantes vers la nouvelle structure
+
+### **Création de héros améliorée**
+- ✅ Formulaire de création étendu (email, password, firstName, lastName)
+- ✅ Création simultanée du compte `users` (role='hero') et de l'entrée dans la bdd de `hero`
+- ✅ Liaison automatique via `hero.id_user`
+
+### **Middlewares et routes protégées**
+- ✅ Middleware `isHero` créé
+- ✅ Routes rapport de mission protégées par `authenticateToken` + `isHero` pour que seul le héro y accède
+- ✅ Routes création héros protégées par `authenticateToken` + `isAdmin` pour que seul l'admin y accède
+
+
+**mise à jour** 18/01/2026
+- Améliorer l'expérience utilisateur avec le système d'authentification : header dynamique, déconnexion, et affichage conditionnel des liens selon le rôle.
+
+### **Fonctionnalités implémentées**
+- ✅ Script `header.script.js` pour gérer l'affichage dynamique du header
+- ✅ Affichage "Bienvenue [Prénom Nom]" pour utilisateurs connectés
+- ✅ Bouton déconnexion fonctionnel (suppression token + redirection)
+- ✅ Affichage conditionnel des liens selon le rôle :
+  - Admin : voit "Créer un héro" (pas "Rapport de mission")
+  - Hero : voit "Rapport de mission" (pas "Créer un héro")
+  - Non connecté : voit "Connexion" et "Inscription"
+- ✅ Formatage automatique des noms (première lettre en majuscule)

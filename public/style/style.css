@@ -24,8 +24,7 @@ body {
 }
 
 main {
-    flex: 1;
-    /* ← Ajoute cette règle pour que main prenne tout l'espace disponible */
+    flex: 1; /* Grâce à cette règle main prend tout l'espace disponible */
 }
 
 /* header */
@@ -60,6 +59,14 @@ h1 a {
     border: 3px solid #A29BFE;
     border-radius: 20px;
     padding: 0.5rem;
+}
+
+#logout, #createHero, #mission, #welcome {
+    display: none;
+}
+
+#welcome {
+    color: var(--color-text);
 }
 
 /* .banniere */

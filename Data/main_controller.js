@@ -272,7 +272,7 @@ export async function createHero(req, res) {
       disadvantage,
       price_per_hour,
       admin.id_user, // Le héro sera créé par l'admin ici, ca fait référence à la colonne created_by
-      user.id_user, // Renseigner l'identifiant de l'user
+      user.id_user, // Renseigner l'identifiant de l'user connecté pour savoir de quel hero il s'agit à la connexion
       other_price,
       'default-hero.png', // Donner une image par défaut
       quartier

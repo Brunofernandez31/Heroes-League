@@ -210,7 +210,7 @@ VALUES
     'Un kit d''évasion professionnel ou un autographe du professeur de la Casa de Papel',
     'ultraquenarde.png', 45),
 
-    ('Poulpy','Octopus', 
+    ('Poulpy','L''octopus', 
     'Il a des tentacules gigantesques, super pratique pour les déménagements.', 
     'Un peu collant et sent la marais', 
     40, 
@@ -218,7 +218,7 @@ VALUES
     'Un assortiment de crabes exotiques frais ou la derniere veste du styliste Dr Octopus',
     'poulpy.png', 52),
 
-    ('Orang Wu', 'Tang Clan', 
+    ('Orang Wu Tang', 'Clan', 
     'Un gros singe agile, multi-tâche, qui intervient tout en rappant.', 
     'Peut être amené à vous demander de financer son prochain album, ne pas accepter.', 
     60, 
