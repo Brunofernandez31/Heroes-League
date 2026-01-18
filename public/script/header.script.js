@@ -58,8 +58,10 @@ async function headerDynamique() {
             const role = data.role;
             if (role === 'hero') {
                 createHero.style.display = 'none';
+                mission.style.display = 'block';
             } else if (role === 'admin') {
-                mission.style.display = 'none'
+                createHero.style.display='block';
+                mission.style.display = 'none';
             }
         } else { // Supprimer le token si la response Not Ok
             localStorage.removeItem('token');
