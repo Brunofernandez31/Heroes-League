@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { displayMissionsDashboard, updateMissionDashboard } from '../../data/main_controller.js';
+import { getMissionsDashboard, updateMissionDashboard} from '../../data/main_controller.js';
 import { authenticateToken } from '../middlewares/authenticateToken.js';
 import { isHero } from '../middlewares/isHero.middelware.js';
 
-export const rapportHeroRouter = Router();
+export const dashboardRouter = Router();
 
 // Route GET : Afficher la dashboard en fonction du héro qui est connecté
-rapportHeroRouter.get('/dashboard/:id', authenticateToken, isHero, displayMissionsDashboard);
+dashboardRouter.get('/api/dashboard', authenticateToken, isHero, getMissionsDashboard);
 
-// Route POST : modifier l'état de la mission en bdd et en dashboard
-rapportHeroRouter.patch('/dashboard/:id', authenticateToken, isHero, updateMissionDashboard);
+// Route PATCH : modifier l'état de la mission en bdd et en dashboard
+// dashboardRouter.patch('/dashboard', authenticateToken, isHero, updateMissionDashboard);

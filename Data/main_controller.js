@@ -292,12 +292,17 @@ export async function createHero(req, res) {
 
 
 // Afficher la dashboard
-export async function displayMissionsDashboard(id) {
-
+export async function getMissionsDashboard(req, res) {
+  const userId = req.user.userId
+  const heroId = await datamapper.getIdHeroByemail(userId); // Récupérer l'id du héro concerné
+  const idHero = heroId.id_hero; // Viser sa colonne
+  const getmission = await datamapper.getMissionDashboard(idHero);
+  console.log(getmission)
+  res.json({getmission})
 };
 
 
 // update la mission sur la bdd et la dashboard
-export async function updateMissionDashboard(id) {
-
+export async function updateMissionDashboard(req, res) {
+console.log("test")
 };

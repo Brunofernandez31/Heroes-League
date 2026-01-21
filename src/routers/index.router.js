@@ -6,6 +6,7 @@ import { createClientRouter } from '../routers/sauvez_moi.router.js'
 import { rapportHeroRouter } from './rapport_mission.router.js';
 import { authRouter } from './auth.router.js';
 import { displayHeroRouter } from './createHero.router.js';
+import { dashboardRouter } from './dashboard.router.js';
 
 export const router = Router();
 
@@ -17,3 +18,4 @@ router.use(createClientRouter);
 router.use(rapportHeroRouter);
 router.use(authRouter);
 router.use(displayHeroRouter);
+router.use(dashboardRouter);

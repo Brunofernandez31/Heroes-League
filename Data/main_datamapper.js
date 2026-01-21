@@ -1,4 +1,5 @@
 import pool from "./database_client.js"; // Pour se connecter à la bdd afin de faire des requetes
+import { updateMissionDashboard } from "./main_controller.js";
 
 
 const datamapper = {
@@ -109,6 +110,18 @@ const datamapper = {
     return result.rows[0];
   },
 
+  async getMissionDashboard (id) {
+    const result = await pool.query(
+      `
+      SELECT id_mission, description, city, start_date, duration, id_client, status, urgency
+      FROM mission
+      WHERE id_hero = $1
+      `,[id]
+    );
+    return result.rows;
+  },
+
+
   async updateHero(id) {
     const result = await pool.query(
       `
@@ -128,6 +141,16 @@ const datamapper = {
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
       `, [email, password, role, firstName, lastName]
+    );
+    return result.rows[0];
+  },
+
+  async getIdHeroByemail(idUser) {
+    const result = await pool.query(
+      `
+      SELECT id_hero from hero
+      WHERE id_user = $1 
+      `,[idUser]
     );
     return result.rows[0];
   },
