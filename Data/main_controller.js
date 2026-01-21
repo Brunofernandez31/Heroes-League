@@ -288,4 +288,16 @@ export async function createHero(req, res) {
     console.log(error);
     res.status(500).json({ error: "Erreur lors de la création du héros" });
   }
-}
+};
+
+
+// Afficher la dashboard
+export async function displayMissionsDashboard(id) {
+
+};
+
+
+// update la mission sur la bdd et la dashboard
+export async function updateMissionDashboard(id) {
+
+};

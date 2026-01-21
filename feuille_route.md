@@ -251,3 +251,20 @@ Créer une interface pour les héros connectés qui leur permet de :
 Voir les missions disponibles (status = 'Disponible')
 Prendre une mission (passe le status à 'En cours' + assigne le héros)
 Voir leur historique (missions terminées avec leurs stats)
+
+todo : 
+
+Sur le dashboard je vais afficher les missions disponibles pour le héro.
+Je vais récupérer l'id_user du héro avec req.user.userId, puis utiliser une fonction datamapper pour récupérer son id_hero.
+Je crée une route GET pour afficher la page du dashboard avec les missions où status = 'Disponible'.
+Sur le dashboard il y aura les missions affichées avec un bouton "Choisir" pour chaque mission.
+J'ai une route GET API qui récupère les missions disponibles en JSON pour le frontend.
+J'ai une route PATCH pour prendre une mission : elle va modifier 2 colonnes dans la BDD (id_hero et status).
+Dans le datamapper je prépare 3 fonctions :
+
+getAvailableMissions() pour récupérer les missions disponibles
+Une fonction pour récupérer l'id_hero depuis l'id_user
+Une fonction pour assigner le héro (UPDATE sur id_hero et status)
+
+Dans le controller j'ai updateStatusMission(req, res) qui récupère l'id_user, appelle le datamapper pour avoir l'id_hero, puis fait l'UPDATE sur la mission.
+Côté frontend : un script qui fetch les missions au chargement, les affiche, et quand on clique sur "Choisir", envoie une requête PATCH au backend puis recharge la liste.
