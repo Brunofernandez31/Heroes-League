@@ -113,7 +113,7 @@ const datamapper = {
   async getMissionDashboard (id) {
     const result = await pool.query(
       `
-      SELECT id_mission, description, city, start_date, duration, id_client, status, urgency
+      SELECT id_mission, description, city, start_date, id_client, status, urgency
       FROM mission
       WHERE id_hero = $1
       `,[id]

@@ -1,12 +1,4 @@
 const token = localStorage.getItem('token');
-const mission = document.getElementById("number_mission");
-const client = document.getElementById("number_client");
-const description = document.getElementById("description");
-const city = document.getElementById("city");
-const start = document.getElementById("start");
-const duration = document.getElementById("duration");
-const statusUser = document.getElementById("status");
-const urgency = document.getElementById("urgency");
 
 async function getMission() {
     const response = await fetch('/api/dashboard', {
@@ -15,30 +7,43 @@ async function getMission() {
             "content-Type": "application/json"
         }
     })
-    const data = await response.json();
-    console.log(data.getmission)
+    
+    const data = await response.json(); // La réponse du back contenant les informations pioché en bdd
+    console.log(data.getmission) // On vise getmission car sur la fonction du controller on fait res.json({getmission})
+    
     if (response.ok) {
-        const dataMission = data.getmission;
-        dataMission.forEach(mission => {
+        
+        const dataMission = data.getmission; // data.getmission est un tableau d'objet
+        // Afin d'afficher toutes les missions on va boucler dessus
+        dataMission.forEach(mission => { // mission contiendra qu'un seul element du tableau d'objet de data.getmission
             
-            const idMission = data.id_mission;
-            const descriptionMission = data.description;
-            const cityMission = data.city;
-            const startMission = data.start_date;
-            const durationMission = data.duration;
-            const clientMission = data.id_client;
-            const statusMission = data.status;
-            const urgencyMission = data.urgency;
+            const idMission = mission.id_mission;
+            const descriptionMission = mission.description;
+            const cityMission = mission.city;
+            const startMission = mission.start_date;
+            const clientMission = mission.id_client;
+            const statusMission = mission.status;
+            const urgencyMission = mission.urgency;
             
-            mission.textContent = idMission;
-            description.textContent = descriptionMission;
-            city.textContent = cityMission;
-            start.textContent = startMission;
-            duration.textContent = durationMission;
-            client.textContent = clientMission;
-            statusUser.textContent = statusMission;
+            const articleHtml =
+            `
+            <article class="mission">
+            <p>Numéro de la mission : ${idMission}</p>
+            <p>Identifiant du client n°${clientMission}</p>
+            <p>Description : ${descriptionMission}</p>
+            <p>Ville : ${cityMission}</p>
+            <p>Date du commencement : ${startMission}</p>
+            <p>Statut : ${statusMission}</p>
+            <p>Urgence : ${urgencyMission}</p>
+            <button type="submit" id="valide_mission">Choisir cette mission</button>
+            <a href="/">Retour à l'accueil</a>
+            </article>
+            `
+
+            const section = document.getElementById("section_dashboard");
+            section.innerHTML += articleHtml;
+
         });
-        urgency.textContent = urgencyMission;
     } else {
         const error = await response.json();
         alert("Erreur : " + error.error);
