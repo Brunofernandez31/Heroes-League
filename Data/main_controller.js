@@ -291,10 +291,15 @@ export async function createHero(req, res) {
 };
 
 
-// Afficher la dashboard
+// Rendre la vue de la page html de la dashboard
+export function displayDashboard(_req, res) {
+  res.render("dashboard")
+};
+
+// selectionner les missions de la dashboard en ayant l'id du héro concerné
 export async function getMissionsDashboard(req, res) {
   const userId = req.user.userId
-  const heroId = await datamapper.getIdHeroByemail(userId); // Récupérer l'id du héro concerné
+  const heroId = await datamapper.getIdHeroByIdUser(userId); // Récupérer l'id du héro concerné
   const idHero = heroId.id_hero; // Viser sa colonne
   const getmission = await datamapper.getMissionDashboard(idHero);
   console.log(getmission)

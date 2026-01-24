@@ -26,7 +26,7 @@ buttonSubmit.addEventListener("click", async (e) => {
         });
 
         const data = await response.json();
-        // console.log(data) // token : leTokenSuperLong
+        console.log(data) // token : leTokenSuperLong
 
         if (response.ok) {  // Status 200-299
             console.log("Connexion réussie !");

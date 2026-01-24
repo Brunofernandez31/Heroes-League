@@ -145,7 +145,7 @@ const datamapper = {
     return result.rows[0];
   },
 
-  async getIdHeroByemail(idUser) {
+  async getIdHeroByIdUser(idUser) {
     const result = await pool.query(
       `
       SELECT id_hero from hero

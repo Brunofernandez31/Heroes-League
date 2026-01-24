@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export async function authenticateToken (req, res, next) {
     try {
         const userToken = req.headers.authorization; // Récupérer le "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV"
-        console.log(userToken)
+        // console.log(userToken)
         const arrayToken = userToken.split(" "); // séparer le mot bearer du token
         const token = arrayToken[1]; // Garder uniquement le token
         if (!token) { 
