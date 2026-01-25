@@ -27,21 +27,21 @@ async function getMission() {
             
             const articleHtml =
             `
-            <article class="mission">
-            <p>Numéro de la mission : ${idMission}</p>
-            <p>Identifiant du client n°${clientMission}</p>
+            <article class="article_mission">
+            <p class = "title_mission">Mission n°:${idMission}</p>
             <p>Description : ${descriptionMission}</p>
+            <p>Identifiant du client n°${clientMission}</p>
             <p>Ville : ${cityMission}</p>
-            <p>Date du commencement : ${startMission}</p>
+            <p>Date de la demande : ${startMission}</p>
             <p>Statut : ${statusMission}</p>
             <p>Urgence : ${urgencyMission}</p>
             <button type="submit" id="valide_mission">Choisir cette mission</button>
-            <a href="/">Retour à l'accueil</a>
+            <a href="/" class="button_link">Retour à l'accueil</a>
             </article>
             `
 
             const section = document.getElementById("section_dashboard");
-            section.innerHTML += articleHtml;
+            section.innerHTML = section.innerHTML+articleHtml;
 
         });
     } else {

@@ -218,8 +218,7 @@ h3 {
 
 .heros article {
     position: relative;
-    overflow: hidden;
-    /* Pour que l'overlay ne dépasse pas */
+    overflow: hidden; /* Pour que l'overlay ne dépasse pas */
 }
 
 .heros .img_hero {
@@ -244,7 +243,8 @@ h3 {
         transform: translateY(0);
     }
 }
-/* L'overlay cache par défaut et se positionne sur l'image */
+
+/* L'overlay se cache par défaut et se positionne sur l'image */
 .heros .overlay {
     position: absolute;
     top: 0;
@@ -262,7 +262,7 @@ h3 {
     color: white;
 }
 
-/* Au survol de l'article, l'overlay apparaît */
+/* Au survol de l'article, l'overlay apparaît grâce à opacity */
 .heros article:hover .overlay {
     opacity: 1;
 }
@@ -390,8 +390,6 @@ h3 {
 }
 
 
-
-
 /* testimonies */
 
 .testimonies {
@@ -447,6 +445,7 @@ h3 {
     transform: translateX(-50%);
     border: 8px solid #A29BFE;
 }
+
 
 /* Sauvez-moi ! */
 
@@ -521,8 +520,27 @@ label {
     /* Petit effet au survol */
 }
 
-/* login */
 
+/* Dashboard mission */
+
+.dashboard {
+    margin: 3rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.article_mission {
+    padding: 20px;
+    border: 1px solid red;
+    width: 30%;
+    background-color: grey;
+}
+
+.title_mission {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
 
 
 /* footer */

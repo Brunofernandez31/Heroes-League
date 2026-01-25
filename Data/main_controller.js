@@ -82,7 +82,7 @@ export async function displayTestimonies(_req, res) {
 
 
 
-// Trouver les infos du formulaire client et insérer la mission dans la BDD
+// Trouver les infos du formulaire client (sauvez_moi.ejs) et insérer la mission dans la BDD
 
 export async function findClient(req, res) {
 
@@ -99,10 +99,10 @@ export async function findClient(req, res) {
     return
   }
 
-  //Chercher si le client dans la bdd
+  //Chercher si le client existe dans la bdd
   const existingClient = await datamapper.getClientByMail(clientMail);
 
-  let clientId; // Attention au scope vu qu'on en a besoin dans les deux cas de l'ID, il faut le déclarer undefined avant
+  let clientId; // Attention au scope vu qu'on a besoin dans les deux conditions de l'ID, il faut le déclarer undefined avant
 
   if (existingClient) {
     // Le client existe déjà
@@ -124,7 +124,7 @@ export async function findClient(req, res) {
 
 
 
-// Fonction permettant de prévisualiser le rapport envoie envoie. Dans le but d'afficher le prix total
+// Fonction permettant de prévisualiser le rapport avant l'envoie. Dans le but d'afficher le prix total
 
 export async function previewRapport(req, res) {
   //Récupérer l'id de la mission, comme on est en back on utilise les req.params
