@@ -21,7 +21,8 @@ async function getMission() {
             const descriptionMission = mission.description;
             const cityMission = mission.city;
             const startMission = mission.start_date;
-            const clientMission = mission.id_client;
+            const formattedDate = new Date(startMission).toLocaleDateString('fr-FR') // Formater les dates en version fr
+            const clientMission = mission.client_name;
             const statusMission = mission.status;
             const urgencyMission = mission.urgency;
             
@@ -30,9 +31,9 @@ async function getMission() {
             <article class="article_mission">
             <p class = "title_mission">Mission n°:${idMission}</p>
             <p>Description : ${descriptionMission}</p>
-            <p>Identifiant du client n°${clientMission}</p>
+            <p>Nom du client : ${clientMission}</p>
             <p>Ville : ${cityMission}</p>
-            <p>Date de la demande : ${startMission}</p>
+            <p>Date de la demande : ${formattedDate}</p>
             <p>Statut : ${statusMission}</p>
             <p>Urgence : ${urgencyMission}</p>
             <button type="submit" id="valide_mission">Choisir cette mission</button>
