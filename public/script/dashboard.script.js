@@ -19,6 +19,7 @@ async function getMission() {
             
             const idMission = mission.id_mission;
             const descriptionMission = mission.description;
+            const descriptionFormatted = descriptionMission.replace(/([.!?;]) /g, "$1\n"); // Formater en retour à la ligne suivi quelques ponctuations
             const cityMission = mission.city;
             const startMission = mission.start_date;
             const formattedDate = new Date(startMission).toLocaleDateString('fr-FR') // Formater les dates en version fr
@@ -26,20 +27,24 @@ async function getMission() {
             const statusMission = mission.status;
             const urgencyMission = mission.urgency;
             
-            const articleHtml =
+            const articleHtml = 
             `
             <article class="article_mission">
-            <p class = "title_mission">Mission n°:${idMission}</p>
-            <p>Description : ${descriptionMission}</p>
-            <p>Nom du client : ${clientMission}</p>
-            <p>Ville : ${cityMission}</p>
-            <p>Date de la demande : ${formattedDate}</p>
-            <p>Statut : ${statusMission}</p>
-            <p>Urgence : ${urgencyMission}</p>
-            <button type="submit" id="valide_mission">Choisir cette mission</button>
-            <a href="/" class="button_link">Retour à l'accueil</a>
+            <p class="title_mission"><span class="wordBold">Mission n°:</span> ${idMission}</p>
+            <div class="article_mission_rangement">
+                <p><span class="wordBold">Nom du client : </span> ${clientMission}</p>
+                <p><span class="wordBold">Commence le :</span> ${formattedDate}</p>
+                <p class="description_mission"><span class="wordBold">Description :</span> ${descriptionFormatted}</p>
+                <p><span class="wordBold">Ville :</span> ${cityMission}</p>
+                <p><span class="wordBold">Urgence :</span> ${urgencyMission}</p>
+                <p><span class="wordBold">Statut :</span> ${statusMission}</p>
+            </div>
+                <div>
+                <button type="submit">Choisir cette mission</button>
+                <a href="/" class="button_link">Retour à l'accueil</a>
+                </div>
             </article>
-            `
+            `;
 
             const section = document.getElementById("section_dashboard");
             section.innerHTML = section.innerHTML+articleHtml;
