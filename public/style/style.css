@@ -555,6 +555,9 @@ label {
     font-weight: bold;
 }
 
+.button_finish_mission, .button_annuler_mission {
+    display: none;
+}
 
 /* footer */
 

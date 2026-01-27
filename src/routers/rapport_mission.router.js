@@ -6,7 +6,7 @@ import { isHero } from '../middlewares/isHero.middelware.js';
 export const rapportHeroRouter = Router();
 
 // Route GET : Afficher le formulaire de rapport de mission
-rapportHeroRouter.get('/rapport_mission/:id', authenticateToken, isHero, displayRapportMission);
+rapportHeroRouter.get('/rapport_mission/:id', displayRapportMission);
 
 // Route POST : Traiter l'affichage du formulaire de rapport de mission AVANT ENVOI
 // L'URL du navigateur ne change pas, mais la requête HTTP est bien envoyée en arrière-plan grâce au fetch (méthode AJAX)
