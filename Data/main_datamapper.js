@@ -110,14 +110,14 @@ const datamapper = {
     return result.rows[0];
   },
 
-  async getMissionDashboard (id) {
+  async getMissionDashboard(id) {
     const result = await pool.query(
       `
       SELECT mission.id_mission, mission.description, mission.city, mission.start_date, mission.id_client, mission.status, mission.urgency, client.name as client_name
       FROM mission
       JOIN client ON mission.id_client = client.id_client
-      WHERE id_hero = $1
-      `,[id]
+      WHERE (id_hero IS NULL OR id_hero = $1)
+      `, [id]
     );
     return result.rows;
   },
@@ -151,7 +151,7 @@ const datamapper = {
       `
       SELECT id_hero from hero
       WHERE id_user = $1 
-      `,[idUser]
+      `, [idUser]
     );
     return result.rows[0];
   },

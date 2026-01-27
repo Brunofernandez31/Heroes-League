@@ -302,7 +302,6 @@ export async function getMissionsDashboard(req, res) {
   const heroId = await datamapper.getIdHeroByIdUser(userId); // Récupérer l'id du héro concerné
   const idHero = heroId.id_hero; // Viser sa colonne
   const getmission = await datamapper.getMissionDashboard(idHero);
-  console.log(getmission)
   res.json({getmission})
 };
 
