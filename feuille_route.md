@@ -268,3 +268,9 @@ Une fonction pour assigner le héro (UPDATE sur id_hero et status)
 
 Dans le controller j'ai updateStatusMission(req, res) qui récupère l'id_user, appelle le datamapper pour avoir l'id_hero, puis fait l'UPDATE sur la mission.
 Côté frontend : un script qui fetch les missions au chargement, les affiche, et quand on clique sur "Choisir", envoie une requête PATCH au backend puis recharge la liste.
+
+
+Dans mon idée maintenant il faudrait faire quelque chose avec ce bouton "choisir cette mission"
+
+Quand on choisit la mission, elle passe de "disponible" à "en cours", j'ai un autre bouton disant "terminée" 
+et lorsqu'on va cliquer sur "terminée" ça va me rediriger vers ma page de rapport de mission

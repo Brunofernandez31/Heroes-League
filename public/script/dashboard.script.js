@@ -48,7 +48,6 @@ async function getMission() {
 
             const section = document.getElementById("section_dashboard");
             section.innerHTML = section.innerHTML+articleHtml;
-
         });
     } else {
         const error = await response.json();

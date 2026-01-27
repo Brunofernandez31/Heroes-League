@@ -117,6 +117,16 @@ const datamapper = {
       FROM mission
       JOIN client ON mission.id_client = client.id_client
       WHERE (id_hero IS NULL OR id_hero = $1)
+      ORDER BY 
+      CASE 
+        WHEN id_hero = $1 THEN 0
+        ELSE 1
+      END,
+      CASE urgency
+        WHEN 'immediate' THEN 1
+        WHEN 'threeDays' THEN 2
+        WHEN 'hebdomadaire' THEN 3
+      END
       `, [id]
     );
     return result.rows;
