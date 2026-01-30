@@ -274,3 +274,7 @@ Dans mon idée maintenant il faudrait faire quelque chose avec ce bouton "choisi
 
 Quand on choisit la mission, elle passe de "disponible" à "en cours", j'ai un autre bouton disant "terminée" 
 et lorsqu'on va cliquer sur "terminée" ça va me rediriger vers ma page de rapport de mission
+
+UPDATE mission 
+SET status = 'Disponible', id_hero = NULL 
+WHERE status = 'En cours';

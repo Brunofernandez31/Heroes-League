@@ -96,6 +96,17 @@ const datamapper = {
     return result.rows[0]; // Retourner que le premier élément du tableau
   },
 
+  async getMissionEnCoursByHero(id) {
+    const result = await pool.query(
+      `
+      SELECT id_hero, status
+      FROM mission
+      WHERE id_hero = $1 AND status = 'En cours'
+      `, [id] 
+    );
+    return result.rows[0]; // Retourner que le premier élément du tableau
+  },
+
 
   async updateMission(id_mission, id_hero, duration, comments, total_price, mission_result) {
     const result = await pool.query(
@@ -187,19 +198,19 @@ const datamapper = {
     return result.rows[0];
   },
 
-  async updateMissionById(id_mission, id_hero) { 
-  const result = await pool.query(
-    `
+  async updateMissionById(id_mission, id_hero) {
+    const result = await pool.query(
+      `
     UPDATE mission 
     SET id_hero = $2, status = 'En cours'
     WHERE id_mission = $1
     RETURNING *
     `,
-    [id_mission, id_hero] 
-  );
-  // console.log(result.rows[0])
-  return result.rows[0];
-}
+      [id_mission, id_hero]
+    );
+    // console.log(result.rows[0])
+    return result.rows[0];
+  }
 
 }
 

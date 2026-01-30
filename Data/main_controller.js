@@ -30,7 +30,7 @@ export async function displayRapportMission(req, res) {
 
   //Récupérer l'id depuis le parametre dans l'URL
   const idUrl = req.params.id;
-  
+
   const result = await datamapper.getHeroes();
   const mission = await datamapper.getMissionById(idUrl); //Utiliser l'id récupérer depuis l'URL
 
@@ -309,12 +309,16 @@ export async function getMissionsDashboard(req, res) {
 // update la mission sur la bdd et la dashboard
 export async function updateMissionDashboardById(req, res) {
   const userId = req.user.userId;
-  // console.log(`UserId: ${userId}`)
   const takeHero = await datamapper.getIdHeroByIdUser(userId); // Récupérer le héro concerné avec l'id User
-  
+
   const idHero = takeHero.id_hero;
   const idMission = req.params.id;
+
+  const checkMission = await datamapper.getMissionEnCoursByHero(idHero); // Vérifier si le héro n'a pas d'autres missions en cours
+
+  if (checkMission) {
+    return res.status(400).json({error : "Vous avez déjà une mission en cours"})
+  }
   const update = await datamapper.updateMissionById(idMission, idHero);
-  // console.log(update)
-  res.status(200).json({mission : update})
+  res.status(200).json({ mission: update })
 };

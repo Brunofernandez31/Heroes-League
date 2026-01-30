@@ -40,9 +40,10 @@ async function getMission() {
                 <p class ="status_mission"><span class="wordBold">Statut :</span> ${statusMission}</p>
             </div>
                 <div>
-                <button type="submit" class="button_choose_mission" data-choosemission="${idMission}">Choisir cette mission</button>
+                <button type="submit" class="button_choose_mission">Choisir cette mission</button>
+                <button type="submit" class="button_validate_mission" data-choosemission="${idMission}">Confirmer</button>
                 <button type="submit" class="button_annuler_mission">Annuler le choix</button>
-                <button type="submit" class="button_finish_mission" data-finishmission="${idMission}">Terminer la mission ?</button>
+                <button type="submit" class="button_finish_mission" data-finishmission="${idMission}">Terminer la mission</button>
                 <a href="/" class="button_link">Retour à l'accueil</a>
                 </div>
             </article>
@@ -53,12 +54,42 @@ async function getMission() {
 
         });
 
-        const chooseMission = document.querySelectorAll(".button_choose_mission");// Sélectionner tous les boutons dupliqués
+        const chooseMission = document.querySelectorAll(".button_choose_mission");// Sélectionner tous les boutons "Choisir cette mission" dupliqués
 
         chooseMission.forEach(buttonChooseMission => { // Boucler pour mettre un listener sur chacun des boutons
             buttonChooseMission.addEventListener('click', async () => {
-                buttonChooseMission.textContent = "Mission choisie"; // Remplacer totalement le texte existant du boutton
-                const buttonIdChoose = Number(buttonChooseMission.dataset.choosemission);
+                buttonChooseMission.style.display = "none"; // Cacher le bouton "Choisir la mission"
+
+                // On doit récupérer le parent du bouton pour afficher les autres boutons de manière dynamique
+                const buttonParent = buttonChooseMission.parentElement;
+                const buttonAnnuler = buttonParent.querySelector(".button_annuler_mission");
+                const buttonTerminer = buttonParent.querySelector(".button_finish_mission");
+                const buttonValidate = buttonParent.querySelector(".button_validate_mission");
+
+                buttonAnnuler.style.display = "block"; // Afficher le bouton "Annuler le choix"
+                buttonTerminer.style.display = "block"; // Afficher le bouton "Terminer la mission"
+                buttonValidate.style.display = "block"; // Afficher le bouton "Confirmer"
+
+                buttonAnnuler.addEventListener('click', () => {
+                    buttonAnnuler.style.display = "none"; // Cacher le bouton "Annuler le choix"
+                    buttonTerminer.style.display = "none"; // Cacher le bouton "Terminer la mission"
+                    buttonValidate.style.display = "none"; // Cacher le bouton "Terminer"
+                    buttonChooseMission.style.display = "block"; // Afficher le bouton "Choisir la mission"
+                });
+
+                buttonTerminer.addEventListener('click', () => {
+                    const buttonIdMission = Number(buttonTerminer.dataset.finishmission); // Forcer le data en nombre pour etre prit en compte
+                    window.location.href = `/rapport_mission/${buttonIdMission}`; // Rediriger vers la page de la conception du rapport de mission
+                })
+
+
+            })
+        });
+
+        const allBouttonValidateMission = document.querySelectorAll(".button_validate_mission");// Sélectionner tous les boutons "Confirmer" dupliqués
+        allBouttonValidateMission.forEach(button => {
+            button.addEventListener('click', async () => {
+                const buttonIdChoose = Number(button.dataset.choosemission); // Forcer le data en nombre pour etre prit en compte
                 const response = await fetch(`/api/mission/${buttonIdChoose}/update`, {
                     method: "PATCH",
                     headers: {
@@ -67,38 +98,29 @@ async function getMission() {
                     }
                 });
 
-                if (response.ok) {  // Status 200-299
+                if (response.ok) {
+                    const section = document.getElementById("section_dashboard");
+                    section.innerHTML = "";
+                    await getMission();
 
-                    const data = await response.json();
-                    const statusUpdate = data.mission.status;
-                    const missionStatus = document.querySelectorAll(".status_mission");
-                    missionStatus.textContent= statusUpdate
+                    // Filtrer pour n'afficher que les missions "En cours" du héro
+                    const allArticles = document.querySelectorAll(".article_mission"); // prendre tous les articles
+                    allArticles.forEach(article => {
+                        const status = article.querySelector(".status_mission").textContent; // Selectionner le contenu de status_mission
 
-                }
+                        if (!status.includes("En cours")) {
+                            article.style.display = "none";
+                            const buttonChoose = document.querySelector(".button_choose_mission");
+                            buttonChoose.style.display = "none";
 
-
-                    // On doit récupérer le parent du bouton pour afficher les autres boutons de manière dynamique
-                    const buttonParent = buttonChooseMission.parentElement;
-                    const buttonAnnuler = buttonParent.querySelector(".button_annuler_mission");
-                    const buttonTerminer = buttonParent.querySelector(".button_finish_mission");
-
-                    buttonAnnuler.style.display = "block"; // Afficher le bouton "Annuler le choix"
-                    buttonTerminer.style.display = "block"; // Afficher le bouton "Terminer la mission"
-
-                    buttonAnnuler.addEventListener('click', () => {
-                        buttonAnnuler.style.display = "none"; // Cacher le bouton "Annuler le choix"
-                        buttonTerminer.style.display = "none"; // Cacher le bouton "Terminer la mission"
-                        buttonChooseMission.textContent = "Choisir cette mission"; // Remettre le texte d'origine
+                            const buttonFinish = document.querySelector(".button_finish_mission");
+                            buttonFinish.style.display = "block"
+                        }
                     });
+                }
+            })
+        })
 
-                    buttonTerminer.addEventListener('click', () => {
-                        const buttonIdMission = Number(buttonTerminer.dataset.finishmission);
-                        window.location.href = `/rapport_mission/${buttonIdMission}`;
-                    })
-
-
-                })
-        });
 
     } else {
         const error = await response.json();

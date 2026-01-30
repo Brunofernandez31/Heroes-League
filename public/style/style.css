@@ -555,7 +555,7 @@ label {
     font-weight: bold;
 }
 
-.button_finish_mission, .button_annuler_mission {
+.button_finish_mission, .button_annuler_mission, .button_validate_mission {
     display: none;
 }
 
