@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { displayDashboard ,getMissionsDashboard, updateMissionDashboard} from '../../data/main_controller.js';
+import { displayDashboard ,getMissionsDashboard, updateMissionDashboardById} from '../../data/main_controller.js';
 import { authenticateToken } from '../middlewares/authenticateToken.js';
 import { isHero } from '../middlewares/isHero.middelware.js';
 
@@ -12,4 +12,4 @@ dashboardRouter.get('/dashboard', displayDashboard);
 dashboardRouter.get('/api/dashboard', authenticateToken, isHero, getMissionsDashboard);
 
 // Route PATCH : modifier l'état de la mission en bdd et en dashboard
-// dashboardRouter.patch('/dashboard', authenticateToken, isHero, updateMissionDashboard);
+dashboardRouter.patch('/api/mission/:id/update', authenticateToken, isHero, updateMissionDashboardById);

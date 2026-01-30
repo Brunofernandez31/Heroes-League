@@ -29,16 +29,16 @@ export function displaySauvezMoiForm(_req, res) {
 export async function displayRapportMission(req, res) {
 
   //Récupérer l'id depuis le parametre dans l'URL
-  const idUrl = req.params.id
-
+  const idUrl = req.params.id;
+  
   const result = await datamapper.getHeroes();
   const mission = await datamapper.getMissionById(idUrl); //Utiliser l'id récupérer depuis l'URL
 
   res.render("rapport_mission", {
     heroes: result,
     mission
-  });
-};
+  })
+}
 
 
 
@@ -299,14 +299,22 @@ export function displayDashboard(_req, res) {
 // selectionner les missions de la dashboard en ayant l'id du héro concerné
 export async function getMissionsDashboard(req, res) {
   const userId = req.user.userId
-  const heroId = await datamapper.getIdHeroByIdUser(userId); // Récupérer l'id du héro concerné
+  const heroId = await datamapper.getIdHeroByIdUser(userId); // Récupérer le héro concerné avec l'id User
   const idHero = heroId.id_hero; // Viser sa colonne
   const getmission = await datamapper.getMissionDashboard(idHero);
-  res.json({getmission})
+  res.json({ getmission })
 };
 
 
 // update la mission sur la bdd et la dashboard
-export async function updateMissionDashboard(req, res) {
-console.log("test")
+export async function updateMissionDashboardById(req, res) {
+  const userId = req.user.userId;
+  // console.log(`UserId: ${userId}`)
+  const takeHero = await datamapper.getIdHeroByIdUser(userId); // Récupérer le héro concerné avec l'id User
+  
+  const idHero = takeHero.id_hero;
+  const idMission = req.params.id;
+  const update = await datamapper.updateMissionById(idMission, idHero);
+  // console.log(update)
+  res.status(200).json({mission : update})
 };

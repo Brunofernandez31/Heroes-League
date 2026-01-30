@@ -1,6 +1,4 @@
 import pool from "./database_client.js"; // Pour se connecter à la bdd afin de faire des requetes
-import { updateMissionDashboard } from "./main_controller.js";
-
 
 const datamapper = {
 
@@ -187,11 +185,22 @@ const datamapper = {
       [firstName, lastName, advantage, disadvantage, price_per_hour, created_by, id_user, other_price, img_hero, quartier]
     );
     return result.rows[0];
-  }
+  },
+
+  async updateMissionById(id_mission, id_hero) { 
+  const result = await pool.query(
+    `
+    UPDATE mission 
+    SET id_hero = $2, status = 'En cours'
+    WHERE id_mission = $1
+    RETURNING *
+    `,
+    [id_mission, id_hero] 
+  );
+  // console.log(result.rows[0])
+  return result.rows[0];
+}
+
 }
 
 export default datamapper;
-
-
-
-
