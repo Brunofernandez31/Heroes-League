@@ -5,7 +5,12 @@ const emailUser = document.getElementById("email_login"); // Ne pas récupérer 
 const passwordUser = document.getElementById("password_login");
 const buttonSubmit = document.getElementById("send_login");
 
-
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+}
 
 buttonSubmit.addEventListener("click", async (e) => {
 
@@ -24,20 +29,19 @@ buttonSubmit.addEventListener("click", async (e) => {
                 password
             })
         });
-
-        const data = await response.json();
-        console.log(data) // token : leTokenSuperLong
-
+        
         if (response.ok) {  // Status 200-299
+            const data = await response.json();
             console.log("Connexion réussie !");
             localStorage.setItem('token', data.token); // Stockage du token dans le localStorage
             window.location.href = '/';  // Redirige vers la page d'accueil
         } else {
-            localStorage.removeItem('token');  // Supprime le vieux token s'il est expiré
+            const error = await response.json();
+            showToast(error.error)
         }
 
     } catch (error) {
-        alert("Erreur, impossible de se connecter au serveur")
+        showToast("Erreur, impossible de se connecter au serveur");
         console.error(error);  // Affiche l'erreur pour débug
     }
 });
