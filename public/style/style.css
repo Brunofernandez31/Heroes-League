@@ -563,10 +563,10 @@ label {
 /* toast notification */
 
 .toast {
-    position: fixed;                                    /* fixé en bas de l'écran */
+    position: fixed;                                    /* fixé en haut de l'écran */
     top: 2rem;
     left: 50%;
-    transform: translateX(-50%) translateY(-150%);       /* caché en dessous par défaut */
+    transform: translateX(-50%) translateY(-200%);       /* caché au dessus par défaut */
     background-color: var(--bg-toast);
     color: var(--color-text);
     padding: 1rem 2rem;

@@ -1,6 +1,13 @@
 // Récupérer le formulaire
 const form = document.getElementById("create_hero_form");
 
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
 form.addEventListener("submit", async (e) => { // Pas oublier async vu qu'on attend une réponse du serveur
     try {
         e.preventDefault();
@@ -40,7 +47,8 @@ form.addEventListener("submit", async (e) => { // Pas oublier async vu qu'on att
             window.location.href = "/"; // Rediriger vers l'accueil
         } else {
             const error = await response.json();
-            alert("Erreur : " + error.error);
+            localStorage.removeItem('token');
+            showToast(error.error);
         }
 
     }
