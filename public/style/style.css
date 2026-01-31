@@ -1,6 +1,7 @@
 :root {
     --bg-button: #A29BFE;
     --bg-button-link:#DE6D76;
+    --bg-toast: #F54242;
     --color-h2: #A29BFE;
     --color-h3: #A29BFE;
     --bg-body: #000000;
@@ -557,6 +558,26 @@ label {
 
 .button_finish_mission, .button_annuler_mission, .button_validate_mission {
     display: none;
+}
+
+/* toast notification */
+
+.toast {
+    position: fixed;                                    /* fixé en bas de l'écran */
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-150%);       /* caché en dessous par défaut */
+    background-color: var(--bg-toast);
+    color: var(--color-text);
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-weight: var(--font-weight-bold);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);          /* remonte quand .show est ajoutée */
 }
 
 /* footer */

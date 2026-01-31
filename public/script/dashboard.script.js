@@ -1,5 +1,14 @@
 const token = localStorage.getItem('token');
 
+// Créer une notification toast
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
 async function getMission() {
     const response = await fetch('/api/dashboard', {
         headers: {
@@ -29,24 +38,24 @@ async function getMission() {
 
             const articleHtml =
                 `
-            <article class="article_mission">
-            <p class="title_mission"><span class="wordBold">Mission n°:</span> ${idMission}</p>
-            <div class="article_mission_rangement">
-                <p><span class="wordBold">Nom du client : </span> ${clientMission}</p>
-                <p><span class="wordBold">Mise en ligne le :</span> ${formattedDate}</p>
-                <p class="description_mission"><span class="wordBold">Description :</span> ${descriptionFormatted}</p>
-                <p><span class="wordBold">Ville :</span> ${cityMission}</p>
-                <p><span class="wordBold">Urgence :</span> ${urgencyMission}</p>
-                <p class ="status_mission"><span class="wordBold">Statut :</span> ${statusMission}</p>
-            </div>
-                <div>
-                <button type="submit" class="button_choose_mission">Choisir cette mission</button>
-                <button type="submit" class="button_validate_mission" data-choosemission="${idMission}">Confirmer</button>
-                <button type="submit" class="button_annuler_mission">Annuler le choix</button>
-                <button type="submit" class="button_finish_mission" data-finishmission="${idMission}">Terminer la mission</button>
-                <a href="/" class="button_link">Retour à l'accueil</a>
+                <article class="article_mission">
+                    <p class="title_mission"><span class="wordBold">Mission n°:</span> ${idMission}</p>
+                <div class="article_mission_rangement">
+                    <p><span class="wordBold">Nom du client : </span> ${clientMission}</p>
+                    <p><span class="wordBold">Mise en ligne le :</span> ${formattedDate}</p>
+                    <p class="description_mission"><span class="wordBold">Description :</span> ${descriptionFormatted}</p>
+                    <p><span class="wordBold">Ville :</span> ${cityMission}</p>
+                    <p><span class="wordBold">Urgence :</span> ${urgencyMission}</p>
+                    <p class ="status_mission"><span class="wordBold">Statut :</span> ${statusMission}</p>
                 </div>
-            </article>
+                <div>
+                    <button type="submit" class="button_choose_mission">Choisir cette mission</button>
+                    <button type="submit" class="button_validate_mission" data-choosemission="${idMission}">Confirmer</button>
+                    <button type="submit" class="button_annuler_mission">Annuler le choix</button>
+                    <button type="submit" class="button_finish_mission" data-finishmission="${idMission}">Terminer la mission</button>
+                    <a href="/" class="button_link">Retour à l'accueil</a>
+                </div>
+                </article>
             `;
 
             const section = document.getElementById("section_dashboard");
@@ -117,6 +126,9 @@ async function getMission() {
                             buttonFinish.style.display = "block"
                         }
                     });
+                } else {
+                const error = await response.json();
+                showToast(error.error);
                 }
             })
         })
