@@ -136,7 +136,8 @@ async function getMission() {
 
     } else {
         const error = await response.json();
-        alert("Erreur : " + error.error);
+        localStorage.removeItem('token');
+        showToast(error.error);
     }
 }
 
