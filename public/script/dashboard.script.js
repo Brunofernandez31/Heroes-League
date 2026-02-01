@@ -10,6 +10,9 @@ function showToast(message) {
 }
 
 async function getMission() {
+    const loader = document.getElementById("loader");
+    loader.classList.add("loader");
+
     const response = await fetch('/api/dashboard', {
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -60,8 +63,8 @@ async function getMission() {
 
             const section = document.getElementById("section_dashboard");
             section.innerHTML = section.innerHTML + articleHtml;
-
         });
+        loader.classList.remove("loader");
 
         const chooseMission = document.querySelectorAll(".button_choose_mission");// Sélectionner tous les boutons "Choisir cette mission" dupliqués
 
@@ -135,6 +138,7 @@ async function getMission() {
 
 
     } else {
+        loader.classList.remove("loader");
         const error = await response.json();
         localStorage.removeItem('token');
         showToast(error.error);

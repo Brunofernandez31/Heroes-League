@@ -53,7 +53,7 @@ form.addEventListener("submit", async (e) => { // Pas oublier async vu qu'on att
 
     }
     catch (error) {
-        console.log("Impossible de créer le héros");
+        showToast("Impossible de créer le héros");
         console.error(error);
     }
 })

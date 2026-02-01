@@ -1,6 +1,6 @@
 :root {
     --bg-button: #A29BFE;
-    --bg-button-link:#DE6D76;
+    --bg-button-link: #DE6D76;
     --bg-toast: #F54242;
     --color-h2: #A29BFE;
     --color-h3: #A29BFE;
@@ -25,7 +25,8 @@ body {
 }
 
 main {
-    flex: 1; /* Grâce à cette règle main prend tout l'espace disponible */
+    flex: 1;
+    /* Grâce à cette règle main prend tout l'espace disponible */
 }
 
 /* header */
@@ -62,7 +63,12 @@ h1 a {
     padding: 0.5rem;
 }
 
-#logout, #createHero, #mission, #welcome, #helpMe, #dashboard {
+#logout,
+#createHero,
+#mission,
+#welcome,
+#helpMe,
+#dashboard {
     display: none;
 }
 
@@ -219,7 +225,8 @@ h3 {
 
 .heros article {
     position: relative;
-    overflow: hidden; /* Pour que l'overlay ne dépasse pas */
+    overflow: hidden;
+    /* Pour que l'overlay ne dépasse pas */
 }
 
 .heros .img_hero {
@@ -239,6 +246,7 @@ h3 {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -549,24 +557,29 @@ label {
 }
 
 .description_mission {
-    white-space: pre-line; /* Dis au navigateur de ne pas ignorer les \n et donc de respecter les retours à la ligne dans le texte */
+    white-space: pre-line;
+    /* Dis au navigateur de ne pas ignorer les \n et donc de respecter les retours à la ligne dans le texte */
 }
 
 .wordBold {
     font-weight: bold;
 }
 
-.button_finish_mission, .button_annuler_mission, .button_validate_mission {
+.button_finish_mission,
+.button_annuler_mission,
+.button_validate_mission {
     display: none;
 }
 
 /* toast notification */
 
 .toast {
-    position: fixed;                                    /* fixé en haut de l'écran */
+    position: fixed;
+    /* fixé en haut de l'écran */
     top: 2rem;
     left: 50%;
-    transform: translateX(-50%) translateY(-200%);       /* caché au dessus par défaut */
+    transform: translateX(-50%) translateY(-200%);
+    /* caché au dessus par défaut */
     background-color: var(--bg-toast);
     color: var(--color-text);
     padding: 1rem 2rem;
@@ -577,7 +590,45 @@ label {
 }
 
 .toast.show {
-    transform: translateX(-50%) translateY(0);          /* remonte quand .show est ajoutée */
+    transform: translateX(-50%) translateY(0);
+    /* remonte quand .show est ajoutée */
+}
+
+
+/* Loader */
+
+.loader {
+    border: 2px solid #FFF;
+    width: 48px;
+    height: 48px;
+    background: #FF3D00;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: rotation 2s linear infinite;
+}
+
+.loader::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 24px solid;
+    border-color: transparent #FFF;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* footer */
