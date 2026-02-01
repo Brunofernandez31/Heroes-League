@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { displayRapportMission, previewRapport, sendRapportMission } from '../../data/main_controller.js';
-import { authenticateToken } from '../middlewares/authenticateToken.js';
-import { isHero } from '../middlewares/isHero.middelware.js';
+import { displayRapportMission, previewRapport, sendRapportMission } from '../controllers/main_controller.js';
+import { authenticateToken } from '../middlewares/authenticateToken.middleware.js';
+import { isHero } from '../middlewares/isHero.middleware.js';
 
 export const rapportHeroRouter = Router();
 

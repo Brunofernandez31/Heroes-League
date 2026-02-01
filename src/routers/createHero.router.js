@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { displayCreateHero, createHero } from "../../data/main_controller.js";
-import { isAdmin } from "../middlewares/isAdmin.middelware.js"
-import { authenticateToken } from "../middlewares/authenticateToken.js"
+import { displayCreateHero, createHero } from "../controllers/main_controller.js";
+import { isAdmin } from "../middlewares/isAdmin.middleware.js"
+import { authenticateToken } from "../middlewares/authenticateToken.middleware.js"
 
 export const displayHeroRouter = Router();
 

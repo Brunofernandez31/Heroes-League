@@ -1,4 +1,5 @@
-import datamapper from "./main_datamapper.js"
+import datamapper from "../config/main_datamapper.js";
+import services from "../data/services.js"
 import argon2 from "argon2";
 
 
@@ -21,6 +22,16 @@ export async function displayHeroes(_req, res) {
 export function displaySauvezMoiForm(_req, res) {
   res.render('sauvez_moi');
 };
+
+
+
+// Afficher les services des héroes
+
+export function displayServices(_res, res) {
+  res.render("services", {
+    services
+  })
+}
 
 
 

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { displayDashboard ,getMissionsDashboard, updateMissionDashboardById} from '../../data/main_controller.js';
-import { authenticateToken } from '../middlewares/authenticateToken.js';
-import { isHero } from '../middlewares/isHero.middelware.js';
+import { displayDashboard ,getMissionsDashboard, updateMissionDashboardById} from '../controllers/main_controller.js';
+import { authenticateToken } from '../middlewares/authenticateToken.middleware.js';
+import { isHero } from '../middlewares/isHero.middleware.js';
 
 export const dashboardRouter = Router();
 

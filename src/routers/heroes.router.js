@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { displayHeroes, displayHeroesById} from '../../data/main_controller.js';
+import { displayHeroes, displayHeroesById} from '../controllers/main_controller.js';
 
 export const heroesRouter = Router();
 

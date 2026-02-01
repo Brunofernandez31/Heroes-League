@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { findClient, displaySauvezMoiForm } from '../../data/main_controller.js';
+import { findClient, displaySauvezMoiForm } from '../controllers/main_controller.js';
 
 export const createClientRouter = Router();
 

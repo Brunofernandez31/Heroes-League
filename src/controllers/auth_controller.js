@@ -1,5 +1,5 @@
 import argon2 from "argon2";
-import datamapper from "./main_datamapper.js";
+import datamapper from "../config/main_datamapper.js";
 import jwt from "jsonwebtoken"
 
 export async function register(req, res) {

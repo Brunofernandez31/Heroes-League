@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { register, login, getMe} from "../../data/auth_controller.js";
-import { displayRegister, displayLogin, createHero, displayCreateHero } from "../../data/main_controller.js";
-import { authenticateToken } from "../middlewares/authenticateToken.js"
-import { isAdmin } from "../middlewares/isAdmin.middelware.js";
+import { register, login, getMe} from "../controllers/auth_controller.js";
+import { displayRegister, displayLogin, createHero, displayCreateHero } from "../controllers/main_controller.js";
+import { authenticateToken } from "../middlewares/authenticateToken.middleware.js"
+import { isAdmin } from "../middlewares/isAdmin.middleware.js";
 
 export const authRouter = Router();
 
