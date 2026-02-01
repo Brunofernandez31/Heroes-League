@@ -7,6 +7,7 @@ import { rapportHeroRouter } from './rapport_mission.router.js';
 import { authRouter } from './auth.router.js';
 import { displayHeroRouter } from './createHero.router.js';
 import { dashboardRouter } from './dashboard.router.js';
+import { displayHeroAdminRouter } from './adminHero.router.js'
 
 export const router = Router();
 
@@ -19,3 +20,4 @@ router.use(rapportHeroRouter);
 router.use(authRouter);
 router.use(displayHeroRouter);
 router.use(dashboardRouter);
+router.use(displayHeroAdminRouter);

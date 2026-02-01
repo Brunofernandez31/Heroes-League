@@ -140,6 +140,29 @@ button {
     gap: 1rem;
 }
 
+.btn-delete {
+    background: none;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+    font-size: 3rem;
+    color: red;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.article_hero:hover .btn-delete {
+    opacity: 1;
+}
+
+.heros article:has(.btn-delete) {
+    overflow: visible !important;
+}
+
 /* articles_services */
 
 h3 {
@@ -225,8 +248,8 @@ h3 {
 
 .heros article {
     position: relative;
-    overflow: hidden;
-    /* Pour que l'overlay ne dépasse pas */
+    overflow: hidden;    /* Pour que l'overlay ne dépasse pas */
+
 }
 
 .heros .img_hero {
@@ -287,6 +310,10 @@ h3 {
 }
 
 /* cartes heros */
+
+.article_hero {
+    position: relative;
+}
 
 .article_hero_cat,
 .article_hero_carotte,

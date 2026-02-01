@@ -235,10 +235,12 @@ export async function sendRapportMission(req, res) {
 };
 
 
+
 // Afficher la vue html du formulaire d'inscription utilisateur
 export function displayRegister(_req, res) {
   res.render("register")
 };
+
 
 
 // Afficher la vue html du formulaire de connexion de l'utilisateur
@@ -247,10 +249,12 @@ export function displayLogin(_req, res) {
 };
 
 
+
 // Afficher la vue html du formulaire de création du héro
 export function displayCreateHero(_req, res) {
   res.render("createHero")
 };
+
 
 
 // Créer un super héro dans la table hero et dans la table user de la BDD
@@ -302,10 +306,13 @@ export async function createHero(req, res) {
 };
 
 
+
 // Rendre la vue de la page html de la dashboard
 export function displayDashboard(_req, res) {
   res.render("dashboard")
 };
+
+
 
 // selectionner les missions de la dashboard en ayant l'id du héro concerné
 export async function getMissionsDashboard(req, res) {
@@ -315,6 +322,7 @@ export async function getMissionsDashboard(req, res) {
   const getmission = await datamapper.getMissionDashboard(idHero);
   res.json({ getmission })
 };
+
 
 
 // update la mission sur la bdd et la dashboard
@@ -332,4 +340,22 @@ export async function updateMissionDashboardById(req, res) {
   }
   const update = await datamapper.updateMissionById(idMission, idHero);
   res.status(200).json({ mission: update })
+};
+
+
+
+// Afficher les héroes pour l'admin
+export async function displayHeroesForAdmin(_req, res) {
+  const heroes = await datamapper.getHeroesForAdmin();
+  res.render("admin_heroes", {
+    heroes
+  })
+};
+
+
+
+// Supprimer un héro
+export async function deleteHero(req, res) {
+  const idHero = req.user.userId;
+  const deleteHero = await datamapper.deleteHeroById(idHero);
 };

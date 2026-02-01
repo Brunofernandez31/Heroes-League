@@ -210,6 +210,22 @@ const datamapper = {
     );
     // console.log(result.rows[0])
     return result.rows[0];
+  },
+
+    async getHeroesForAdmin() {
+      const result = await pool.query(
+        'select * from hero'
+      )
+    return result.rows;
+  },
+
+  async deleteHeroById(id) {
+    const result = await pool.query(
+      `
+      DELETE FROM hero
+      WHERE id_hero = $1
+      `,[id]
+    )
   }
 
 }
