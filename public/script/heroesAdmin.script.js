@@ -28,7 +28,7 @@ showAll.addEventListener("click", () => {
     const hiddenHeroes = document.querySelectorAll(".hidden-hero");
 
     if (!isExpanded) {
-        
+
         hiddenHeroes.forEach((hero, index) => {
 
             setTimeout(() => {
@@ -59,17 +59,22 @@ buttonDelete.forEach(deletebtn => {
     deletebtn.addEventListener('click', async (e) => {
         e.stopPropagation(); // Empecher la propagation jusqu'au parent article que me redirigerait vers la page de mon héro que je tente de supprimé
         const id = deletebtn.dataset.id;
-        const response = await fetch (`/api/admin_heroes/${id}`, {
-            method : "DELETE",
+        const response = await fetch(`/api/admin_heroes/${id}`, {
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             }
         });
 
-        const result = await response.json();
-        showToast(result.message);
-        window.location.href = `/admin_heroes`;
-
+        if (response.ok) {
+            const result = await response.json();
+            const parentDeleteButton = deletebtn.parentElement; // Remonter au parent du logo-boutton "supprimer"
+            parentDeleteButton.remove(); // Supprimer l'article sans refresh pour un meilleur UX
+            showToast(result.message);
+        } else {
+            const error = await response.json();
+            showToast(error.error);
+        }
     })
 });
