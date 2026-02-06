@@ -360,7 +360,7 @@ export async function deleteHero(req, res) {
   const hero = await datamapper.getHeroesById(idHero);
   const userId = hero.id_user;
   
-  await datamapper.deleteIdHeroById(idHero);
+  await datamapper.deleteIdHeroById(idHero); // D'abord supprimer le héro avec le user à cause de la contrainte d'unicité de clef etrangere
   await datamapper.deleteUserHeroById(userId);
 
   res.status(200).json({ message: "Héro supprimé" })

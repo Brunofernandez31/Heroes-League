@@ -57,7 +57,7 @@ const buttonDelete = document.querySelectorAll(".btn-delete");
 
 buttonDelete.forEach(deletebtn => {
     deletebtn.addEventListener('click', async (e) => {
-        e.stopPropagation(); // Empecher la propagation jusqu'au parent
+        e.stopPropagation(); // Empecher la propagation jusqu'au parent article que me redirigerait vers la page de mon héro que je tente de supprimé
         const id = deletebtn.dataset.id;
         const response = await fetch (`/api/admin_heroes/${id}`, {
             method : "DELETE",
@@ -69,7 +69,7 @@ buttonDelete.forEach(deletebtn => {
 
         const result = await response.json();
         showToast(result.message);
-        window.location.href = `/api/admin_heroes`;
+        window.location.href = `/admin_heroes`;
 
     })
 });
