@@ -69,9 +69,10 @@ buttonDelete.forEach(deletebtn => {
 
         if (response.ok) {
             const result = await response.json();
+            showToast(result.message);
+            
             const parentDeleteButton = deletebtn.parentElement; // Remonter au parent du logo-boutton "supprimer"
             parentDeleteButton.remove(); // Supprimer l'article sans refresh pour un meilleur UX
-            showToast(result.message);
         } else {
             const error = await response.json();
             showToast(error.error);

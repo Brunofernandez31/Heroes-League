@@ -41,19 +41,19 @@ form.addEventListener("submit", async (e) => { // Pas oublier async vu qu'on att
         })
 
         if (response.ok) {
-            const data = await response.json();
-            const idHero = data.heroId;
-            console.log(`Le héro a bien été créer avec l'id ${idHero}`);
-            window.location.href = "/"; // Rediriger vers l'accueil
+            await response.json();
+            window.location.href = "/admin_heroes";
         } else {
-            const error = await response.json();
-            localStorage.removeItem('token');
-            showToast(error.error);
+            if (response.status === 401) { // Supprimer le token uniquement si on a un probleme d'authentification
+                localStorage.removeItem('token');
+                }
+
+                const error = await response.json();
+                showToast(error.error);
         }
 
     }
     catch (error) {
-        showToast("Impossible de créer le héros");
-        console.error(error);
+        showToast("Impossible de créer le héro");
     }
 })
