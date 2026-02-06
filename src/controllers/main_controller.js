@@ -356,12 +356,25 @@ export async function displayHeroesForAdmin(_req, res) {
 
 // Supprimer un héro
 export async function deleteHero(req, res) {
+  try {
   const idHero = req.params.id;
+
+  if (!idHero) {
+  res.status(404).json({error : "Id héro non trouvé"})
+  }
+
   const hero = await datamapper.getHeroesById(idHero);
   const userId = hero.id_user;
-  
+
+    if (!userId) {
+  res.status(404).json({error : "Id user non trouvé"})
+  }
+
   await datamapper.deleteIdHeroById(idHero); // D'abord supprimer le héro avec le user à cause de la contrainte d'unicité de clef etrangere
   await datamapper.deleteUserHeroById(userId);
 
   res.status(200).json({ message: "Héro supprimé" })
+  } catch {
+    res.status(500).json({error: "Erreur lors de la suppression"})
+  }
 };
