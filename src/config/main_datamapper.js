@@ -219,14 +219,27 @@ const datamapper = {
     return result.rows;
   },
 
-  async deleteHeroById(id) {
+  async deleteIdHeroById(id) {
     const result = await pool.query(
       `
       DELETE FROM hero
       WHERE id_hero = $1
+      RETURNING*
       `,[id]
     )
-  }
+    return result.rows[0];
+  },
+
+  async deleteUserHeroById(id) {
+    const result = await pool.query(
+      `
+      DELETE FROM users
+      WHERE id_user = $1
+      RETURNING*
+      `,[id]
+    )
+    return result.rows[0];
+  },
 
 }
 

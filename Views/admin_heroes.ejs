@@ -5,8 +5,8 @@
 
     <h2 id="h2_heros"><em>-</em> Nos <em>Supers</em> héros <em>-</em></h2>
 
+    <div id = "toast"></div>
     <section class="heros">
-
         <% heroes.forEach((hero, index)=> { %>
 
             <article class="article_hero article_hero_<%= hero.name %> <%= index >= 3 ? 'hidden-hero' : '' %>">
@@ -15,7 +15,7 @@
 
                 <img class="img_hero" data-id="<%=hero.id_hero%>" src="/ressources/images/<%=hero.img_hero%>"
                     alt="<%=hero.firstname%> <%=hero.lastname%>">
-                <button class="btn-delete" title="Supprimer">
+                <button class="btn-delete" data-id="<%=hero.id_hero%>" title="Supprimer">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
                 <div class="overlay">

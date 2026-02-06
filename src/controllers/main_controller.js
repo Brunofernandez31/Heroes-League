@@ -336,7 +336,7 @@ export async function updateMissionDashboardById(req, res) {
   const checkMission = await datamapper.getMissionEnCoursByHero(idHero); // Vérifier si le héro n'a pas d'autres missions en cours
 
   if (checkMission) {
-    return res.status(400).json({error : "Vous avez déjà une mission en cours"})
+    return res.status(400).json({ error: "Vous avez déjà une mission en cours" })
   }
   const update = await datamapper.updateMissionById(idMission, idHero);
   res.status(200).json({ mission: update })
@@ -356,6 +356,12 @@ export async function displayHeroesForAdmin(_req, res) {
 
 // Supprimer un héro
 export async function deleteHero(req, res) {
-  const idHero = req.user.userId;
-  const deleteHero = await datamapper.deleteHeroById(idHero);
+  const idHero = req.params.id;
+  const hero = await datamapper.getHeroesById(idHero);
+  const userId = hero.id_user;
+  
+  await datamapper.deleteIdHeroById(idHero);
+  await datamapper.deleteUserHeroById(userId);
+
+  res.status(200).json({ message: "Héro supprimé" })
 };

@@ -1,6 +1,14 @@
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
 const heros = document.querySelectorAll(".article_hero");
 // Selector All sur l'article parce que l'image possede un overlay qui empeche le clic
 
+// Afficher tous les héros
 heros.forEach(hero => {
     hero.addEventListener('click', () => {
         const id = hero.querySelector(".img_hero").dataset.id;
@@ -13,6 +21,8 @@ heros.forEach(hero => {
 const showAll = document.getElementById("show-more-heroes");
 let isExpanded = false;
 
+
+// Afficher les héros en déroulant leurs photos
 showAll.addEventListener("click", () => {
     const allHeroes = document.querySelectorAll(".article_hero");
     const hiddenHeroes = document.querySelectorAll(".hidden-hero");
@@ -40,4 +50,26 @@ showAll.addEventListener("click", () => {
         showAll.textContent = "Tous nos héros";
         isExpanded = false;
     }
+});
+
+const token = localStorage.getItem('token');
+const buttonDelete = document.querySelectorAll(".btn-delete");
+
+buttonDelete.forEach(deletebtn => {
+    deletebtn.addEventListener('click', async (e) => {
+        e.stopPropagation(); // Empecher la propagation jusqu'au parent
+        const id = deletebtn.dataset.id;
+        const response = await fetch (`/api/admin_heroes/${id}`, {
+            method : "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const result = await response.json();
+        showToast(result.message);
+        window.location.href = `/api/admin_heroes`;
+
+    })
 });
