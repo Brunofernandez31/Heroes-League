@@ -1,0 +1,64 @@
+services:
+  heroes_db:
+    image: postgres:17 # Image permettant de créer le conteneur
+    restart: unless-stopped # Redémarre automatiquement mon service en cas de crash (sauf si je l'ai éteint manuellement)
+    networks:
+      - heroes-network # Utiliser les networks pour permettre aux containers de communiquer entre eux en s'appelant par leurs nom de services
+    volumes:
+      - heroes_db-volume:/var/lib/postgresql/data # je monte mon volume heroes-data dans mon conteneur, dans le dossier où Postgres écrit par défaut ses données lorsqu'il manipule les tables
+      - ./src/config/heroes_db.sql:/docker-entrypoint-initdb.d/init.sql  # Monte le script SQL. La ligne "/docker-entrypoint-initdb.d/init.sql" Au 1er démarrage du container, pg exécute tous les fichiers sql présents
+      # Le fichier local heroes_db.sql est appelé dans le container sous le nom init.sql
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=C --lc-ctype=C" # Forcer l'encoding en UTF8
+    ports: # Si on a besoin de pouvoir contacter la BDD depuis l'extérieur, on peut rajouter ce binding de port, sinon pas besoin
+      # PORT_LOCAL:PORT_CONTENEUR
+      - ${POSTGRES_PORT}:5432
+    healthcheck: # Vérification du service s'il est en bon état, le tester 5 fois toutes les 5 secs permettant que tout se monte correctement
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  heroes-api:
+    build:
+      context: . # La racine de mon projet
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: ${PORT}
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@heroes_db:5432/${POSTGRES_DB}
+      JWT_SECRET: ${JWT_SECRET}
+      NODE_ENV: development
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      # On crée un bind volume pour le code source, qui nous permettra de développer au sein du conteneur -> on redirige l'utilisation du dossier /app depuis le conteneur vers le dossier local /api => permet le hot reload en dev
+      - .:/app # De la racine vers le dossier app
+      - /app/node_modules # Exclure les node_modules local, et utiliser uniquement ceux du conteneur
+    networks:
+      - heroes-network
+    # Obligation de depends_on car sans ça le service heroes-api démarre tout de suite, se co à pg mais comme il sera pas encore pret ça va crash
+    depends_on: # Je dépends de 
+      heroes_db: # heroes_db
+        condition: service_healthy # A condition que le service soit en bon état
+    command: npm run dev
+
+  # OPTIONNEL : Interface web pour gérer PostgreSQL
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - "${ADMINER_PORT}:8080"
+    networks:
+      - heroes-network
+    depends_on:
+      - heroes_db
+
+networks:
+  heroes-network:
+
+volumes:
+  heroes_db-volume:

@@ -56,7 +56,7 @@ CREATE TABLE "hero" (
     disadvantage TEXT,
     price_per_hour DECIMAL (7,2), 
     percent_win DECIMAL (5,2) CHECK (percent_win BETWEEN 0 AND 100) DEFAULT 100,
-    id_user INT REFERENCES "users"(id_user), -- Compte du héro (optionnel)
+    id_user INT REFERENCES "users"(id_user), 
     created_by INT NOT NULL REFERENCES "users"(id_user), -- Admin qui a créé le héro
     other_price VARCHAR(255),
     img_hero VARCHAR(255),
@@ -108,7 +108,7 @@ CREATE TABLE "have" (
 -- INSERTIONS
 -- ========================================
 
--- 1. Créer l'admin dans users AVEC un vrai mot de passe hashé
+-- 1. Créer l'admin
 
 INSERT INTO "users" (email, password, role, firstname, lastname)
 VALUES ('bruno@admin.fr', '$argon2i$v=19$m=16,t=2,p=1$dWswVmxKcVNUTlBkajZFOA$mWeb3/AkYsZpHE9g0+BhGw', 'admin', 'Bruno', 'administrateur');
