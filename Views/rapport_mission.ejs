@@ -2,42 +2,28 @@
 
     <!-- Formulaire rapport de mission -->
 
-    <h2 class="h2_mission_report" id="h2_mission_report"><em>-</em> Rapport de <em>Mission n°<%=mission.id_mission%>
-        </em> <em>-</em></h2>
+    <h2 class="h2_mission_report" id="h2_mission_report"><em>-</em> Rapport de <em>Mission n°<%=mission.id_mission%> </em> par <%=hero.firstname%> <%=hero.lastname%><em>-</em></h2>
 
     <section class="mission_report">
 
         <form id="mission_report_form" action="/rapport_mission/<%=mission.id_mission%>" method="POST">
         <!-- Ajouter un champ caché dans le HTML pour le récupérer dans le front facilement -->
         <input type="hidden" id="mission_id" value="<%= mission.id_mission %>">
-
-            <!-- Sélection du héros -->
-            <fieldset>
-                <label for="hero_select">Rédigé par </label>
-                <select name="hero_id" id="hero_select" required>
-                    <option value="" selected disabled>Choisir un héros</option>
-                    <% heroes.forEach(hero=> { %>
-                        <option value="<%= hero.id_hero %>" data-price="<%= hero.price_per_hour %>">
-                            <%= hero.name %>
-                        </option>
-                        <% }); %>
-                </select>
-            </fieldset>
+        <input type="hidden" id="hero_id" value="<%= hero.id_hero %>">
 
             <!-- Affichage du taux horaire -->
             <fieldset>
                 <label for="hourly_rate">Taux horaire du héros</label>
-                <input type="text" id="hourly_rate" readonly placeholder="Taux horaire">
+                <input type="text" id="hourly_rate" readonly value = "<%=hero.price_per_hour%>">
                 <!-- Readonly pour éviter que l'utilisateur triche et modifie lui même le prix -->
             </fieldset>
 
             <!-- Degré d'urgence -->
             <fieldset class="urgency_fieldset">
-                <legend>Degré d'urgence de la mission</legend>
                 <div class="degre_urgency">
                     <label for="urgency">Urgence</label>
                     <input type="text" id="urgency" readonly
-                        value="<%= mission.urgency === 'hebdomadaire' ? 'Normal (7 jours)' : mission.urgency === 'threeDays' ? 'Urgent (3 jours)' : 'Immédiat' %>">
+                        value="<%= mission.urgency%>">
                 </div>
             </fieldset>
 
@@ -82,11 +68,11 @@
             <div class="modal" id="preview_modal" style="display: none;">
                 <div class="modal_content">
                     <h3>Récapitulatif</h3>
-                        <p>Héros : <span id="modal_hero"></span></p>
-                        <p>Taux horaire : <span id="modal_taux"></span>€</p>
+                        <p>Héro : <%=hero.firstname%> <%=hero.lastname%></p>
+                        <p>Taux horaire : <%=hero.price_per_hour%></span>€</p>
                         <p>Durée : <span id="modal_duration"></span></p>
-                        <p>Délai d'urgence réalisé <span id="modal_urgency"></span></p>
-                        <p>Commentaire laissé par le client : <span id="modal_comments"></span></p>
+                        <p>Délai d'urgence réalisé : <span id="modal_urgency"></span>. Pénalité de <span id="modal_penality"></span>% appliqué</p>
+                        <p>Commentaire laissé par le héro : <span id="modal_comments"></span></p>
                         <p>Montant total : <span id="modal_total"></span>€</p>
                         <p>La mission a été un : <span id="modal_result">La mission est un </span></p>
                     <button type="submit" form="mission_report_form" id="send_rapport" >Envoyer le rapport</button>

@@ -41,13 +41,12 @@ export async function displayRapportMission(req, res) {
 
   //Récupérer l'id depuis le parametre dans l'URL
   const idUrl = req.params.id;
-
-  const result = await datamapper.getHeroes();
   const mission = await datamapper.getMissionById(idUrl); //Utiliser l'id récupérer depuis l'URL
-
+  const idHero = mission.id_hero;
+  const hero = await datamapper.getHeroesById(idHero);
   res.render("rapport_mission", {
-    heroes: result,
-    mission
+    mission,
+    hero
   })
 }
 
@@ -135,57 +134,35 @@ export async function findClient(req, res) {
 
 
 
-// Fonction permettant de prévisualiser le rapport avant l'envoie. Dans le but d'afficher le prix total
-
+// Prévisualiser le rapport avant l'envoie
 export async function previewRapport(req, res) {
   //Récupérer l'id de la mission, comme on est en back on utilise les req.params
   const missionId = req.params.id;
-
+  
   // Récupérer la mission en cours via datamapper et lui assigné l'id de la mission
   const mission = await datamapper.getMissionById(missionId);
-
-
-  // console.log(missionId) // Voir si on récupère bien l'id dans l'URL
-  // console.log(req.body) // Que récupère le body ? Utile pour savoir quoi pointer sur l'objet req.body
-
+  
   // Récupérer toutes les données du formulaire de rapport de mission du héro
-  const idHero = req.body.heroId; // Id héro
+  const idHero = req.body.heroId; 
+  const duration = req.body.duration; 
+  
   const urgency = mission.urgency; // Degre urgence non changeable par le héro donc pas de récupération via req.body.urgency mais plutot par la bdd
-  const duration = req.body.duration; // Temps mission
-  const comments = req.body.comments; // Commentaire de mission
-  const missionResult = req.body.missionResult; // Sucess ou failed
-
-
-  // Calculer de manière sécurisée le prix total à mettre à jour
-
-  // console.log(idHero)
-  const hero = await datamapper.getHeroesById(idHero); // Bien envoyé l'id du 
-  const nameHero = hero.name; // Viser la colonne de la bdd contenant le nom du héro
-  const heroPrice = hero.price_per_hour; // Viser la colonne de la bdd contenant le taux horaire du héro
+  
+  const hero = await datamapper.getHeroesById(idHero);
+  const heroPrice = hero.price_per_hour; 
 
   let totalPrice = 0;
-
   if (urgency === "hebdomadaire") {
-    totalPrice = heroPrice * duration * (1 + 0);
+    totalPrice = heroPrice * duration * 1;
   } else if (urgency === "threeDays") {
-    totalPrice = heroPrice * duration * (1 + 0.05);
+    totalPrice = heroPrice * duration * 1.05
   } else if (urgency === "immediate") {
-    totalPrice = heroPrice * duration * (1 + 0.15);
+    totalPrice = heroPrice * duration * 1.15
   }
 
-
-  // Renvoyer une réponse en json pour que le front puisse le comprendre
-
   res.json({
-    nameHero,
-    heroPrice,
-    duration,
-    urgency,
-    comments,
-    totalPrice,
-    missionResult
+    totalPrice
   })
-  // Plus rien ne s'éxécute après, la res est envoyée
 };
 
 
@@ -219,11 +196,11 @@ export async function sendRapportMission(req, res) {
   let totalPrice = 0;
 
   if (urgency === "hebdomadaire") {
-    totalPrice = heroPrice * missionDuration * (1 + 0);
+    totalPrice = heroPrice * duration * 1;
   } else if (urgency === "threeDays") {
-    totalPrice = heroPrice * missionDuration * (1 + 0.05);
+    totalPrice = heroPrice * duration * 1.05
   } else if (urgency === "immediate") {
-    totalPrice = heroPrice * missionDuration * (1 + 0.15);
+    totalPrice = heroPrice * duration * 1.15
   }
 
   // Appel de la fonction
