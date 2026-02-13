@@ -11,7 +11,7 @@ function showToast(message) {
 
 async function getMission() {
     const loader = document.getElementById("loader");
-    loader.classList.add("loader");
+    loader.classList.add("loader"); // pour afficher un petit logo de chargement 
 
     const response = await fetch('/api/dashboard', {
         headers: {
@@ -31,7 +31,7 @@ async function getMission() {
 
             const idMission = mission.id_mission;
             const descriptionMission = mission.description;
-            const descriptionFormatted = descriptionMission.replace(/([.!?;]) /g, "$1\n"); // Formater en retour à la ligne suivi quelques ponctuations
+            const descriptionFormatted = descriptionMission.replace(/([.!?;]) /g, "$1\n"); // Formater en retour à la ligne lorsqu'on a quelques ponctuations
             const cityMission = mission.city;
             const startMission = mission.start_date;
             const formattedDate = new Date(startMission).toLocaleDateString('fr-FR') // Formater les dates en version fr
@@ -88,20 +88,38 @@ async function getMission() {
                     buttonValidate.style.display = "none"; // Cacher le bouton "Terminer"
                     buttonChooseMission.style.display = "block"; // Afficher le bouton "Choisir la mission"
                 });
-
-                buttonTerminer.addEventListener('click', () => {
-                    const buttonIdMission = Number(buttonTerminer.dataset.finishmission); // Forcer le data en nombre pour etre prit en compte
-                    window.location.href = `/rapport_mission/${buttonIdMission}`; // Rediriger vers la page de la conception du rapport de mission
-                })
-
-
             })
         });
+
+        // Filtrer pour n'afficher que les missions "En cours" du héro
+        const allArticles = document.querySelectorAll(".article_mission"); // prendre tous les articles
+        allArticles.forEach(article => {
+            const status = article.querySelector(".status_mission").textContent; // Selectionner le contenu de status_mission
+
+            // Si on n'a pas le statut "en cours", cacher tous les autres articles
+            if (!status.includes("En cours")) { 
+                article.style.display = "none";
+            }
+
+            // Si on a le statut "en cours", gérer l'affichage des boutons
+            if (status.includes("En cours")) {
+                const buttonChoose = article.querySelector(".button_choose_mission");
+                buttonChoose.style.display = "none";
+
+                const buttonFinish = article.querySelector(".button_finish_mission");
+                buttonFinish.style.display = "block"
+
+                buttonFinish.addEventListener('click', () => {
+                    const buttonIdMission = Number(buttonFinish.dataset.finishmission); // Forcer le data en nombre pour etre prit en compte
+                    window.location.href = `/rapport_mission/${buttonIdMission}`; // Rediriger vers la page de la conception du rapport de mission
+                })
+            }
+        })
 
         const allBouttonValidateMission = document.querySelectorAll(".button_validate_mission");// Sélectionner tous les boutons "Confirmer" dupliqués
         allBouttonValidateMission.forEach(button => {
             button.addEventListener('click', async () => {
-                const buttonIdChoose = Number(button.dataset.choosemission); // Forcer le data en nombre pour etre prit en compte
+                const buttonIdChoose = Number(button.dataset.choosemission); // Forcer le dataset en nombre pour etre prit en compte
                 const response = await fetch(`/api/mission/${buttonIdChoose}/update`, {
                     method: "PATCH",
                     headers: {
@@ -113,30 +131,13 @@ async function getMission() {
                 if (response.ok) {
                     const section = document.getElementById("section_dashboard");
                     section.innerHTML = "";
-                    await getMission();
-
-                    // Filtrer pour n'afficher que les missions "En cours" du héro
-                    const allArticles = document.querySelectorAll(".article_mission"); // prendre tous les articles
-                    allArticles.forEach(article => {
-                        const status = article.querySelector(".status_mission").textContent; // Selectionner le contenu de status_mission
-
-                        if (!status.includes("En cours")) {
-                            article.style.display = "none";
-                            const buttonChoose = document.querySelector(".button_choose_mission");
-                            buttonChoose.style.display = "none";
-
-                            const buttonFinish = document.querySelector(".button_finish_mission");
-                            buttonFinish.style.display = "block"
-                        }
-                    });
+                    await getMission(); // Rappeler la fonction pour eviter de rafraichir la page et voir la maj des statuts de mission
                 } else {
                 const error = await response.json();
                 showToast(error.error);
                 }
             })
         })
-
-
     } else {
         loader.classList.remove("loader");
         const error = await response.json();
