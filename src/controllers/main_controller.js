@@ -138,18 +138,18 @@ export async function findClient(req, res) {
 export async function previewRapport(req, res) {
   //Récupérer l'id de la mission, comme on est en back on utilise les req.params
   const missionId = req.params.id;
-  
+
   // Récupérer la mission en cours via datamapper et lui assigné l'id de la mission
   const mission = await datamapper.getMissionById(missionId);
-  
+
   // Récupérer toutes les données du formulaire de rapport de mission du héro
-  const idHero = req.body.heroId; 
-  const duration = req.body.duration; 
-  
+  const idHero = req.body.heroId;
+  const duration = req.body.duration;
+
   const urgency = mission.urgency; // Degre urgence non changeable par le héro donc pas de récupération via req.body.urgency mais plutot par la bdd
-  
+
   const hero = await datamapper.getHeroesById(idHero);
-  const heroPrice = hero.price_per_hour; 
+  const heroPrice = hero.price_per_hour;
 
   let totalPrice = 0;
   if (urgency === "hebdomadaire") {
@@ -172,43 +172,32 @@ export async function previewRapport(req, res) {
 
 export async function sendRapportMission(req, res) {
 
-  //Récupérer l'id de la mission
   const missionId = req.params.id;
-  // Récupérer la mission en cours grâce à l'Id
   const mission = await datamapper.getMissionById(missionId);
 
-  // console.log(missionId) // Voir si on récupère bien l'id dans l'URL
-  console.log(req.body) // Que récupère le body ?
+  const idHero = req.body.idHero; // Id héro
+  const urgency = mission.urgency; // Degre urgence non changeable par le héro. Récup par la bdd direct
+  const missionDuration = req.body.duration; // Temps mission
+  const missionComments = req.body.comments; // Commentaire de mission
+  const missionResult = req.body.missionResultValue; // Sucess ou failed
 
-  // Récupérer toutes les données du formulaire de rapport de mission du héro
-  const idHero = req.body.hero_id; // Id héro
-  const urgency = mission.urgency; // Degre urgence non changeable par le héro donc pas de récupération via req.body.urgency mais plutot par la bdd
-  const missionDuration = req.body.mission_duration; // Temps mission
-  const missionComments = req.body.mission_comments; // Commentaire de mission
-  const missionResult = req.body.mission; // Sucess ou failed
-
-
-  // Calculer de manière sécurisée le prix total à mettre à jour
-
-  const hero = await datamapper.getHeroesById(idHero); // Bien envoyé l'id du héro
-  const heroPrice = hero.price_per_hour; // Viser la colonne de la bdd contenant le taux horaire du héro
-
+  const hero = await datamapper.getHeroesById(idHero);
+  const heroPrice = hero.price_per_hour; // récup le total horaire du héro
+  
   let totalPrice = 0;
-
   if (urgency === "hebdomadaire") {
-    totalPrice = heroPrice * duration * 1;
+    totalPrice = heroPrice * missionDuration * 1;
   } else if (urgency === "threeDays") {
-    totalPrice = heroPrice * duration * 1.05
+    totalPrice = heroPrice * missionDuration * 1.05
   } else if (urgency === "immediate") {
-    totalPrice = heroPrice * duration * 1.15
+    totalPrice = heroPrice * missionDuration * 1.15
   }
 
-  // Appel de la fonction
-  await datamapper.updateMission(missionId, idHero, missionDuration, missionComments, totalPrice, missionResult);
-  await datamapper.updateHero(idHero);
+  let priceFixed = totalPrice.toFixed(2);
 
-  res.redirect("/"); // si on utilise render c'est une erreur
-  // Ici on utilise redirect pour renvoyer vers une page et pas rendre une vue 
+  // Mettre à jour la bdd avec les info du body reçu
+  await datamapper.updateMission(missionId, idHero, missionDuration, missionComments, priceFixed, missionResult);
+  await datamapper.updateHero(idHero);
 };
 
 
@@ -334,24 +323,24 @@ export async function displayHeroesForAdmin(_req, res) {
 // Supprimer un héro
 export async function deleteHero(req, res) {
   try {
-  const idHero = req.params.id;
+    const idHero = req.params.id;
 
-  if (!idHero) {
-  res.status(404).json({error : "Id héro non trouvé"})
-  }
+    if (!idHero) {
+      res.status(404).json({ error: "Id héro non trouvé" })
+    }
 
-  const hero = await datamapper.getHeroesById(idHero);
-  const userId = hero.id_user;
+    const hero = await datamapper.getHeroesById(idHero);
+    const userId = hero.id_user;
 
     if (!userId) {
-  res.status(404).json({error : "Id user non trouvé"})
-  }
+      res.status(404).json({ error: "Id user non trouvé" })
+    }
 
-  await datamapper.deleteIdHeroById(idHero); // D'abord supprimer le héro avec le user à cause de la contrainte d'unicité de clef etrangere
-  await datamapper.deleteUserHeroById(userId);
+    await datamapper.deleteIdHeroById(idHero); // D'abord supprimer le héro avec le user à cause de la contrainte d'unicité de clef etrangere
+    await datamapper.deleteUserHeroById(userId);
 
-  res.status(200).json({ message: "Héro supprimé" })
+    res.status(200).json({ message: "Héro supprimé" })
   } catch {
-    res.status(500).json({error: "Erreur lors de la suppression"})
+    res.status(500).json({ error: "Erreur lors de la suppression" })
   }
 };

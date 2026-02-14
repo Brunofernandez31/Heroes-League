@@ -108,13 +108,13 @@ const datamapper = {
   },
 
 
-  async updateMission(id_mission, id_hero, duration, comments, total_price, mission_result) {
+  async updateMission(missionId, idHero, missionDuration, missionComments, priceFixed, missionResult) {
     const result = await pool.query(
       `
       UPDATE mission 
       SET id_hero = $2, duration = $3, status = 'Terminée', comments = $4, total_price = $5, mission_result = $6
       WHERE id_mission = $1
-      RETURNING *`, [id_mission, id_hero, duration, comments, total_price, mission_result]
+      RETURNING *`, [missionId, idHero, missionDuration, missionComments, priceFixed, missionResult]
     );
     return result.rows[0];
   },
@@ -142,6 +142,7 @@ const datamapper = {
   },
 
 
+  // Incrémenter le nombre de mission du héro
   async updateHero(id) {
     const result = await pool.query(
       `
@@ -149,9 +150,9 @@ const datamapper = {
       SET nb_mission = nb_mission + 1
       WHERE id_hero = $1
       RETURNING *
-      `, [id] // prévention contre injection sql, le [id] remplacera le $1
+      `, [id] 
     );
-    return result.rows[0]; // Retourner que le premier élément du tableau
+    return result.rows[0]; 
   },
 
   async createUser(email, password, role, firstName, lastName) {
