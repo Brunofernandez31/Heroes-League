@@ -22,7 +22,6 @@ async function getMission() {
 
     const data = await response.json(); // La réponse du back contenant les informations pioché en bdd
     // console.log(data.getmission) // On vise getmission car sur la fonction du controller on fait res.json({getmission})
-
     if (response.ok) {
 
         const dataMission = data.getmission; // data.getmission est un tableau d'objet
@@ -30,6 +29,7 @@ async function getMission() {
         dataMission.forEach(mission => { // mission contiendra qu'un seul element du tableau d'objet de data.getmission
 
             const idMission = mission.id_mission;
+            const idHero = mission.id_hero;
             const descriptionMission = mission.description;
             const descriptionFormatted = descriptionMission.replace(/([.!?;]) /g, "$1\n"); // Formater en retour à la ligne lorsqu'on a quelques ponctuations
             const cityMission = mission.city;
@@ -42,6 +42,7 @@ async function getMission() {
             const articleHtml =
                 `
                 <article class="article_mission">
+                    <input type="hidden" class="hero_id" value="${idHero}">
                     <p class="title_mission"><span class="wordBold">Mission n°:</span> ${idMission}</p>
                 <div class="article_mission_rangement">
                     <p><span class="wordBold">Nom du client : </span> ${clientMission}</p>
@@ -93,28 +94,51 @@ async function getMission() {
 
         // Filtrer pour n'afficher que les missions "En cours" du héro
         const allArticles = document.querySelectorAll(".article_mission"); // prendre tous les articles
-        allArticles.forEach(article => {
-            const status = article.querySelector(".status_mission").textContent; // Selectionner le contenu de status_mission
 
-            // Si on n'a pas le statut "en cours", cacher tous les autres articles
-            if (!status.includes("En cours")) { 
+        // Vérifier si le héro a une mission en cours
+        const hasMissionEnCours = dataMission.some(mission => {
+            return String(mission.id_hero) === String(data.idHero) && mission.status === "En cours";
+        });
+
+        allArticles.forEach(article => {
+            const idHeroByArticle = article.querySelector(".hero_id").value;
+            const idHeroConnect = data.idHero;
+            const status = article.querySelector(".status_mission").textContent;
+
+            const idHeroConnectString = String(idHeroConnect);
+
+            // Une mission est disponible si l'id du héro connecté ou d'un autre héro n'est pas dans l'article
+            const missionEstDisponible = (idHeroByArticle === "" || idHeroByArticle === "null");
+
+            // Condition pour afficher ma mission en cours, je compare si le héro connecté correspond à l'id du héro dans l'article + le statut
+            const maMissionEnCours = (idHeroByArticle === idHeroConnectString && status.includes("En cours"));
+
+            let doitAfficher = false;
+
+            if (hasMissionEnCours && maMissionEnCours) {
+                doitAfficher = true;  // J'ai une mission en cours et c'est la mienne
+            } else if (!hasMissionEnCours && missionEstDisponible) {
+                doitAfficher = true;  // Je n'ai pas de mission et celle-ci est disponible
+            }
+
+            if (!doitAfficher) {
                 article.style.display = "none";
             }
 
-            // Si on a le statut "en cours", gérer l'affichage des boutons
+            // Gérer les boutons
             if (status.includes("En cours")) {
                 const buttonChoose = article.querySelector(".button_choose_mission");
                 buttonChoose.style.display = "none";
 
                 const buttonFinish = article.querySelector(".button_finish_mission");
-                buttonFinish.style.display = "block"
+                buttonFinish.style.display = "block";
 
                 buttonFinish.addEventListener('click', () => {
-                    const buttonIdMission = Number(buttonFinish.dataset.finishmission); // Forcer le data en nombre pour etre prit en compte
-                    window.location.href = `/rapport_mission/${buttonIdMission}`; // Rediriger vers la page de la conception du rapport de mission
-                })
+                    const buttonIdMission = Number(buttonFinish.dataset.finishmission);
+                    window.location.href = `/rapport_mission/${buttonIdMission}`;
+                });
             }
-        })
+        });
 
         const allBouttonValidateMission = document.querySelectorAll(".button_validate_mission");// Sélectionner tous les boutons "Confirmer" dupliqués
         allBouttonValidateMission.forEach(button => {
@@ -133,8 +157,8 @@ async function getMission() {
                     section.innerHTML = "";
                     await getMission(); // Rappeler la fonction pour eviter de rafraichir la page et voir la maj des statuts de mission
                 } else {
-                const error = await response.json();
-                showToast(error.error);
+                    const error = await response.json();
+                    showToast(error.error);
                 }
             })
         })

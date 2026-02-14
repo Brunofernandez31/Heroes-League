@@ -123,7 +123,7 @@ sendRapport.addEventListener('click', async (e) => {
     })
 
     const result = await response.json();
-    if (result.ok) {
+    if (response.ok) {
         window.location.href ="/dashboard";
     }
 })

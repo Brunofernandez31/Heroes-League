@@ -122,7 +122,7 @@ const datamapper = {
   async getMissionDashboard(id) {
     const result = await pool.query(
       `
-      SELECT mission.id_mission, mission.description, mission.city, mission.start_date, mission.id_client, mission.status, mission.urgency, client.name as client_name
+      SELECT mission.id_mission, mission.id_hero, mission.description, mission.city, mission.start_date, mission.id_client, mission.status, mission.urgency, client.name as client_name
       FROM mission
       JOIN client ON mission.id_client = client.id_client
       WHERE (id_hero IS NULL OR id_hero = $1)

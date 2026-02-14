@@ -282,11 +282,11 @@ export function displayDashboard(_req, res) {
 
 // selectionner les missions de la dashboard en ayant l'id du héro concerné
 export async function getMissionsDashboard(req, res) {
-  const userId = req.user.userId
-  const heroId = await datamapper.getIdHeroByIdUser(userId); // Récupérer le héro concerné avec l'id User
+  const userId = req.user.userId // La personne connectée
+  const heroId = await datamapper.getIdHeroByIdUser(userId); // Récupérer le héro concerné avec l'id de l'User
   const idHero = heroId.id_hero; // Viser sa colonne
   const getmission = await datamapper.getMissionDashboard(idHero);
-  res.json({ getmission })
+  res.json({ getmission, idHero })
 };
 
 
